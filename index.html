@@ -84,6 +84,7 @@ body:has(#p-inicio.activa){padding:clamp(20px,3.6vw,58px)}
   border:1px solid var(--borde);border-radius:30px;
   box-shadow:var(--sombra),var(--brillo);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:clamp(20px,3vw,44px)}
+@media(max-width:1079px){.tarjeta{backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}}
 
 /* INICIO */
 .inicio-grid{display:grid;gap:clamp(22px,3vw,40px)}
@@ -93,7 +94,7 @@ body:has(#p-inicio.activa){padding:clamp(20px,3.6vw,58px)}
 .rosco-preview{flex:1;min-height:min(44vh,400px);display:grid;place-items:center;container-type:inline-size}
 #rosco-mini{position:relative;width:min(100%,min(44vh,400px));aspect-ratio:1}
 #rosco-mini.gira{animation:gira 110s linear infinite}
-#rosco-mini::before{content:"";position:absolute;inset:2%;border-radius:50%;border:1.5px dashed var(--anillo)}
+@media(min-width:1080px){#rosco-mini::before{content:"";position:absolute;inset:2%;border-radius:50%;border:1.5px dashed var(--anillo)}}
 #rosco-mini::after{content:"";position:absolute;inset:18%;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,color-mix(in srgb,var(--marca) 13%,transparent),transparent 70%)}
 .letra-mini{position:absolute;transform:translate(-50%,-50%);width:13.5%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;transition:transform 1.1s cubic-bezier(.2,1.15,.35,1),opacity .55s ease;
@@ -139,6 +140,7 @@ input::placeholder{color:var(--placeholder)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .chip{background:var(--superficie);border:1.5px solid var(--borde);color:var(--suave);border-radius:999px;padding:9px 16px;
   font-size:14px;font-family:var(--cuerpo);cursor:pointer;transition:.18s}
+@media(max-width:1079px){.chip{font-size:16px;padding:13px 21px}.chips{gap:10px}}
 .chip:hover{border-color:var(--turquesa);transform:translateY(-1px)}
 .chip:active{transform:scale(.93)}
 .chip[aria-pressed=true]{background:linear-gradient(135deg,var(--marca),var(--turquesa));border-color:transparent;color:var(--btn-txt);font-weight:800;
@@ -164,6 +166,7 @@ input::placeholder{color:var(--placeholder)}
 .btn.pasar:hover{background:color-mix(in srgb,var(--sol) 17%,transparent)}
 .btn.chica{padding:11px 20px;font-size:15px}
 .btn.grande{padding:19px 34px;font-size:19px;letter-spacing:.01em}
+@media(max-width:1079px){.btn.grande{font-size:23px}}
 .aviso{color:var(--parina);font-weight:700;font-size:14.5px;min-height:20px;margin-top:12px}
 .credito{margin-top:clamp(20px,3vw,30px);padding-top:16px;border-top:1px solid var(--borde);color:var(--gris);font-size:13.5px}
 .credito strong{color:var(--tinta)}
@@ -830,7 +833,7 @@ function elegirVoz(){
   };
   vozElegida=vs.reduce((a,b)=>puntos(b)>puntos(a)?b:a);
 }
-if(soportaVoz){elegirVoz();speechSynthesis.onvoiceschanged=elegirVoz;}
+if(soportaVoz){setTimeout(elegirVoz,900);speechSynthesis.onvoiceschanged=elegirVoz;}
 const callar=()=>{if(soportaVoz)speechSynthesis.cancel();};
 function toastVoz(msg){  // aviso breve abajo de la pantalla
   let t=$("toast-voz");
