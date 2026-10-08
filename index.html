@@ -400,9 +400,9 @@ body.con-letras .letras-fondo{display:block}
    y leerse como palabras; se dejan solo en celular */
 @media(min-width:761px){body.con-letras .letras-fondo{display:none}}
 .letra-fondo{position:absolute;font-family:var(--display);font-weight:800;line-height:1;
-  opacity:var(--alfa-letras);transform:rotate(var(--r0,0deg));
+  opacity:var(--alfa-letras);transform:translate(-50%,-50%) rotate(var(--r0,0deg));
   animation:derivaL var(--t,26s) ease-in-out infinite alternate;will-change:transform}
-@keyframes derivaL{to{transform:rotate(var(--r0,0deg)) translate(var(--dx,20px),var(--dy,-24px)) rotate(var(--dr,12deg))}}
+@keyframes derivaL{to{transform:translate(-50%,-50%) translate(var(--dx,20px),var(--dy,-24px)) rotate(var(--dr,12deg))}}
 
 /* RANKING DEL COLE */
 .ranking{margin-top:18px;background:var(--superficie2);border:1px solid var(--borde);border-radius:20px;padding:16px 18px}
@@ -1408,16 +1408,20 @@ $("btn-copiar").addEventListener("click",async()=>{
 /* letras de colores flotando, como en el arte del programa */
 (function(){const cont=document.createElement("div");cont.className="letras-fondo";
   const cols=["var(--turquesa)","var(--parina)","var(--uva)","var(--marca)"];
-  const mob=innerWidth<760,COLS=mob?7:14,ROWS=mob?5:10;
+  const mob=innerWidth<760,COLS=mob?18:20,ROWS=mob?14:12;
+  /* grilla densa de letras chiquitas, cada una centrada en su celda: no se
+     solapan entre sí ni quedan cortadas por el borde de la pantalla */
   for(let i=0;i<COLS*ROWS;i++){const s=document.createElement("span");s.className="letra-fondo";
+    const gx=i%COLS,gy=(i/COLS)|0,fs=(mob?8:14)+Math.random()*(mob?7:32);
+    const px=(3+(gx+.3+Math.random()*.4)/COLS*94);
+    const py=(3+(gy+.3+Math.random()*.4)/ROWS*94);
     s.textContent=LETRAS[Math.floor(Math.random()*LETRAS.length)];
-    const gx=i%COLS,gy=(i/COLS)|0;
-    s.style.left=((gx+.14+Math.random()*.55)/COLS*100)+"vw";
-    s.style.top=((gy+.14+Math.random()*.55)/ROWS*100)+"vh";
-    s.style.fontSize=((mob?16:22)+Math.random()*(mob?36:70))+"px";s.style.color=cols[i%cols.length];
+    s.style.left=px+"vw";
+    s.style.top=py+"vh";
+    s.style.fontSize=fs+"px";s.style.color=cols[i%cols.length];
     s.style.setProperty("--r0",((Math.random()*50-25)|0)+"deg");
-    s.style.setProperty("--dx",((Math.random()*50-25)|0)+"px");
-    s.style.setProperty("--dy",((Math.random()*50-25)|0)+"px");
+    s.style.setProperty("--dx",((Math.random()*(mob?12:36)-(mob?6:18))|0)+"px");
+    s.style.setProperty("--dy",((Math.random()*(mob?12:36)-(mob?6:18))|0)+"px");
     s.style.setProperty("--dr",((Math.random()*40-20)|0)+"deg");
     s.style.setProperty("--t",(20+Math.random()*22)+"s");
     cont.appendChild(s);}
