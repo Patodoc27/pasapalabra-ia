@@ -408,7 +408,7 @@ body.con-letras .letras-fondo{display:block}
 .ranking{margin-top:18px;background:var(--superficie2);border:1px solid var(--borde);border-radius:20px;padding:16px 18px}
 .ranking h3{font-family:var(--display);font-size:17px;margin-bottom:6px;color:var(--ambar)}
 .ranking>small{display:block;color:var(--gris);font-size:13px;margin-bottom:10px}
-.f-rank{display:grid;grid-template-columns:36px 38px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;font-size:15px}
+.f-rank{display:grid;grid-template-columns:26px 36px 1fr auto;gap:8px;align-items:center;padding:8px 8px;border-radius:12px;font-size:14px}
 .f-rank .ava-r{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1.5px solid var(--borde)}
 .avs{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .avs img{width:42px;height:42px;border-radius:50%;border:2.5px solid transparent;cursor:pointer;opacity:.72;transition:.16s;object-fit:cover;padding:0}
@@ -419,9 +419,9 @@ body.con-letras .letras-fondo{display:block}
 .ava-p{width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;border:2px solid currentColor;margin-right:7px}
 .f-rank:nth-child(odd){background:var(--superficie)}
 .f-rank .pos{font-family:var(--display);font-weight:800;color:var(--tenue);text-align:center;font-size:16px}
-.f-rank .nom{font-weight:700;color:var(--tinta)}
-.f-rank .nom small{color:var(--gris);font-weight:400;font-size:12.5px;margin-left:7px}
-.f-rank .pts{font-family:var(--display);font-weight:800;color:var(--marca)}
+.f-rank .nom{font-weight:700;color:var(--tinta);line-height:1.2;min-width:0}
+.f-rank .nom small{color:var(--gris);font-weight:400;font-size:12.5px;margin-left:5px;white-space:nowrap}
+.f-rank .pts{font-family:var(--display);font-weight:800;color:var(--marca);white-space:nowrap;font-size:15px;text-align:right}
 .f-rank.mio{background:color-mix(in srgb,var(--marca) 13%,transparent)!important;outline:1.5px solid color-mix(in srgb,var(--marca) 38%,transparent)}
 .rank-vacio{color:var(--gris);font-size:14px;padding:6px 2px}
 #p-ranking .tarjeta{max-width:1180px}
@@ -536,7 +536,7 @@ body.con-letras .letras-fondo{display:block}
       <p style="color:var(--gris);font-size:13.5px;margin-top:10px">Para proyectar en clase conviene el claro; el oscuro es el modo show, tipo tele.</p>
     </div>
     <div class="ranking" id="ranking-inicio" style="display:none">
-      <h3>🏆 Mejores del cole</h3>
+      <h3>🏆 Posiciones en el colegio</h3>
       <p style="color:var(--gris);font-size:12.5px;margin:2px 0 8px">Suma los aciertos de todas las partidas jugadas.</p>
       <div id="ranking-inicio-lista"></div>
     </div>
@@ -625,7 +625,7 @@ body.con-letras .letras-fondo{display:block}
       <div style="--c:var(--j2)"><b id="d2">—</b><span id="dp2">0</span> aciertos</div>
     </div>
     <div class="ranking" id="ranking-final" style="display:none">
-      <h3>🏆 Ranking del cole</h3>
+      <h3>🏆 Posiciones en el colegio</h3>
       <small>Tu marca ya quedó anotada en la planilla de la profe.</small>
       <div id="ranking-final-lista"></div>
     </div>
@@ -1408,23 +1408,35 @@ $("btn-copiar").addEventListener("click",async()=>{
 /* letras de colores flotando, como en el arte del programa */
 (function(){const cont=document.createElement("div");cont.className="letras-fondo";
   const cols=["var(--turquesa)","var(--parina)","var(--uva)","var(--marca)"];
-  const mob=innerWidth<760,COLS=mob?18:20,ROWS=mob?14:12;
-  /* grilla densa de letras chiquitas, cada una centrada en su celda: no se
-     solapan entre sí ni quedan cortadas por el borde de la pantalla */
-  for(let i=0;i<COLS*ROWS;i++){const s=document.createElement("span");s.className="letra-fondo";
-    const gx=i%COLS,gy=(i/COLS)|0,fs=(mob?8:14)+Math.random()*(mob?7:32);
-    const px=(3+(gx+.3+Math.random()*.4)/COLS*94);
-    const py=(3+(gy+.3+Math.random()*.4)/ROWS*94);
+  const W=innerWidth,H=innerHeight,mob=W<760;
+  /* Marco de letritas: solo van donde se ven ENTERAS (márgenes de la tarjeta),
+     chiquitas, sin solaparse y sin que el borde las corte. No derivan (--dx/--dy 0)
+     para que nunca se salgan de su franja. */
+  const card=document.querySelector("#p-inicio .tarjeta");
+  const cr=card?card.getBoundingClientRect():{left:W*.06,right:W*.94,top:H*.04,bottom:H};
+  let k=0;
+  const poner=(x,y,fs)=>{const s=document.createElement("span");s.className="letra-fondo";
     s.textContent=LETRAS[Math.floor(Math.random()*LETRAS.length)];
-    s.style.left=px+"vw";
-    s.style.top=py+"vh";
-    s.style.fontSize=fs+"px";s.style.color=cols[i%cols.length];
-    s.style.setProperty("--r0",((Math.random()*50-25)|0)+"deg");
-    s.style.setProperty("--dx",((Math.random()*(mob?12:36)-(mob?6:18))|0)+"px");
-    s.style.setProperty("--dy",((Math.random()*(mob?12:36)-(mob?6:18))|0)+"px");
-    s.style.setProperty("--dr",((Math.random()*40-20)|0)+"deg");
-    s.style.setProperty("--t",(20+Math.random()*22)+"s");
-    cont.appendChild(s);}
+    s.style.left=(x/W*100)+"vw";s.style.top=(y/H*100)+"vh";
+    s.style.fontSize=fs+"px";s.style.color=cols[k++%4];
+    s.style.setProperty("--r0",((Math.random()*44-22)|0)+"deg");
+    s.style.setProperty("--dx","0px");s.style.setProperty("--dy","0px");
+    s.style.setProperty("--dr",((Math.random()*30-15)|0)+"deg");
+    s.style.setProperty("--t",(22+Math.random()*18)+"s");
+    cont.appendChild(s);};
+  const marL=cr.left,marR=W-cr.right;
+  const fsm=Math.max(9,Math.min(mob?13:18,Math.min(marL,marR)-6));
+  /* columnas laterales: tantas filas como entren sin tocarse */
+  const nv=Math.max(4,Math.floor(H/(fsm+20))),padY=fsm+24;
+  for(let i=0;i<nv;i++){const y=padY+(i+.5)/nv*(H-2*padY)+(Math.random()*8-4);
+    poner(marL/2,y,fsm);poner(cr.right+marR/2,y,fsm);}
+  /* franja superior libre (entre el borde y la tarjeta) */
+  const st=cr.top-6;
+  if(st>14){const nh=Math.max(3,Math.floor(W/(fsm+16)));
+    for(let i=0;i<nh;i++)poner((i+.5)/nh*W,st/2,Math.min(fsm+2,st-6));}
+  /* franja inferior: se ve cuando llegás al final de la página */
+  const yb=H-13,nh2=Math.max(3,Math.floor(W/(fsm+16)));
+  for(let i=0;i<nh2;i++)poner((i+.5)/nh2*W,yb,fsm+2);
   document.body.prepend(cont);
   document.body.classList.add("con-letras");   // arranca en la pantalla de inicio
 })();
