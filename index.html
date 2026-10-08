@@ -665,12 +665,16 @@ E:[
 F:[
  {m:E,p:"FEW-SHOT",v:["few shot","fewshot","few shots"],k:"varios ejemplos antes del pedido",d:"Técnica que consiste en poner varios ejemplos antes del pedido real, cuando aportan patrones útiles y diversos."},
  {m:E,p:"FORMATO",v:["formatos","el formato"],k:"cómo tiene que salir la respuesta",d:"Parte del pedido que indica cómo tiene que salir la respuesta: extensión, estructura, tono."}],
+G:[
+ {m:C,p:"INTELIGENCIA ARTIFICIAL GENERATIVA",v:["ia generativa","genai","gen ai","la ia generativa"],k:"crea contenido nuevo con patrones",d:"Sistemas probabilísticos que generan contenido nuevo a partir de patrones aprendidos. <b>(Tres palabras.)</b>"}],
 I:[
  {m:E,p:"ITERAR",v:["iteración","iteracion","iterando"],k:"en vueltas sucesivas",d:"Mejorar la respuesta en vueltas sucesivas: pedir, leer, detectar qué falló y corregir solo eso."}],
 L:[
  {m:E,p:"LÍMITES",v:["límite","limite","limites","restricciones","restricción","restriccion"],k:"lo que la IA no puede hacer",d:"Parte del pedido que indica lo que la IA no puede hacer, como inventar o salir de la fuente."}],
 M:[
  {m:E,p:"MODELO DE LENGUAJE",v:["modelos de lenguaje","modelo de lenguajes","llm"],k:"calcula continuaciones probables",d:"Sistema que genera texto calculando continuaciones probables a partir de patrones aprendidos. <b>(Tres palabras.)</b>"}],
+N:[
+ {m:C,p:"DATOS PERSONALES",v:["dato personal","información personal","informacion personal"],k:"identifican a una persona",d:"Información que permite identificar a una persona. <b>(Dos palabras.)</b>"}],
 O:[
  {m:E,p:"ONE-SHOT",v:["one shot","oneshot","one shots"],k:"un solo ejemplo alcanza",d:"Técnica que consiste en dar un solo ejemplo, cuando ayuda a mostrar la forma esperada."}],
 P:[
@@ -689,7 +693,7 @@ V:[
 Z:[
  {m:E,p:"ZERO-SHOT",v:["zero shot","zeroshot","zero shots","cero-shot","cero shot"],k:"instrucción sola, sin ejemplos",d:"Técnica que consiste en no dar ejemplos, cuando la instrucción sola alcanza."}],
 };
-const LETRAS=["A","B","C","D","E","F","I","L","M","O","P","R","S","T","V","Z"];
+const LETRAS=["A","B","C","D","E","F","G","I","L","M","N","O","P","R","S","T","V","Z"];
 const ARRANQUES=[8,13,3,10,0,5,11,2,6,14];
 const TODAS=Object.values(POOL).flat().map(x=>x.p);
 const PALABRAS=Object.values(POOL).flat();
