@@ -142,8 +142,9 @@ input::placeholder{color:var(--placeholder)}
   font-size:14px;font-family:var(--cuerpo);cursor:pointer;transition:.18s}
 @media(max-width:1079px){.chip{font-size:16px;padding:13px 21px}.chips{gap:10px}}
 .chip:hover{border-color:var(--turquesa);transform:translateY(-1px)}
-#chips-tiempo{flex-wrap:nowrap}#chips-tiempo .chip{flex:1 1 0;white-space:nowrap;padding-left:8px;padding-right:8px;text-align:center}
-#chips-rival{flex-wrap:nowrap}
+#chips-tiempo{flex-wrap:nowrap;gap:7px}#chips-tiempo .chip{flex:1 1 0;white-space:nowrap;min-width:0;padding-left:5px;padding-right:5px;text-align:center}
+@media(max-width:1079px){#chips-tiempo .chip{font-size:15px;padding-top:12px;padding-bottom:12px}}
+#chips-rival{flex-wrap:nowrap}#chips-rival .chip{min-width:0;white-space:nowrap}
 .chip:active{transform:scale(.93)}
 .chip[aria-pressed=true]{background:linear-gradient(135deg,var(--marca),var(--turquesa));border-color:transparent;color:var(--btn-txt);font-weight:800;
   box-shadow:0 8px 22px -10px color-mix(in srgb,var(--marca) 65%,transparent)}
