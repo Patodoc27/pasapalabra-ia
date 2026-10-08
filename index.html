@@ -142,6 +142,8 @@ input::placeholder{color:var(--placeholder)}
   font-size:14px;font-family:var(--cuerpo);cursor:pointer;transition:.18s}
 @media(max-width:1079px){.chip{font-size:16px;padding:13px 21px}.chips{gap:10px}}
 .chip:hover{border-color:var(--turquesa);transform:translateY(-1px)}
+#chips-tiempo{flex-wrap:nowrap}#chips-tiempo .chip{flex:1 1 0;white-space:nowrap;padding-left:8px;padding-right:8px;text-align:center}
+#chips-rival{flex-wrap:nowrap}
 .chip:active{transform:scale(.93)}
 .chip[aria-pressed=true]{background:linear-gradient(135deg,var(--marca),var(--turquesa));border-color:transparent;color:var(--btn-txt);font-weight:800;
   box-shadow:0 8px 22px -10px color-mix(in srgb,var(--marca) 65%,transparent)}
@@ -151,6 +153,8 @@ input::placeholder{color:var(--placeholder)}
 .btn:hover{transform:translateY(-2px) scale(1.02)}
 .btn:active{transform:translateY(1px) scale(.97)}
 .btn:disabled{opacity:.38;cursor:not-allowed;transform:none;box-shadow:none}
+#btn-responder{transition:opacity .18s,filter .18s,box-shadow .18s,transform .15s}
+#btn-responder.apagada{opacity:.42;filter:saturate(.3);box-shadow:none}
 #btn-jugar{position:relative;overflow:hidden}
 #btn-jugar::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;pointer-events:none;
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);
@@ -225,6 +229,7 @@ input::placeholder{color:var(--placeholder)}
 .menu-pop button:hover{background:var(--superficie)}
 .tablero{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:clamp(30px,5vw,84px);padding-top:clamp(14px,2vw,24px);transition:filter .3s}
 .tablero.oculto{filter:blur(9px) saturate(.6);pointer-events:none}
+.rosco-col{display:flex;flex-direction:column;align-items:center;gap:clamp(12px,2vh,20px);flex:none;min-width:0}
 .rosco-caja{position:relative;width:min(78vh,740px);max-width:100%;aspect-ratio:1;flex:none;container-type:inline-size;margin:0 auto}
 .rosco-caja::after{content:"";position:absolute;inset:16%;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,color-mix(in srgb,var(--jug) 12%,transparent),transparent 70%);transition:background .4s}
@@ -261,7 +266,7 @@ input::placeholder{color:var(--placeholder)}
 .definicion{font-size:clamp(13px,1.32vw,18.5px);line-height:1.38;color:var(--tinta);
   max-height:40cqw;overflow-y:auto}
 .definicion b{color:var(--uva)}
-.respuesta{display:flex;gap:8px;justify-content:center;align-items:center;position:absolute;left:50%;bottom:14.5%;transform:translateX(-50%);width:60%;z-index:2}
+.respuesta{display:flex;gap:8px;justify-content:center;align-items:center;width:min(560px,100%);z-index:2}
 #entrada{flex:1;min-width:0;max-width:340px;font-size:15.5px;text-transform:uppercase;border-width:2px;letter-spacing:.03em;text-align:center;padding:10px 12px}
 .respuesta .btn{padding:10px 20px;font-size:14.5px}
 .acciones{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center}
@@ -305,7 +310,7 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
     padding:17.5%;gap:8px}
   .consigna{font-size:12px;padding:6px 15px}
   .definicion{font-size:13.5px;line-height:1.4;max-height:100%;overflow-y:auto}
-  .respuesta{position:static;transform:none;width:100%}
+  .respuesta{width:100%}
   #entrada{max-width:none;padding:13px 14px;font-size:16px}
   .respuesta .btn{padding:13px 20px;font-size:15px}
   .lateral .acciones{order:-1;width:100%}
@@ -481,7 +486,7 @@ body.con-letras .letras-fondo{display:block}
     <div>
       <label>Modalidad</label>
       <div class="chips" id="chips-rival">
-        <button class="chip" type="button" data-bot="2" aria-pressed="true">🧍 Sola · cerrá el rosco vos</button>
+        <button class="chip" type="button" data-bot="2" aria-pressed="true">🧍 Sola</button>
         <button class="chip" type="button" data-bot="1" aria-pressed="false">🤖 Contra Boti</button>
       </div>
     </div>
@@ -568,15 +573,17 @@ body.con-letras .letras-fondo{display:block}
     </div>
 
     <div class="tablero" id="tablero">
-      <div class="rosco-caja">
-        <div id="rosco" style="position:absolute;inset:0" role="list" aria-label="Rosco"></div>
+      <div class="rosco-col">
+        <div class="rosco-caja">
+          <div id="rosco" style="position:absolute;inset:0" role="list" aria-label="Rosco"></div>
         <div class="centro-juego">
           <p class="consigna" id="consigna">Empieza por A</p>
           <p class="definicion" id="definicion">…</p>
         </div>
+        </div>
         <div class="respuesta">
           <input type="text" id="entrada" placeholder="Tu respuesta" autocomplete="off" spellcheck="false">
-          <button class="btn" id="btn-responder">Responder</button>
+          <button class="btn apagada" id="btn-responder">Responder</button>
         </div>
       </div>
       <aside class="lateral">
@@ -1180,11 +1187,13 @@ function habilitar(v){
   $("btn-pasar").disabled=!v||sinResolver<=1;
   $("btn-pasar").title=sinResolver<=1?"Es la última letra: hay que responderla":"";
 }
+const actBtnResp=()=>$("btn-responder").classList.toggle("apagada",!$("entrada").value.trim());
+$("entrada").addEventListener("input",actBtnResp);
 function mostrarLetra(){
   const it=items[idx];
   $("consigna").textContent=(it.m===E?"Empieza por ":"Contiene la ")+it.letra+(estado[idx]==="pasada"?" ↻":"");
   $("definicion").innerHTML=it.d;
-  $("entrada").value="";$("feedback").textContent="";$("feedback").className="feedback";
+  $("entrada").value="";actBtnResp();$("feedback").textContent="";$("feedback").className="feedback";
   pintar();leerConsigna();
 }
 function siguienteLetra(){
@@ -1256,7 +1265,7 @@ function responder(){
   const it=items[idx],ok=acepta(it,txt);
   if(!ok&&casiAcepta(it,txt)){   // la palabra es la correcta pero está mal acentuada
     sPas();$("feedback").className="feedback pas";carita("inclina");burbuja("casi");
-    $("feedback").innerHTML="<span class='tit'>Casi</span>Esa es la palabra, pero le falta la tilde o la ñ. Fijate dónde va el acento y escribila otra vez. No perdés la letra.";
+    $("feedback").innerHTML="<span class='tit'>Casi — le faltó la tilde</span>Esa es la palabra, pero se escribe con acento: <b>"+it.p+"</b>. Corregila y mandala de nuevo, no perdés la letra.";
     $("entrada").focus();$("entrada").select();return;}
   if(ok){estado[idx]="acierto";respondio[idx]=turno;puntos[turno]++;rachas[turno]++;sOk();carita("salta");burbuja("ok");
     $("feedback").className="feedback ok";$("feedback").innerHTML="<span class='tit'>✓ "+it.p+"</span>"+(rachas[turno]>=3?"<span class='racha'>¡Racha de "+rachas[turno]+"! 🔥</span>":"");
@@ -1265,7 +1274,7 @@ function responder(){
   if(modoPractica()&&intentos===1){   // segunda oportunidad con pista, solo en práctica
     sMal();$("feedback").className="feedback mal";carita("sacude");burbuja("mal");
     $("feedback").innerHTML="<span class='tit'>✕ Todavía no</span><span class='clave'>Pista clave: "+it.k+"</span>";
-    $("entrada").value="";$("entrada").focus();return;}
+    $("entrada").value="";actBtnResp();$("entrada").focus();return;}
   estado[idx]="error";respondio[idx]=turno;rachas[turno]=0;sMal();carita("sacude");burbuja("mal");
   $("feedback").className="feedback mal";
   $("feedback").innerHTML="<span class='tit'>✕ Era "+it.p+"</span><span class='clave'>Pista clave: "+it.k+"</span>";
