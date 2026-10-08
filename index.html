@@ -61,6 +61,7 @@
 html{color-scheme:light}
 html[data-tema="show"]{color-scheme:dark}
 body{background:var(--fondo0);color:var(--tinta);font-family:var(--cuerpo);min-height:100dvh;
+  touch-action:manipulation;
   display:flex;justify-content:center;padding:clamp(10px,2vw,30px);overflow-x:hidden}
 body::before{content:"";position:fixed;inset:-18%;z-index:-2;pointer-events:none;
   background:
@@ -423,6 +424,16 @@ body.con-letras .letras-fondo{display:block}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <script>try{document.documentElement.dataset.tema=localStorage.getItem("ppia-tema")||"aula"}catch(e){}</script>
+<script>
+/* Bloqueo de zoom: iPhone ignora el meta viewport, así que frenamos el
+   gesto de pinza (gesturestart) y cualquier toque con dos dedos. El
+   touch-action del body además quita el zoom por doble toque. */
+(function(){
+  document.addEventListener("gesturestart",function(e){e.preventDefault()});
+  document.addEventListener("gesturechange",function(e){e.preventDefault()});
+  document.addEventListener("touchmove",function(e){if(e.touches.length>1)e.preventDefault()},{passive:false});
+})();
+</script>
 </head>
 <body>
 <div id="app">
