@@ -174,7 +174,7 @@ input::placeholder{color:var(--placeholder)}
 .btn.grande{padding:19px 34px;font-size:19px;letter-spacing:.01em}
 @media(max-width:1079px){.btn.grande{font-size:23px}}
 .aviso{color:var(--parina);font-weight:700;font-size:14.5px;min-height:20px;margin-top:12px}
-.credito{margin-top:clamp(20px,3vw,30px);padding-top:16px;border-top:1px solid var(--borde);color:var(--gris);font-size:13.5px}
+.credito{margin-top:clamp(20px,3vw,30px);padding-top:16px;border-top:1px solid var(--borde);color:var(--gris);font-size:13.5px;text-align:center}
 .credito strong{color:var(--tinta)}
 
 /* CUENTA */
@@ -514,9 +514,9 @@ body.con-letras .letras-fondo{display:block}
     <div style="margin-top:20px">
       <label>Tiempo de juego</label>
       <div class="chips" id="chips-tiempo">
-        <button class="chip" type="button" data-seg="600" aria-pressed="true">10 minutos</button>
-        <button class="chip" type="button" data-seg="720" aria-pressed="false">12 minutos</button>
-        <button class="chip" type="button" data-seg="900" aria-pressed="false">15 minutos</button>
+        <button class="chip" type="button" data-seg="600" aria-pressed="true">10 min</button>
+        <button class="chip" type="button" data-seg="720" aria-pressed="false">12 min</button>
+        <button class="chip" type="button" data-seg="900" aria-pressed="false">15 min</button>
       </div>
     </div>
     <div style="margin-top:18px">
@@ -1037,7 +1037,7 @@ const fmt=s=>String(Math.floor(Math.max(s,0)/60)).padStart(2,"0")+":"+String(Mat
 /* ===== INICIO ===== */
 /* tiempos según modalidad: sola necesita más porque cada consigna se lee en voz alta */
 function pintarTiempo(){
-  const ops=sola?[[600,"10 minutos"],[720,"12 minutos"],[900,"15 minutos"]]:[[300,"5 minutos"],[480,"8 minutos"]];
+  const ops=sola?[[600,"10 min"],[720,"12 min"],[900,"15 min"]]:[[300,"5 min"],[480,"8 min"]];
   $("chips-tiempo").innerHTML=ops.map((o,i)=>'<button class="chip" type="button" data-seg="'+o[0]+'" aria-pressed="'+(i===0)+'">'+o[1]+'</button>').join("");
   sinReloj=false;seg=ops[0][0];
 }
