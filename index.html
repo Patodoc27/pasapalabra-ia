@@ -892,12 +892,22 @@ function leerConsigna(){
   if(!esBot()){$("feedback").className="feedback";$("feedback").innerHTML="<span class='tit'>🗣️ Escuchá la consigna</span>Cuando termine de leer se habilita la respuesta.";}
   /* primero la consigna; cuando termina, ~1.2 s de pausa y recién la definición;
      al terminar la definición se habilita el campo de respuesta */
+  /* seguro anti-congelado: si el motor de voz queda mudo y no dispara
+     onend/onerror (bug conocido de Chrome en Android), el campo se
+     habilita igual y arranca el reloj */
+  luego(()=>{
+    if(!jugando||esBot()||items[idx]!==it||!$("entrada").disabled)return;
+    callar();habilitar(true);arrancarReloj();
+    $("feedback").className="feedback";
+    $("feedback").innerHTML="<span class='tit'>🎧 Sin voz</span>No se escuchó la consigna, pero está escrita arriba: podés responder igual.";
+    luego(()=>$("entrada").focus(),60);
+  },7000+(cons.length+txt.length)*80);
   setTimeout(()=>decir(cons,()=>{
     setTimeout(()=>{
       if(!lectura||!soportaVoz||!jugando||items[idx]!==it)return;
       decir(txt,()=>{
         if(jugando&&items[idx]===it&&!esBot()){
-          habilitar(true);
+          habilitar(true);arrancarReloj();
           $("feedback").className="feedback";$("feedback").textContent="";
           luego(()=>$("entrada").focus(),60);
         }});
@@ -1179,9 +1189,10 @@ function entrarAlJuego(){
   jugando=true;bloqueado=false;intentos=0;colorTurno();$("tablero").classList.remove("oculto");
   mostrarLetra();
   if(esBot()){habilitar(false);jugadaBot();}
-  else{   // con lectura: la respuesta se habilita recién cuando termina de leer la definición
-    if(lectura&&soportaVoz)habilitar(false);else habilitar(true);
-    arrancarReloj();luego(()=>$("entrada").focus(),120);}
+  else{   // con lectura: la respuesta y el reloj arrancan recién cuando termina de leer
+    if(lectura&&soportaVoz){habilitar(false);pararReloj();}
+    else{habilitar(true);arrancarReloj();}
+    luego(()=>$("entrada").focus(),120);}
 }
 function habilitar(v){
   $("btn-responder").disabled=!v;$("entrada").disabled=!v;
@@ -1214,7 +1225,10 @@ function jugadaBot(){
   const sinResolver=estado.filter(s=>s!=="acierto"&&s!=="error").length;
   let acierta=Math.random()<BOT.ok;
   if(rachaBot>=BOT.racha)acierta=false;
-  const pasa=!acierta&&sinResolver>1&&Math.random()<BOT.pasa/(1-BOT.ok);
+  /* de cada fallo, a lo sumo la mitad es pasapalabra: así siempre se ven
+     también sus errores con pista clave (antes con BOT.ok>=0.9 el 100%
+     de sus fallos eran pasadas y nunca respondía mal) */
+  const pasa=!acierta&&sinResolver>1&&Math.random()<Math.min(.5,BOT.pasa/(1-BOT.ok));
   const texto=acierta?it.p:(pasa?"":erroneaBot(it));
   luego(()=>{
     if(pasa){rachaBot=0;resolverBot("pasa");return;}
@@ -1255,8 +1269,8 @@ function cerrarJugada(resu){
     siguienteLetra();
     if(sola){   // contra vos misma: seguís vos, sin tarjeta de turno
       intentos=0;mostrarLetra();
-      if(lectura&&soportaVoz)habilitar(false);else{habilitar(true);luego(()=>$("entrada").focus(),120);}
-      arrancarReloj();
+      if(lectura&&soportaVoz){habilitar(false);pararReloj();}
+      else{habilitar(true);arrancarReloj();luego(()=>$("entrada").focus(),120);}
     }else{turno=1-turno;overlayTurno(resu);}
   },esBot()?1700:1300);
 }
