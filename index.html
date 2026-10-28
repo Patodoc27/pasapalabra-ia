@@ -1582,9 +1582,9 @@ function correrBarra(t){
 }
 function pararLetra(){clearTimeout(letraT);clearInterval(letraInt);letraT=null;const b=$("barra-turno");if(b)b.classList.remove("on","urgente");}
 function arrancarLetra(){
-  if(!enLinea||!miTurno()||sinReloj||recuperacion||!jugando)return;
+  if((enLinea&&!miTurno())||sinReloj||recuperacion||!jugando)return;
   const t=segundosLetra(items[idx]);correrBarra(t);
-  redEnviar("tl",{s:t,i:idx});
+  if(enLinea)redEnviar("tl",{s:t,i:idx});
   clearTimeout(letraT);letraT=setTimeout(porTiempo,t*1000);
 }
 function porTiempo(){
