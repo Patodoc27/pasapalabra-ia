@@ -602,9 +602,9 @@ body.online #tiempo{display:none}
     <div style="margin-top:20px">
       <label>Tiempo de juego</label>
       <div class="chips" id="chips-tiempo">
-        <button class="chip" type="button" data-seg="600" aria-pressed="true">10 min</button>
-        <button class="chip" type="button" data-seg="720" aria-pressed="false">12 min</button>
-        <button class="chip" type="button" data-seg="900" aria-pressed="false">15 min</button>
+        <button class="chip" type="button" data-seg="360" aria-pressed="true">6 min</button>
+        <button class="chip" type="button" data-seg="480" aria-pressed="false">8 min</button>
+        <button class="chip" type="button" data-seg="600" aria-pressed="false">10 min</button>
       </div>
     </div>
     <div style="margin-top:18px">
@@ -907,7 +907,7 @@ const AVATAR_BOTI=AVATARES.length-1;
 const ava=j=>'<img class="ava-p" src="'+AVATARES[avatares[j]].img+'" alt="">';
 const avaR=i=>{const a=AVATARES[+i];return a?'<img class="ava-r" src="'+a.img+'" alt="">':'<span></span>';};
 const avaO=j=>'<img class="ava-o" src="'+AVATARES[avatares[j]].img+'" alt="">';
-let seg=600,restante=600,sinReloj=false,cron=null,jugando=false,bloqueado=false,arranque=true;
+let seg=360,restante=360,sinReloj=false,cron=null,jugando=false,bloqueado=false,arranque=true;
 let sonido=true,recuperacion=false,pendientesRepaso=[],conBot=false,sola=true,intentos=0,timers=[];
 const modoPractica=()=>sinReloj||recuperacion;
 const esBot=()=>conBot&&turno===1;
@@ -1216,7 +1216,7 @@ const fmt=s=>String(Math.floor(Math.max(s,0)/60)).padStart(2,"0")+":"+String(Mat
    en línea cada jugador tiene su propio reloj */
 function pintarTiempo(){
   const ops=modoOnline?[[240,"Normal · 4 min cada uno"],[180,"Intermedio · 3 min cada uno"],[90,"Intenso · 90 s cada uno"],[0,"Sin reloj · práctica"]]
-    :sola?[[600,"10 min"],[720,"12 min"],[900,"15 min"]]:[[300,"5 min"],[480,"8 min"]];
+    :sola?[[360,"6 min"],[480,"8 min"],[600,"10 min"]]:[[240,"4 min"],[360,"6 min"]];
   $("chips-tiempo").innerHTML=ops.map((o,i)=>'<button class="chip" type="button" data-seg="'+o[0]+'" aria-pressed="'+(i===0)+'">'+o[1]+'</button>').join("");
   sinReloj=false;seg=ops[0][0];
 }
