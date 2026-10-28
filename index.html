@@ -1210,7 +1210,7 @@ const fmt=s=>String(Math.floor(Math.max(s,0)/60)).padStart(2,"0")+":"+String(Mat
 /* tiempos según modalidad: sola necesita más porque cada consigna se lee en voz alta;
    en línea cada jugador tiene su propio reloj */
 function pintarTiempo(){
-  const ops=modoOnline?[[480,"8 min c/u"],[360,"6 min c/u"],[240,"4 min c/u"],[0,"Sin reloj"]]
+  const ops=modoOnline?[[360,"Normal · 6 min cada uno"],[240,"Intermedio · 4 min cada uno"],[120,"Intenso · 2 min cada uno"],[0,"Sin reloj · práctica"]]
     :sola?[[600,"10 min"],[720,"12 min"],[900,"15 min"]]:[[300,"5 min"],[480,"8 min"]];
   $("chips-tiempo").innerHTML=ops.map((o,i)=>'<button class="chip" type="button" data-seg="'+o[0]+'" aria-pressed="'+(i===0)+'">'+o[1]+'</button>').join("");
   sinReloj=false;seg=ops[0][0];
@@ -1823,7 +1823,7 @@ const red={sala:"",rol:"",canal:null,rival:null,rivalAqui:false,ronda:0,rondaT:0
 let modoOnline=false,enLinea=false,yo=0,solo=false,partidaViva=false,rel=[0,0],usado=[0,0],tIni=0;
 const miTurno=()=>!enLinea||turno===yo;
 const autoTurno=()=>enLinea||solo;
-const nombreModo=s=>+s===0?"Sin reloj · práctica":+s<=240?"4 min cada uno":+s<=360?"6 min cada uno":"8 min cada uno";
+const nombreModo=s=>+s===0?"Sin reloj · práctica":+s<=120?"Intenso · 2 min cada uno":+s<=240?"Intermedio · 4 min cada uno":"Normal · 6 min cada uno";
 
 function redEnviar(ev,p){if(red.canal)red.canal.enviar(ev,Object.assign({ronda:red.ronda},p||{}));}
 function guardarSesion(){try{sessionStorage.setItem("ppia-sala",JSON.stringify({sala:red.sala,rol:red.rol,rival:red.rival,nombre:nombres[yo],t:Date.now()}));}catch(e){}}
