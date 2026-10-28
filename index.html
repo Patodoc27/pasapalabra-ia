@@ -582,7 +582,6 @@ body.online #tiempo{display:none}
       <div class="campo" style="--c:var(--uva);min-width:230px"><label>Sección</label>
         <div class="chips" id="chips-sec" style="margin-top:8px">
           <button class="chip" type="button" data-sec="5° A" aria-pressed="true" style="flex:1;padding:12px">5° A</button>
-          <button class="chip" type="button" data-sec="5° Primera" aria-pressed="false" style="flex:1;padding:12px">5° Primera</button>
         </div>
       </div>
     </div>
@@ -620,7 +619,7 @@ body.online #tiempo{display:none}
       <p style="color:var(--gris);font-size:13.5px;margin-top:10px">Para proyectar en clase conviene el claro; el oscuro es el modo show, tipo tele.</p>
     </div>
     <div class="ranking" id="ranking-inicio" style="display:none">
-      <h3>🏆 Posiciones en el colegio</h3>
+      <h3>🏆 Mejores jugadores</h3>
       <p style="color:var(--gris);font-size:12.5px;margin:2px 0 8px">Suma los aciertos de todas las partidas jugadas.</p>
       <div id="ranking-inicio-lista"></div>
     </div>
@@ -713,7 +712,7 @@ body.online #tiempo{display:none}
     </div>
     <div class="podio" id="podio" style="display:none"></div>
     <div class="ranking" id="ranking-final" style="display:none">
-      <h3>🏆 Posiciones en el colegio</h3>
+      <h3>🏆 Mejores jugadores</h3>
       <small>Tu marca ya quedó anotada en la planilla de la profe.</small>
       <div id="ranking-final-lista"></div>
     </div>
@@ -1073,18 +1072,57 @@ async function rankingTraer(top){
   lista.forEach(x=>{const k=normNom(x.nombre)+"|"+(x.seccion||"");
     if(!por[k])por[k]=Object.assign({},x);
     else{por[k].aciertos+=x.aciertos;por[k].partidas=(por[k].partidas||1)+(x.partidas||1);}});
-  return Object.values(por).sort((a,b)=>b.aciertos-a.aciertos||a.partidas-b.partidas);
+  /* segunda pasada: funde escrituras con errores de tipeo de una misma
+     persona dentro de la misma sección (p. ej. "Aleján" por "Alejandro"),
+     así los puntos se le suman al jugador aunque haya tecleado mal o
+     haya entrado desde otro dispositivo */
+  const grupos=[];
+  Object.keys(por).forEach(k=>{
+    const g=por[k],nm=normNom(g.nombre),sec=g.seccion||"";
+    const h=grupos.find(x=>x.sec===sec&&mismaPersona(x.nm,nm));
+    if(!h)grupos.push({sec:sec,nm:nm,e:g});
+    else{h.e.aciertos+=g.aciertos;
+      if((g.partidas||1)>=(h.e.partidas||1)&&g.nombre.length>=h.e.nombre.length)h.e.nombre=g.nombre;
+      h.e.partidas=(h.e.partidas||1)+(g.partidas||1);}
+  });
+  return grupos.map(x=>x.e).sort((a,b)=>b.aciertos-a.aciertos||a.partidas-b.partidas);
+}
+/* distancia de edición corta (Levenshtein con tope 3) */
+function distEd(a,b){
+  if(Math.abs(a.length-b.length)>3)return 9;
+  let f=[...Array(b.length+1).keys()];
+  for(let i=1;i<=a.length;i++){let p=f[0];f[0]=i;
+    for(let j=1;j<=b.length;j++){const t=f[j];
+      f[j]=Math.min(f[j]+1,f[j-1]+1,p+(a[i-1]!==b[j-1]));p=t;}
+    if(Math.min.apply(null,f)>3)return 9;}
+  return f[b.length];
+}
+/* dos nombres normalizados cuentan como la misma persona cuando tienen la
+   misma cantidad de palabras y cada par difiere poco (prefijo con salto ≥2
+   o edición ≤2), sin fundir casos ambiguos tipo "daniel"/"daniela" */
+function mismaPersona(a,b){
+  const ta=String(a).split(" "),tb=String(b).split(" ");
+  if(ta.length!==tb.length||!ta[0])return false;
+  for(let i=0;i<ta.length;i++){
+    const x=ta[i],y=tb[i];if(x===y)continue;
+    const minL=Math.min(x.length,y.length),dif=Math.abs(x.length-y.length);
+    const pref=x.startsWith(y)||y.startsWith(x);
+    if(minL>=4&&pref&&dif>=2)continue;
+    if(minL>=5&&!(pref&&dif===1)&&distEd(x,y)<=2)continue;
+    return false;
+  }
+  return true;
 }
 const normNom=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim();
 function rankingFila(r,i,sinSec){
   const medal=i<3?["🥇","🥈","🥉"][i]:(i+1);
-  const mio=r.seccion===seccion&&((enLinea||solo)?normNom(r.nombre)===normNom(nombres[yo]):(normNom(r.nombre)===normNom(nombres[0])||normNom(r.nombre)===normNom(nombres[1])));
+  const mio=r.seccion===seccion&&((enLinea||solo)?mismaPersona(normNom(r.nombre),normNom(nombres[yo])):(mismaPersona(normNom(r.nombre),normNom(nombres[0]))||mismaPersona(normNom(r.nombre),normNom(nombres[1]))));
   return '<div class="f-rank'+(mio?" mio":"")+'"><span class="pos">'+medal+'</span>'+avaR(r.avatar)+
-    '<span class="nom"><span class="nn">'+r.nombre+'</span><small>'+(sinSec?"":r.seccion+" · ")+(r.partidas>1?r.partidas+" partidas":"1 partida")+'</small>'+
+    '<span class="nom"><span class="nn">'+nombreBonito(r.nombre)+'</span><small>'+(sinSec?"":r.seccion+" · ")+(r.partidas>1?r.partidas+" partidas":"1 partida")+'</small>'+
     '<span class="pts">'+r.aciertos+' aciertos</span></span></div>';
 }
 function rankingPintar(lista){
-  [["ranking-inicio","ranking-inicio-lista",6],["ranking-final","ranking-final-lista",200]].forEach(x=>{
+  [["ranking-inicio","ranking-inicio-lista",10],["ranking-final","ranking-final-lista",200]].forEach(x=>{
     const c=$(x[0]);if(!c)return;
     if(!rankingOn()||!lista){c.style.display="none";return;}
     c.style.display="";
@@ -1221,7 +1259,7 @@ $("btn-jugar").addEventListener("click",()=>{
   avatares[1]=AVATAR_BOTI;
   const a=$("n1").value.trim(),b=BOT.nombre;
   if(!a||!b){$("aviso").textContent="Escribí tu nombre para empezar.";return;}
-  nombres=[a,b];audio();jugados=[];quienEmpieza=0;nuevaPartida();
+  nombres=[nombreBonito(limpiaNom(a)),b];audio();jugados=[];quienEmpieza=0;nuevaPartida();
   try{localStorage.setItem("ppia-jugador",JSON.stringify({nombre:nombres[0],avatar:avatares[0],seccion:seccion}))}catch(e){}
 });
 try{const g=JSON.parse(localStorage.getItem("ppia-jugador")||"null");
@@ -1822,7 +1860,7 @@ $("salas-abiertas").addEventListener("click",e=>{const b=e.target.closest(".sala
   if($("n1").value.trim())$("btn-jugar").click();else{$("aviso").textContent="Escribí tu nombre y tocá «Entrar a la sala».";$("n1").focus();}});
 
 function redEntrar(){
-  const a=limpiaNom($("n1").value);
+  const a=nombreBonito(limpiaNom($("n1").value));
   if(!a){$("aviso").textContent="Escribí tu nombre para entrar a una sala.";$("n1").focus();return;}
   const cod=$("cod-sala").value.toUpperCase().replace(/[^A-Z0-9]/g,"");
   if(cod&&cod.length!==4){$("aviso").textContent="El código de la sala tiene 4 caracteres.";return;}
