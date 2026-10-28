@@ -494,6 +494,11 @@ body.online #tiempo{display:none}
 #slot-sala .chat,#slot-final .chat{position:static;width:auto}
 #slot-sala .chat .c-carta,#slot-final .chat .c-carta{box-shadow:none;text-align:left}
 .chat.on{display:block}
+.chat.flota{bottom:70px}
+.chat-btn{position:fixed;bottom:12px;right:12px;z-index:79;width:48px;height:48px;border-radius:50%;border:2px solid var(--borde);background:var(--superficie);box-shadow:var(--sombra);display:none;align-items:center;justify-content:center;cursor:pointer}
+.chat-btn.on{display:flex}
+.chat-btn svg{width:24px;height:24px;fill:var(--uva)}
+.chat-n{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;border-radius:9px;background:var(--uva);color:#fff;font-size:11px;line-height:18px;padding:0 4px;text-align:center}
 .chat .c-carta{background:var(--superficie);border:2px solid var(--borde);border-radius:16px;padding:10px;box-shadow:var(--sombra);display:flex;flex-direction:column;gap:8px}
 .chat b{font-size:14px}
 .chat .c-lista{max-height:150px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
@@ -778,6 +783,7 @@ body.online #tiempo{display:none}
 </div>
 
 <div class="banda-red" id="banda-red"><span id="banda-txt"></span><button class="btn chica" id="banda-btn" type="button" style="display:none">Terminar la partida</button></div>
+<button class="chat-btn" id="chat-btn" type="button" aria-label="Abrir el chat" title="Chat con tu rival"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-4.3 3.4c-.5.4-1.2.1-1.2-.5V5a2 2 0 0 1 0-2z" transform="translate(.5 0)"/></svg><span class="chat-n" id="chat-n" style="display:none">0</span></button>
 <div class="chat" id="chat">
   <div class="c-carta">
     <b id="chat-tit">Chat</b>
@@ -2178,23 +2184,29 @@ function redAlTerminar(){
   if(red.sala)redBotonFinal();else $("btn-otra").textContent="Otro rosco";
 }
 
-/* --- chat entre los dos (en la sala de espera y al terminar; nunca durante el rosco) --- */
-const chat={lista:[],ultimo:0};
+/* --- chat entre los dos: en la sala, al terminar y durante el rosco en línea (botón flotante) --- */
+const chat={lista:[],ultimo:0,abierto:false,nuevos:0};
 const MALAS=/^(bolud|pelotud|forr[oa]s?$|put[oa]s?$|putit|pute[ao]|mierd|conch|culo|orto$|idiot|estupid|tarad|mogol|imbecil|pendej|cagon|chot[oa]|pija|verga|garca|trolo|tont[oa]s?$|inutil|bob[oa]s?$|gord[oa]s?$|fe[oa]s?$|sorete|chupa|coger|cogid|manc[oa]s?$|burr[oa]s?$|matate|muerete|odio|lpm|ctm|hdp|tarupi|zarpad)/;
 function filtrar(t){return t.split(/(\s+)/).map(w=>{
     const n=w.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z\u00f1]/g,"");
   return n&&MALAS.test(n)?"•••":w;}).join("");}
 const nomRival=()=>nombreBonito((red.jug?red.jug.nombres:nombres)[1-yo]||"tu rival");
 function chatUbicar(id){
-  const c=$("chat");if(!c)return;
+  const c=$("chat"),btn=$("chat-btn");if(!c)return;
   if(!id){const a=document.querySelector(".pantalla.activa");id=a?a.id:"";}
   const slot=id==="p-sala"?$("slot-sala"):id==="p-final"?$("slot-final"):null;
-  const ver=!!(slot&&red.sala&&(red.rival||chat.lista.length));
-  c.classList.toggle("on",ver);if(!ver)return;
-  if(c.parentNode!==slot)slot.appendChild(c);
-  const activo=!!(red.rival&&red.rivalAqui);
-  [...$("chat-rapidas").children].forEach(b=>b.disabled=!activo);
-  chatPintar();
+  const enJuego=id==="p-juego"&&!!red.sala;
+  const ver=!!(slot&&red.sala&&(red.rival||chat.lista.length))||(enJuego&&chat.abierto);
+  c.classList.toggle("on",ver);
+  if(ver){
+    if(slot){if(c.parentNode!==slot)slot.appendChild(c);c.classList.remove("flota");}
+    else{if(c.parentNode!==document.body)document.body.appendChild(c);c.classList.add("flota");}
+    const activo=!!(red.rival&&red.rivalAqui);
+    [...$("chat-rapidas").children].forEach(b=>b.disabled=!activo);
+    chatPintar();
+  }
+  if(btn)btn.classList.toggle("on",enJuego);
+  const n=$("chat-n");if(n){n.textContent=chat.nuevos>9?"9+":String(chat.nuevos);n.style.display=(enJuego&&!chat.abierto&&chat.nuevos)?"block":"none";}
 }
 function chatPintar(){
   $("chat-tit").textContent="Chat con "+nomRival();
@@ -2218,9 +2230,11 @@ function chatRecibir(p){
   const tx=filtrar(String(p.tx||"").replace(/\s+/g," ").trim().slice(0,80));if(!tx)return;
   chat.lista.push({mio:0,j:1-yo,n:(red.jug?red.jug.nombres:nombres)[1-yo],tx:tx});
   if(chat.lista.length>60)chat.lista.shift();
+  if($("chat").classList.contains("on"))chat.nuevos=0;else chat.nuevos++;
   tono(1046,.09,"sine",.1);tono(1318,.12,"sine",.09,.08);
   chatUbicar();
 }
+$("chat-btn").addEventListener("click",()=>{chat.abierto=!chat.abierto;if(chat.abierto)chat.nuevos=0;chatUbicar();});
 $("chat-rapidas").addEventListener("click",e=>{const b=e.target.closest(".chip-chat");if(b)chatEnviar(b.textContent);});
 $("chat-enviar").addEventListener("click",()=>{const i=$("chat-in");chatEnviar(i.value);i.value="";});
 $("chat-in").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("chat-enviar").click();}});
