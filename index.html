@@ -476,11 +476,9 @@ body.online #salas-abiertas{display:flex!important}
 .bur-stat.rj.urgente{background:linear-gradient(145deg,#FF4FA3,#D61178)}
 .bur-stat.rj.urgente.activo{animation:late 1s steps(2,end) infinite}
 body.online #tiempo{display:none}
-.barra-turno{display:none;height:30px;padding:4px 10px;margin-bottom:8px;background:color-mix(in srgb,var(--superficie) 82%,transparent);border:1.5px solid var(--borde);border-radius:12px}
+.barra-turno{display:none;height:30px;padding:4px 10px;margin-bottom:8px;align-self:stretch;width:min(560px,100%);background:color-mix(in srgb,var(--superficie) 82%,transparent);border:1.5px solid var(--borde);border-radius:12px}
 .barra-turno.on{display:flex;align-items:center;gap:8px}
-.barra-turno i{flex:1;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--parina),var(--ambar),var(--turquesa));width:100%}
-.barra-turno span{font-size:10.5px;font-weight:700;color:var(--gris);white-space:nowrap}
-.barra-turno.urgente i{background:linear-gradient(90deg,var(--parina),#B3074F)}
+.barra-turno i{flex:1;height:10px;border-radius:99px;background:var(--turquesa);width:100%}
 .podio{display:flex;justify-content:center;align-items:flex-end;gap:clamp(10px,4vw,48px);margin-top:20px;width:100%}
 .podio-col{flex:1;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
 .podio-col .medalla{width:clamp(44px,12vw,62px);height:auto;filter:drop-shadow(0 6px 10px rgba(20,40,90,.25))}
@@ -682,7 +680,7 @@ body.online #tiempo{display:none}
           <p class="definicion" id="definicion">…</p>
         </div>
         </div>
-        <div class="barra-turno" id="barra-turno"><i id="barra-turno-i"></i><span id="barra-turno-s"></span></div>
+        <div class="barra-turno" id="barra-turno"><i id="barra-turno-i"></i></div>
         <div class="respuesta">
           <input type="text" id="entrada" placeholder="Tu respuesta" autocomplete="off" spellcheck="false">
           <button class="btn apagada" id="btn-responder">Responder</button>
@@ -1573,10 +1571,11 @@ function correrBarra(t){
   const b=$("barra-turno"),i=$("barra-turno-i");clearInterval(letraInt);
   if(!t){b.classList.remove("on","urgente");return;}
   letraFin=Date.now()+t*1000;b.classList.remove("urgente");b.classList.add("on");
-  i.style.transition="none";i.style.width="100%";i.offsetWidth;
+  i.style.transition="none";i.style.width="100%";i.style.background="var(--turquesa)";i.offsetWidth;
   i.style.transition="width "+t+"s linear";i.style.width="0%";
-  const pinta=()=>{const q=Math.max(0,Math.ceil((letraFin-Date.now())/1000));$("barra-turno-s").textContent="Tiempo de la letra: "+q+" s";
-    b.classList.toggle("urgente",q<=5);if(q<=0)clearInterval(letraInt);};
+  const pinta=()=>{const f=Math.max(0,(letraFin-Date.now())/(t*1000));
+    i.style.background="color-mix(in srgb,var(--parina) "+Math.round((1-f)*100)+"%,var(--turquesa))";
+    if(f<=0)clearInterval(letraInt);};
   pinta();letraInt=setInterval(pinta,250);
 }
 function pararLetra(){clearTimeout(letraT);clearInterval(letraInt);letraT=null;const b=$("barra-turno");if(b)b.classList.remove("on","urgente");}
