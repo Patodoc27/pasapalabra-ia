@@ -124,6 +124,11 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--marca),var(--tur
 .bajada{color:var(--gris);font-size:clamp(15px,1.6vw,18.5px);line-height:1.55;align-self:stretch;text-align:center}
 .como{margin-top:clamp(4px,1vw,10px);display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
 .paso{background:var(--f,var(--superficie));border:1px solid var(--borde);border-radius:18px;padding:15px 18px;display:flex;gap:12px;align-items:flex-start}
+[data-tema="show"] .paso{background:linear-gradient(160deg,color-mix(in srgb,var(--c) 26%,#141E4E),color-mix(in srgb,var(--c) 12%,#101A4C));
+  border:1.5px solid color-mix(in srgb,var(--c) 78%,#fff);
+  box-shadow:0 0 24px -5px color-mix(in srgb,var(--c) 72%,transparent),inset 0 0 20px -12px var(--c)}
+[data-tema="show"] .paso .ico{filter:drop-shadow(0 0 10px color-mix(in srgb,var(--c) 85%,#fff))}
+[data-tema="show"] .paso h3{text-shadow:0 0 16px color-mix(in srgb,var(--c) 85%,transparent)}
 .paso .ico{font-size:26px;line-height:1}
 .paso h3{font-family:var(--display);font-size:16px;color:var(--c,var(--turquesa));margin-bottom:2px}
 .paso p{font-size:14.5px;color:var(--suave);line-height:1.45}
@@ -558,15 +563,16 @@ body.online #tiempo{display:none}
     <details>
       <summary>Reglas del juego</summary>
       <ul>
-        <li>En modo <b>Sola</b> respondés todo el rosco vos, una letra atrás de la otra: ganás si cerrás las 18. En modo <b>Contra Boti</b> el turno alterna, incluso cuando se dice Pasapalabra.</li>
-        <li>Las consignas se leen en voz alta siempre: primero «empieza por / contiene la», una pausa, la definición, y recién ahí se habilita la respuesta.</li>
-        <li>La consigna aparece recién cuando el jugador de turno toca «Listo».</li>
-        <li>Cada acierto se pinta del color de quien respondió ✓, el error va en rosa ✕ y el pasapalabra en celeste ↻.</li>
-        <li>Las letras celestes vuelven y las responde quien tenga el turno en ese momento.</li>
-        <li>El reloj se detiene mientras se pasan el teclado y mientras se lee el resultado de la jugada.</li>
-        <li>Cada partida sortea palabras y letra de arranque: nunca se repite el mismo rosco ni el mismo arranque.</li>
-        <li>Las palabras se escriben con tilde y con ñ. Si la palabra es la correcta pero está mal acentuada, avisa y se puede corregir sin perder la letra.</li>
-        <li>En modo práctica, sin reloj, el primer error da una pista y una segunda oportunidad.</li>
+        <li>Sola: respondés las 18 letras vos. Contra Boti y En línea: por turnos, incluso al decir pasapalabra.</li>
+        <li>Acierto ✓ en tu color · error ✕ en rosa · pasapalabra ↻ en celeste (la letra vuelve).</li>
+        <li>La consigna se lee en voz alta y recién después se habilita la respuesta.</li>
+        <li>Cada uno tiene su reloj según el modo elegido y corre solo en su turno.</li>
+        <li>Cada letra tiene un tiempo límite (la barra): si se acaba, vuelve como pasapalabra; si ya había vuelto, es error.</li>
+        <li>En línea ves y escuchás la consigna del rival y lo que escribe.</li>
+        <li>Gana quien acierta más; si empatan, el desempate es la revancha.</li>
+        <li>Tilde y ñ cuentan. Si errás solo la acentuación, avisa y corregís sin perder la letra.</li>
+        <li>Cada partida sortea palabras y letra de arranque: nunca se repite el rosco.</li>
+        <li>En práctica sin reloj, el primer error da una pista y otra oportunidad.</li>
       </ul>
     </details>
     <div class="rosco-preview"><div id="rosco-mini"></div></div>
