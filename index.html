@@ -476,7 +476,7 @@ body.online #salas-abiertas{display:flex!important}
 .bur-stat.rj.urgente{background:linear-gradient(145deg,#FF4FA3,#D61178)}
 .bur-stat.rj.urgente.activo{animation:late 1s steps(2,end) infinite}
 body.online #tiempo{display:none}
-.barra-turno{display:none;position:absolute;top:0;left:0;right:0;height:26px;z-index:5;padding:3px 8px;background:color-mix(in srgb,var(--superficie) 82%,transparent);border-radius:12px 12px 0 0}
+.barra-turno{display:none;height:30px;padding:4px 10px;margin-bottom:8px;background:color-mix(in srgb,var(--superficie) 82%,transparent);border:1.5px solid var(--borde);border-radius:12px}
 .barra-turno.on{display:flex;align-items:center;gap:8px}
 .barra-turno i{flex:1;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--parina),var(--ambar),var(--turquesa));width:100%}
 .barra-turno span{font-size:10.5px;font-weight:700;color:var(--gris);white-space:nowrap}
@@ -678,11 +678,11 @@ body.online #tiempo{display:none}
         <div class="rosco-caja">
           <div id="rosco" style="position:absolute;inset:0" role="list" aria-label="Rosco"></div>
         <div class="centro-juego">
-          <div class="barra-turno" id="barra-turno"><i id="barra-turno-i"></i><span id="barra-turno-s"></span></div>
           <p class="consigna" id="consigna">Empieza por A</p>
           <p class="definicion" id="definicion">…</p>
         </div>
         </div>
+        <div class="barra-turno" id="barra-turno"><i id="barra-turno-i"></i><span id="barra-turno-s"></span></div>
         <div class="respuesta">
           <input type="text" id="entrada" placeholder="Tu respuesta" autocomplete="off" spellcheck="false">
           <button class="btn apagada" id="btn-responder">Responder</button>
@@ -1583,7 +1583,8 @@ function correrBarra(t){
 function pararLetra(){clearTimeout(letraT);clearInterval(letraInt);letraT=null;const b=$("barra-turno");if(b)b.classList.remove("on","urgente");}
 function arrancarLetra(){
   if((enLinea&&!miTurno())||sinReloj||recuperacion||!jugando)return;
-  const t=segundosLetra(items[idx]);correrBarra(t);
+  const rem=enLinea?rel[turno]:restante;
+  const t=Math.min(segundosLetra(items[idx]),Math.max(5,rem));correrBarra(t);
   if(enLinea)redEnviar("tl",{s:t,i:idx});
   clearTimeout(letraT);letraT=setTimeout(porTiempo,t*1000);
 }
