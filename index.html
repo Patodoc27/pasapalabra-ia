@@ -859,7 +859,7 @@ Z:[
  {m:E,p:"ZERO-SHOT",v:["zero shot","zeroshot","zero shots","cero-shot","cero shot"],k:"instrucción sola, sin ejemplos",d:"Técnica que consiste en no dar ejemplos, cuando la instrucción sola alcanza."}],
 };
 const LETRAS=["A","B","C","D","E","F","G","I","L","M","N","O","P","R","S","T","U","V","Z"];
-const ARRANQUES=[8,13,3,10,0,5,11,2,6,14];
+const ARRANQUES=LETRAS.map((l,i)=>i);   // el arranque puede ser cualquier letra: más variedad
 const TODAS=Object.values(POOL).flat().map(x=>x.p);
 const PALABRAS=Object.values(POOL).flat();
 /* ===== ROSCOS AL AZAR =====
@@ -877,7 +877,7 @@ function armarRoscoN(){
     const emp=PALABRAS.filter(w=>w.p.startsWith(l)&&!usadas[w.p]);
     const con=PALABRAS.filter(w=>!usadas[w.p]&&!w.p.startsWith(l)&&w.p.includes(l));
     let lista;
-    if(emp.length&&con.length)lista=Math.random()<.55?emp:con;
+    if(emp.length&&con.length)lista=Math.random()<.60?emp:con;
     else lista=emp.length?emp:con;
     if(!lista.length)lista=PALABRAS.filter(w=>w.p.startsWith(l)).concat(PALABRAS.filter(w=>w.p.includes(l)));
     const w=lista[Math.floor(Math.random()*lista.length)];
