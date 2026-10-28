@@ -476,15 +476,20 @@ body.online #tiempo{display:none}
 .barra-turno i{flex:1;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--parina),var(--ambar),var(--turquesa));width:100%}
 .barra-turno span{font-size:10.5px;font-weight:700;color:var(--gris);white-space:nowrap}
 .barra-turno.urgente i{background:linear-gradient(90deg,var(--parina),#B3074F)}
-.podio{display:flex;align-items:flex-end;justify-content:center;gap:14px;margin:8px auto 4px}
-.podio .col{display:flex;flex-direction:column;align-items:center;gap:5px;width:min(40%,170px)}
-.podio .med{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:var(--suave);border:3px solid var(--borde)}
-.podio .med img{width:50px;height:50px;border-radius:50%}
-.podio .col.gana .med{border-color:var(--sol);background:radial-gradient(circle at 35% 30%,#FFF7D6,var(--sol));box-shadow:0 0 0 5px color-mix(in srgb,var(--sol) 30%,transparent)}
-.podio .col.gana{transform:translateY(-8px)}
-.podio .nom{font-weight:800;font-size:15px;text-align:center;line-height:1.2}
-.podio .pts{font-family:var(--display);font-weight:800;font-size:22px;color:var(--uva)}
-.podio .sub{font-size:12px;color:var(--gris);text-align:center}
+.podio{display:flex;justify-content:center;align-items:flex-end;gap:clamp(10px,4vw,48px);margin-top:20px;width:100%}
+.podio-col{flex:1;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
+.podio-col .medalla{width:clamp(44px,12vw,62px);height:auto;filter:drop-shadow(0 6px 10px rgba(20,40,90,.25))}
+.p2 .medalla{width:clamp(36px,10vw,50px)}
+.ava-pod{width:clamp(80px,22vw,116px);height:clamp(80px,22vw,116px);border-radius:50%;object-fit:cover;border:4px solid var(--c);background:var(--superficie)}
+.p2 .ava-pod{width:clamp(66px,18vw,92px);height:clamp(66px,18vw,92px)}
+.podio-col b{font-family:var(--display);font-size:clamp(17px,4.6vw,24px);color:var(--c)}
+.podio-col b em{font-style:normal;color:var(--gris);font-size:.7em}
+.podio-pts{font-family:var(--display);font-weight:800;font-size:clamp(30px,9vw,46px);line-height:1;color:var(--tinta)}
+.podio-pts small{font-size:14px;color:var(--gris);font-weight:700;margin-left:5px}
+.podio-det{color:var(--suave);font-size:14px}
+.peldano{width:100%;border-radius:16px 16px 6px 6px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:clamp(26px,7.5vw,42px);
+  color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.25);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 80%,#fff),var(--c));margin-top:8px}
+.p1 .peldano{height:110px}.p2 .peldano{height:62px}
 .chat{position:fixed;bottom:12px;right:12px;z-index:80;width:min(300px,88vw);display:none}
 #slot-sala .chat,#slot-final .chat{position:static;width:auto}
 #slot-sala .chat .c-carta,#slot-final .chat .c-carta{box-shadow:none;text-align:left}
@@ -1018,7 +1023,7 @@ function leerConsigna(){
      habilita igual y arranca el reloj */
   luego(()=>{
     if(!jugando||esBot()||items[idx]!==it||!$("entrada").disabled)return;
-    callar();habilitar(true);arrancarReloj();arrancarLetra();
+    callar();habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();
     $("feedback").className="feedback";
     $("feedback").innerHTML="<span class='tit'>🎧 Sin voz</span>No se escuchó la consigna, pero está escrita arriba: podés responder igual.";
     luego(()=>$("entrada").focus(),60);
@@ -1029,7 +1034,7 @@ function leerConsigna(){
       decir(txt,()=>{
         if(jugando&&items[idx]===it&&!esBot()){
           if(enLinea&&!miTurno()){verRival();return;}
-          habilitar(true);arrancarReloj();arrancarLetra();
+          habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();
           $("feedback").className="feedback";$("feedback").textContent="";
           luego(()=>$("entrada").focus(),60);
         }});
@@ -1364,7 +1369,7 @@ function entrarAlJuego(){
   else{   // con lectura: la respuesta y el reloj arrancan recién cuando termina de leer
     $("entrada").placeholder="Tu respuesta";
     if(lectura&&soportaVoz){habilitar(false);pararReloj();}
-    else{habilitar(true);arrancarReloj();arrancarLetra();}
+    else{habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();}
     luego(()=>$("entrada").focus(),120);}
 }
 function habilitar(v){
@@ -1444,7 +1449,7 @@ function cerrarJugada(resu){
     if(sola||solo){   // contra vos misma o repaso: seguís vos, sin tarjeta de turno
       intentos=0;mostrarLetra();
       if(lectura&&soportaVoz){habilitar(false);pararReloj();}
-      else{habilitar(true);arrancarReloj();arrancarLetra();luego(()=>$("entrada").focus(),120);}
+      else{habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();luego(()=>$("entrada").focus(),120);}
     }else{if(tieneTiempo(1-turno))turno=1-turno;overlayTurno(resu);}
   },(esBot()||!miTurno())?1700:1300);
 }
@@ -1596,23 +1601,11 @@ function terminar(motivo){
   $("f-ok").textContent=ok;$("f-tot").textContent=n;$("motivo").textContent=motivo;
   $("f-rot").textContent=conBot||enLinea?"Conceptos cerrados entre los dos":(sola||solo?"Conceptos del rosco":"Conceptos recuperados");
   $("f-sec").textContent=seccion;
-  $("f-tiempo").textContent=sinReloj?"sin reloj":enLinea?fmt(Math.round(usado[yo]/1000)):fmt(seg-Math.max(restante,0));
+  $("f-tiempo").textContent=fmtT(usado[enLinea?yo:0]+(enLinea||conBot||solo?0:usado[1]));
 
-  const enOrd=enLinea?ordenFinal():null;
-  $("duelo").style.display=conBot?"flex":"none";
-  $("d1").innerHTML=ava(0)+nombres[0];$("dp1").textContent=puntos[0];
-  $("d2").innerHTML=ava(1)+nombres[1];$("dp2").textContent=puntos[1];
+  $("duelo").style.display="none";
   const pd=$("podio");pd.style.display="none";pd.innerHTML="";
-  if(enLinea){
-    pd.style.display="flex";
-    pd.innerHTML=enOrd.map((j,i)=>{
-      const emp=puntaje(0)===puntaje(1),gano=i===0&&!emp;
-      return '<div class="col'+(gano?" gana":"")+'"><div class="med">'+ava(j)+'</div>'+medalla(i,emp)+
-        '<div class="nom">'+nombreBonito(nombres[j])+(j===yo?' <em>(vos)</em>':'')+'</div>'+
-        '<div class="pts">'+puntaje(j)+' pts</div><div class="sub">'+puntos[j]+' aciertos · '+(sinReloj?"sin reloj":"+"+bono(j)+" pts por el reloj")+'</div></div>';
-    }).join("");
-    lluviaLetras();
-  }
+  if(conBot||enLinea){pd.style.display="flex";pd.innerHTML=podio();luego(lluviaLetras,400);}
   $("aportes").innerHTML=enLinea
     ? nombreBonito(nombres[0])+" resolvió <b>"+puntos[0]+"</b> conceptos y "+nombreBonito(nombres[1])+" resolvió <b>"+puntos[1]+"</b>. Entre los dos cerraron <b>"+ok+"</b> de "+n+"."
     : conBot
@@ -1633,15 +1626,12 @@ function terminar(motivo){
   pendientesRepaso=revisar.concat(sin);
 
   let v;
-  if(enLinea){
-    const mis=puntaje(yo),suyo=puntaje(1-yo);
-    if(mis===suyo)v="¡Empate de "+mis+" puntos! La revancha define al campeón.";
-    else if(enOrd[0]===yo)v="¡Ganaste vos! "+mis+" a "+suyo+" puntos. Las que quedaron en rojo vuelven en el repaso.";
-    else v="Ganó "+nombreBonito(nombres[enOrd[0]])+" por "+suyo+" a "+mis+". Pedile revancha y practicá las que quedaron en rojo.";
-  }else if(conBot){
-    if(puntos[0]>puntos[1]){v="Le ganaste a "+nombres[1]+" por "+puntos[0]+" a "+puntos[1]+". Igual mirá abajo las que quedaron en rojo.";if(conBot)luego(confeti,650);}
-    else if(puntos[0]===puntos[1])v="Empate en "+puntos[0]+". Las que quedaron en rojo son el desempate para la próxima.";
-    else v=nombres[1]+" resolvió "+puntos[1]+" y vos "+puntos[0]+". Practicá las que costaron y volvé a desafiarlo.";
+  if(enLinea||conBot){
+    const yo_=enLinea?yo:0,ot=1-yo_,a=puntos[yo_],b=puntos[ot],riv=nombreBonito(nombres[ot]);
+    if(a===b)v="Empate en "+a+" aciertos con "+riv+" ("+fmtT(usado[yo_])+" contra "+fmtT(usado[ot])+" de respuesta). El desempate es la revancha: coordinen y jueguen un rosco nuevo.";
+    else if(a>b){luego(confeti,650);
+      v="¡Ganaste! Le ganaste a "+riv+" por "+a+" a "+b+" aciertos.";}
+    else v=riv+" ganó por "+b+" a "+a+" aciertos. Practicá las que costaron y pedí la revancha.";
   }else if(sola){
     if(ok===n){v="¡Ganaste! Cerraste el rosco entero vos sola: las "+n+" letras en verde.";luego(confeti,650);}
     else if(ok>=n*.75)v="Muy cerca: resolviste "+ok+" de "+n+". Repasá las que quedaron en rojo y volvé a intentar el rosco completo.";
@@ -2125,13 +2115,33 @@ function redAplicarEstado(p){
   if(p.fin){limpiarTimers();terminar("Partida terminada.");}
 }
 
-/* --- puntaje del podio: aciertos + bonus por el reloj que sobró --- */
-const bono=j=>sinReloj?0:Math.round(rel[j]*2);
+/* --- puntaje del podio (igual que el pasapalabra bio): aciertos x100 + bonus
+       de hasta 99 según la fracción de su reloj que NO usó; a igual aciertos: empate --- */
+const BONO_BASE=()=>(seg>0?seg:240)*1000;
+const bono=j=>Math.max(0,Math.min(99,Math.round(99*(1-usado[j]/BONO_BASE()))));
 const puntaje=j=>puntos[j]*100+bono(j);
-const ordenFinal=()=>[0,1].sort((a,b)=>puntaje(b)-puntaje(a)||usado[a]-usado[b]);
-const medalla=(i,emp)=>i===0&&!emp
-  ?'<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#FFD23F" stroke="#B8860B" stroke-width="1.5"/><text x="12" y="16.5" text-anchor="middle" font-size="12" font-weight="800" fill="#7A5800">1</text></svg>'
-  :'<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#D7DEE9" stroke="#96A3B8" stroke-width="1.5"/><text x="12" y="16.5" text-anchor="middle" font-size="12" font-weight="800" fill="#4C5A70">2</text></svg>';
+function ordenFinal(){   // primero aciertos; con igual cantidad, empate
+  if(puntos[0]!==puntos[1])return puntos[0]>puntos[1]?[0,1]:[1,0];
+  return null;
+}
+const fmtT=ms=>{const s=Math.max(0,ms)/1000,m=Math.floor(s/60);let r=(s-m*60).toFixed(1).replace(".",",");if(r.length<4)r="0"+r;return m+":"+r;};
+function medalla(oro){
+  const c=oro?["#FBE38A","#E0B021","#8A6508"]:["#F3F5F9","#BCC4D1","#6E7888"];
+  return '<svg class="medalla" viewBox="0 0 64 86" aria-hidden="true"><path d="M17 0h13l7 24-11 7z" fill="var(--parina)"/><path d="M47 0H34l-7 24 11 7z" fill="var(--marca)"/>'+
+    '<circle cx="32" cy="56" r="27" fill="'+c[1]+'" stroke="'+c[2]+'" stroke-width="3"/><circle cx="32" cy="56" r="19" fill="'+c[0]+'" stroke="'+c[2]+'" stroke-width="2"/>'+
+    '<path d="M32 43l3.8 7.7 8.5 1.2-6.2 6 1.5 8.4L32 62.3l-7.6 4 1.5-8.4-6.2-6 8.5-1.2z" fill="'+c[2]+'" opacity=".85"/></svg>';
+}
+function podio(){
+  const o=ordenFinal()||[0,1],emp=!ordenFinal();
+  const col=(j,pos)=>{const oro=pos===0||emp;
+    const nom=(enLinea||conBot)?nombreBonito(nombres[j]):nombres[j];
+    return '<div class="podio-col '+(oro?"p1":"p2")+'" style="--c:var(--j'+(j+1)+')">'+medalla(oro)+
+      '<img class="ava-pod" src="'+AVATARES[avatares[j]].img+'" alt=""><b>'+escH(nom)+(enLinea&&j===yo?" <em>(vos)</em>":"")+'</b>'+
+      '<div class="podio-pts">'+puntaje(j)+'<small>puntos</small></div>'+
+      '<span class="podio-det">'+puntos[j]+(puntos[j]===1?" acierto":" aciertos")+' · '+fmtT(usado[j])+' de respuesta</span>'+
+      '<div class="peldano">'+(oro?"1°":"2°")+'</div></div>';};
+  return col(o[0],0)+col(o[1],1);
+}
 function lluviaLetras(){   // letras del rosco que caen como papelitos cuando se arma el podio
   const cols=["#22E3D6","#FF4FA3","#4D9BFF","#0A9E96","#E01480","#2446C8"],capa=document.createElement("div");
   for(let i=0;i<70;i++){const s=document.createElement("b");s.className="confeti letra-cae";
