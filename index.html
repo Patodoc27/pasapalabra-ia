@@ -432,6 +432,82 @@ body.con-letras .letras-fondo{display:block}
 
 :focus-visible{outline:3px solid var(--uva);outline-offset:3px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ===== EN LÍNEA ===== */
+#chips-rival .chip[data-bot="3"]{--c:var(--parina)}
+#chips-rival .chip[data-bot="3"][aria-pressed="true"]{box-shadow:0 0 0 3px var(--suave),0 0 0 6px var(--parina),0 12px 26px -14px rgba(230,30,130,.8)}
+.i-nota{display:inline-block;margin-left:6px;font-size:10px;font-weight:800;color:var(--uva);background:var(--lima);padding:2px 8px;border-radius:999px;transform:translateY(-1px)}
+body.online .jugadores{display:flex;flex-direction:column}
+body.online #campo-sala{display:block!important}
+body.online #salas-abiertas{display:flex!important}
+#salas-abiertas{flex-direction:column;gap:8px}
+.salas-tit{color:var(--gris);font-size:13px}
+.sala-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border:2px solid var(--borde);border-radius:14px;background:var(--superficie);color:var(--tinta);cursor:pointer;text-align:left;font-size:14px;transition:border .15s,transform .15s}
+.sala-item:hover{border-color:var(--turquesa);transform:translateY(-1px)}
+.sala-item img{width:30px;height:30px;border-radius:50%}
+.sala-item span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sala-item span small{display:block;color:var(--gris);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sala-item b{font-family:var(--display);font-weight:800;color:var(--uva);letter-spacing:.12em}
+#p-sala .tarjeta{display:flex;flex-direction:column;gap:14px;text-align:center}
+#p-sala .cod-sala{display:inline-block;font-family:var(--display);font-size:38px;font-weight:800;color:var(--uva);letter-spacing:.22em;background:var(--superficie2);border:2px dashed var(--uva);border-radius:14px;padding:4px 18px}
+#p-sala .jug{display:flex;align-items:center;gap:12px;padding:10px 16px;border-radius:16px;background:var(--superficie2);border:2px solid var(--borde);text-align:left;min-height:66px}
+#p-sala .jug[style*="j1"]{border-color:var(--j1)}
+#p-sala .jug[style*="j2"]{border-color:var(--j2)}
+#p-sala .jug img{width:42px;height:42px;border-radius:50%;flex-shrink:0}
+#p-sala .jug b{display:block;font-size:16px}
+#p-sala .jug b em{font-style:normal;color:var(--gris);font-size:12px}
+#p-sala .jug small{display:block;color:var(--gris);font-size:12.5px}
+#p-sala .sala-vacio{display:flex;justify-content:center;margin-bottom:4px}
+#p-sala .lobby-espera{color:var(--gris);font-size:14.5px;margin:0;line-height:1.5}
+.banda-red{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:90;display:none;align-items:center;gap:10px;max-width:92vw;padding:9px 16px;border-radius:999px;background:var(--parina);color:#fff;font-weight:700;font-size:13.5px;box-shadow:var(--sombra)}
+.banda-red.on{display:flex}
+.banda-red .btn{padding:5px 12px;font-size:12px;background:#fff;color:var(--parina)}
+.duo-reloj{display:flex;gap:8px;justify-content:center}
+.duo-reloj>div{display:flex;flex-direction:column;align-items:center;gap:3px}
+.duo-reloj small{font-size:11px;color:var(--gris);max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.bur-stat.rj{background:linear-gradient(145deg,color-mix(in srgb,var(--c) 88%,#fff),color-mix(in srgb,var(--c) 84%,#000));box-shadow:none;opacity:.5;width:52px;font-size:14px}
+.bur-stat.rj.activo{opacity:1;transform:scale(1.08);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 28%,transparent),0 10px 24px -10px color-mix(in srgb,var(--c) 65%,transparent)}
+.bur-stat.rj.agotado{opacity:.32;filter:grayscale(.8)}
+.bur-stat.rj.urgente{background:linear-gradient(145deg,#FF4FA3,#D61178)}
+.bur-stat.rj.urgente.activo{animation:late 1s steps(2,end) infinite}
+body.online #tiempo{display:none}
+.barra-turno{display:none;position:absolute;top:0;left:0;right:0;height:26px;z-index:5;padding:3px 8px;background:color-mix(in srgb,var(--superficie) 82%,transparent);border-radius:12px 12px 0 0}
+.barra-turno.on{display:flex;align-items:center;gap:8px}
+.barra-turno i{flex:1;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--parina),var(--ambar),var(--turquesa));width:100%}
+.barra-turno span{font-size:10.5px;font-weight:700;color:var(--gris);white-space:nowrap}
+.barra-turno.urgente i{background:linear-gradient(90deg,var(--parina),#B3074F)}
+.podio{display:flex;align-items:flex-end;justify-content:center;gap:14px;margin:8px auto 4px}
+.podio .col{display:flex;flex-direction:column;align-items:center;gap:5px;width:min(40%,170px)}
+.podio .med{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:var(--suave);border:3px solid var(--borde)}
+.podio .med img{width:50px;height:50px;border-radius:50%}
+.podio .col.gana .med{border-color:var(--sol);background:radial-gradient(circle at 35% 30%,#FFF7D6,var(--sol));box-shadow:0 0 0 5px color-mix(in srgb,var(--sol) 30%,transparent)}
+.podio .col.gana{transform:translateY(-8px)}
+.podio .nom{font-weight:800;font-size:15px;text-align:center;line-height:1.2}
+.podio .pts{font-family:var(--display);font-weight:800;font-size:22px;color:var(--uva)}
+.podio .sub{font-size:12px;color:var(--gris);text-align:center}
+.chat{position:fixed;bottom:12px;right:12px;z-index:80;width:min(300px,88vw);display:none}
+#slot-sala .chat,#slot-final .chat{position:static;width:auto}
+#slot-sala .chat .c-carta,#slot-final .chat .c-carta{box-shadow:none;text-align:left}
+.chat.on{display:block}
+.chat .c-carta{background:var(--superficie);border:2px solid var(--borde);border-radius:16px;padding:10px;box-shadow:var(--sombra);display:flex;flex-direction:column;gap:8px}
+.chat b{font-size:14px}
+.chat .c-lista{max-height:150px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.chat .c-lista .msg{align-self:flex-start;background:var(--suave);padding:4px 10px;border-radius:12px;max-width:92%;line-height:1.35}
+.chat .c-lista .msg.mio{align-self:flex-end;background:var(--uva);color:#fff}
+.chat .c-lista .msg b{display:block;font-size:10.5px;opacity:.75}
+.chat .c-lista .chat-aviso{text-align:center;color:var(--gris);font-size:11.5px;font-style:italic;margin:2px 0}
+.chat .c-lista .chat-vacio{color:var(--gris);font-size:12.5px;margin:2px 0}
+.chat .rapid{display:flex;flex-wrap:wrap;gap:6px}
+.chip-chat{font-size:12px;padding:5px 10px;border-radius:999px;border:1.5px solid var(--borde);background:var(--superficie2);color:var(--tinta);cursor:pointer}
+.chip-chat:hover{border-color:var(--turquesa)}
+.chip-chat:disabled{opacity:.45;cursor:default}
+.chat .entrada-c{display:flex;gap:6px}
+.chat .entrada-c input{flex:1;min-width:0;padding:8px 10px;border:1.5px solid var(--borde);border-radius:10px;background:var(--superficie2);color:var(--tinta);font-size:13.5px}
+.chat .entrada-c .btn{padding:8px 12px}
+.letra-cae{background:none!important;font-family:var(--display);font-weight:800;line-height:1}
+/* ranking legible en el celular: nombre y datos no se enciman */
+.f-rank .nom{display:flex;flex-direction:column;gap:1px;min-width:0;overflow:hidden}
+.f-rank .nom .nn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.f-rank .nom small{margin-left:0;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 <script>try{document.documentElement.dataset.tema=localStorage.getItem("ppia-tema")||"aula"}catch(e){}</script>
 <script>
@@ -490,12 +566,18 @@ body.con-letras .letras-fondo{display:block}
       <div class="chips" id="chips-rival">
         <button class="chip" type="button" data-bot="2" aria-pressed="true">🧍 Sola</button>
         <button class="chip" type="button" data-bot="1" aria-pressed="false">🤖 Contra Boti</button>
+        <button class="chip" type="button" data-bot="3" aria-pressed="false">🌐 En línea <span class="i-nota">¡Nuevo!</span></button>
       </div>
     </div>
 
     <div class="jugadores">
-      <div class="campo" style="--c:var(--j1)"><label for="n1">Tu nombre</label><input type="text" id="n1" placeholder="Nombre y apellido" maxlength="28" autocomplete="off"><div class="avs" id="avs-0"></div></div>
-      <div class="campo" style="--c:var(--j2);display:none"><label for="n2" id="lab2">Rival</label><input type="text" id="n2" placeholder="Boti" maxlength="28" autocomplete="off" disabled><div class="avs" id="avs-1"></div></div>
+      <div class="campo" id="campo-n1" style="--c:var(--j1)"><label for="n1">Tu nombre</label><input type="text" id="n1" placeholder="Nombre y apellido" maxlength="28" autocomplete="off"><div class="avs" id="avs-0"></div></div>
+      <div class="campo" id="campo-n2" style="--c:var(--j2);display:none"><label for="n2" id="lab2">Rival</label><input type="text" id="n2" placeholder="Boti" maxlength="28" autocomplete="off" disabled><div class="avs" id="avs-1"></div></div>
+      <div class="campo" id="campo-sala" style="--c:var(--uva);display:none"><label for="cod-sala">Código de sala</label>
+        <input type="text" id="cod-sala" placeholder="ABCD" maxlength="4" autocomplete="off">
+        <small>Para unirte escribí el código de tu rival; para crear una sala dejalo vacío.</small>
+      </div>
+      <div id="salas-abiertas" style="display:none"></div>
       <div class="campo" style="--c:var(--uva);min-width:230px;display:none"><label>Sección</label>
         <div class="chips" id="chips-sec" style="margin-top:8px;flex-direction:column;align-items:stretch">
           <button class="chip" type="button" data-sec="1° A" aria-pressed="true" style="width:100%;padding:12px">1° A</button>
@@ -507,6 +589,7 @@ body.con-letras .letras-fondo{display:block}
     <div class="ranking" id="progreso-card" style="display:none;margin-top:20px">
       <h3>📈 Tu progreso</h3>
       <small>Se guarda en este teléfono, no se comparte.</small>
+      <span id="slot-inicio"></span>
       <div id="progreso-detalle" style="font-size:15px;line-height:1.6"></div>
       <p style="margin-top:10px;margin-bottom:0"><button class="btn pasar" id="btn-repaso" style="display:none;width:100%">↻ Repasar las que te costaron</button></p>
     </div>
@@ -579,6 +662,7 @@ body.con-letras .letras-fondo{display:block}
         <div class="rosco-caja">
           <div id="rosco" style="position:absolute;inset:0" role="list" aria-label="Rosco"></div>
         <div class="centro-juego">
+          <div class="barra-turno" id="barra-turno"><i id="barra-turno-i"></i><span id="barra-turno-s"></span></div>
           <p class="consigna" id="consigna">Empieza por A</p>
           <p class="definicion" id="definicion">…</p>
         </div>
@@ -589,7 +673,9 @@ body.con-letras .letras-fondo{display:block}
         </div>
       </div>
       <aside class="lateral">
-        <div class="stat"><span class="lbl">Reloj</span><span class="bur-stat" id="tiempo">10:00</span></div>
+        <div class="stat"><span class="lbl">Reloj</span><span class="bur-stat" id="tiempo">10:00</span>
+          <div class="duo-reloj" id="reloj-duo" style="display:none"><div><span class="bur-stat rj" id="tiempo0" style="--c:var(--j1)">--:--</span><small id="tnom0"></small></div>
+          <div><span class="bur-stat rj" id="tiempo1" style="--c:var(--j2)">--:--</span><small id="tnom1"></small></div></div></div>
         <div class="stat ok"><span class="lbl">Aciertos</span><span class="bur-stat" id="m-ok">0</span></div>
         <div class="stat er"><span class="lbl">Falladas</span><span class="bur-stat" id="m-er">0</span></div>
         <div class="stat re"><span class="lbl">Restantes</span><span class="bur-stat" id="m-re">16</span></div>
@@ -624,6 +710,7 @@ body.con-letras .letras-fondo{display:block}
       <div style="--c:var(--j1)"><b id="d1">—</b><span id="dp1">0</span> aciertos</div>
       <div style="--c:var(--j2)"><b id="d2">—</b><span id="dp2">0</span> aciertos</div>
     </div>
+    <div class="podio" id="podio" style="display:none"></div>
     <div class="ranking" id="ranking-final" style="display:none">
       <h3>🏆 Posiciones en el colegio</h3>
       <small>Tu marca ya quedó anotada en la planilla de la profe.</small>
@@ -641,6 +728,7 @@ body.con-letras .letras-fondo{display:block}
       </div>
     </div>
     <div id="grupos"></div>
+    <span id="slot-final"></span>
     <div class="pie">
       <button class="btn uva grande" id="btn-resultados">🏆 Resultados y ranking</button>
       <button class="btn uva" id="btn-practicar">Practicar las que costaron</button>
@@ -650,6 +738,23 @@ body.con-letras .letras-fondo{display:block}
     </div>
     <p style="color:var(--gris);font-size:13.5px;margin-top:14px">Tiempo usado <b id="f-tiempo">—</b><span style="display:none">Sección <b id="f-sec">—</b></span></p>
     <p class="credito"><strong>Actividad producida por Patricia Inés Castro</strong> en colaboración con Devin (Cognition AI) y Claude (Anthropic).</p>
+  </div>
+</section>
+
+<!-- ===== SALA EN LÍNEA ===== -->
+<section class="pantalla" id="p-sala">
+  <div class="tarjeta">
+    <p class="eyebrow">Juego en línea</p>
+    <h2>Sala <b class="cod-sala" id="sala-cod">····</b></h2>
+    <div class="jug" id="sala-j0" style="--c:var(--j1)"></div>
+    <div class="jug" id="sala-j1" style="--c:var(--j2)"></div>
+    <p class="lobby-espera" id="sala-modo"></p>
+    <p class="lobby-espera" id="sala-txt"></p>
+    <span id="slot-sala"></span>
+    <div class="pie">
+      <button class="btn grande" id="btn-sala-empezar">Sortear rosco y empezar</button>
+      <button class="btn hueca" id="btn-sala-salir">Salir de la sala</button>
+    </div>
   </div>
 </section>
 
@@ -665,6 +770,22 @@ body.con-letras .letras-fondo{display:block}
     </div>
   </div>
 </section>
+</div>
+
+<div class="banda-red" id="banda-red"><span id="banda-txt"></span><button class="btn chica" id="banda-btn" type="button" style="display:none">Terminar la partida</button></div>
+<div class="chat" id="chat">
+  <div class="c-carta">
+    <b id="chat-tit">Chat</b>
+    <div class="c-lista" id="chat-lista"></div>
+    <div class="rapid" id="chat-rapidas">
+      <button class="chip-chat" type="button">¡Hola!</button>
+      <button class="chip-chat" type="button">¡Suerte!</button>
+      <button class="chip-chat" type="button">Bien jugado</button>
+      <button class="chip-chat" type="button">¿Otra?</button>
+      <button class="chip-chat" type="button">Tengo que irme</button>
+    </div>
+    <div class="entrada-c"><input type="text" id="chat-in" maxlength="80" placeholder="Escribí algo corto…" autocomplete="off"><button class="btn chica" id="chat-enviar" type="button">Enviar</button></div>
+  </div>
 </div>
 
 <script>
@@ -897,7 +1018,7 @@ function leerConsigna(){
      habilita igual y arranca el reloj */
   luego(()=>{
     if(!jugando||esBot()||items[idx]!==it||!$("entrada").disabled)return;
-    callar();habilitar(true);arrancarReloj();
+    callar();habilitar(true);arrancarReloj();arrancarLetra();
     $("feedback").className="feedback";
     $("feedback").innerHTML="<span class='tit'>🎧 Sin voz</span>No se escuchó la consigna, pero está escrita arriba: podés responder igual.";
     luego(()=>$("entrada").focus(),60);
@@ -907,7 +1028,8 @@ function leerConsigna(){
       if(!lectura||!soportaVoz||!jugando||items[idx]!==it)return;
       decir(txt,()=>{
         if(jugando&&items[idx]===it&&!esBot()){
-          habilitar(true);arrancarReloj();
+          if(enLinea&&!miTurno()){verRival();return;}
+          habilitar(true);arrancarReloj();arrancarLetra();
           $("feedback").className="feedback";$("feedback").textContent="";
           luego(()=>$("entrada").focus(),60);
         }});
@@ -917,7 +1039,7 @@ function leerConsigna(){
 
 const mostrar=id=>{document.querySelectorAll(".pantalla").forEach(p=>p.classList.remove("activa"));$(id).classList.add("activa");
   if(id!=="p-juego"&&soportaVoz)callar();
-  document.body.classList.toggle("con-letras",id==="p-inicio");};
+  document.body.classList.toggle("con-letras",id==="p-inicio");chatUbicar(id);};
 const colorTurno=()=>document.documentElement.style.setProperty("--jug",turno===0?"var(--j1)":"var(--j2)");
 
 /* ===== AMBIENTE: aula (claro) / show (oscuro) ===== */
@@ -955,13 +1077,13 @@ async function rankingTraer(top){
 const normNom=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim();
 function rankingFila(r,i,sinSec){
   const medal=i<3?["🥇","🥈","🥉"][i]:(i+1);
-  const mio=r.seccion===seccion&&(normNom(r.nombre)===normNom(nombres[0])||normNom(r.nombre)===normNom(nombres[1]));
+  const mio=r.seccion===seccion&&((enLinea||solo)?normNom(r.nombre)===normNom(nombres[yo]):(normNom(r.nombre)===normNom(nombres[0])||normNom(r.nombre)===normNom(nombres[1])));
   return '<div class="f-rank'+(mio?" mio":"")+'"><span class="pos">'+medal+'</span>'+avaR(r.avatar)+
-    '<span class="nom">'+r.nombre+'<small>'+(sinSec?"":r.seccion+" · ")+(r.partidas>1?r.partidas+" partidas":"1 partida")+'</small></span>'+
+    '<span class="nom"><span class="nn">'+r.nombre+'</span><small>'+(sinSec?"":r.seccion+" · ")+(r.partidas>1?r.partidas+" partidas":"1 partida")+'</small></span>'+
     '<span class="pts">'+r.aciertos+' aciertos</span></div>';
 }
 function rankingPintar(lista){
-  [["ranking-inicio","ranking-inicio-lista",3],["ranking-final","ranking-final-lista",200]].forEach(x=>{
+  [["ranking-inicio","ranking-inicio-lista",6],["ranking-final","ranking-final-lista",200]].forEach(x=>{
     const c=$(x[0]);if(!c)return;
     if(!rankingOn()||!lista){c.style.display="none";return;}
     c.style.display="";
@@ -975,14 +1097,14 @@ async function rankingActualizar(){
 }
 function rankingEnviar(){
   if(!rankingOn()||sinReloj)return Promise.resolve();   // modo práctica: no se asienta en el ranking
-  const js=(conBot?[0]:[0,1]).filter(j=>nombres[j]&&nombres[j]!==BOT.nombre);
+  const js=(enLinea?[yo]:conBot?[0]:[0,1]).filter(j=>nombres[j]&&nombres[j]!==BOT.nombre);
   return Promise.allSettled(js.map(j=>fetch(RANKING_URL,{method:"POST",
     headers:{"Content-Type":"text/plain"},
-    body:JSON.stringify({nombre:nombres[j],seccion:seccion,avatar:avatares[j],modo:conBot?"vs Boti":"sola",
+    body:JSON.stringify({nombre:nombres[j],seccion:seccion,avatar:avatares[j],modo:enLinea?"en línea":conBot?"vs Boti":"sola",
       aciertos:puntos[j],errores:estado.filter((s,k)=>s==="error"&&respondio[k]===j).length,
       pasadas:estado.filter((s,k)=>s==="pasada"&&respondio[k]===j).length,total:items.length,
       porcentaje:items.length?Math.round(puntos[j]/items.length*100):0,
-      tiempo_seg:sinReloj?"":seg-Math.max(restante,0),inicio:letraIni})})));
+      tiempo_seg:sinReloj?"":(enLinea?Math.round(usado[j]/100)/10:seg-Math.max(restante,0)),inicio:letraIni})})));
 }
 async function mostrarRankingSecs(){
   mostrar("p-ranking");const cont=$("ranking-secs");
@@ -1010,13 +1132,14 @@ function progresoGuardar(){
   try{
     const g=progresoLeer();
     g.partidas=(g.partidas||0)+1;
-    g.aciertos=(g.aciertos||0)+puntos[0];
-    g.mejor=Math.max(g.mejor||0,puntos[0]);
+    const mj=solo?0:(enLinea?yo:0);   // en línea o repaso: el progreso es del que juega acá
+    g.aciertos=(g.aciertos||0)+puntos[mj];
+    g.mejor=Math.max(g.mejor||0,puntos[mj]);
     if(!quedan())g.completos=(g.completos||0)+1;   // rosco cerrado: no quedó letra pendiente
     const map={};(g.repasar||[]).forEach(it=>map[it.p]=it);
     items.forEach((it,i)=>{
       if(estado[i]==="acierto")delete map[it.p];                       // ya la recuperó: sale del repaso
-      else if(!(estado[i]==="error"&&respondio[i]===1))map[it.p]=it;   // error propio o sin responder: queda
+      else if(!(estado[i]==="error"&&respondio[i]===(enLinea?1-yo:(solo||sola?1:1))))map[it.p]=it;   // error del otro no va a tu repaso
     });
     g.repasar=Object.values(map).slice(-60);
     localStorage.setItem("ppia-progreso",JSON.stringify(g));
@@ -1045,15 +1168,19 @@ progresoPintar();
 const fmt=s=>String(Math.floor(Math.max(s,0)/60)).padStart(2,"0")+":"+String(Math.max(s,0)%60).padStart(2,"0");
 
 /* ===== INICIO ===== */
-/* tiempos según modalidad: sola necesita más porque cada consigna se lee en voz alta */
+/* tiempos según modalidad: sola necesita más porque cada consigna se lee en voz alta;
+   en línea cada jugador tiene su propio reloj */
 function pintarTiempo(){
-  const ops=sola?[[600,"10 min"],[720,"12 min"],[900,"15 min"]]:[[300,"5 min"],[480,"8 min"]];
+  const ops=modoOnline?[[480,"8 min c/u"],[360,"6 min c/u"],[240,"4 min c/u"],[0,"Sin reloj"]]
+    :sola?[[600,"10 min"],[720,"12 min"],[900,"15 min"]]:[[300,"5 min"],[480,"8 min"]];
   $("chips-tiempo").innerHTML=ops.map((o,i)=>'<button class="chip" type="button" data-seg="'+o[0]+'" aria-pressed="'+(i===0)+'">'+o[1]+'</button>').join("");
   sinReloj=false;seg=ops[0][0];
 }
 $("chips-rival").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
   [...$("chips-rival").children].forEach(c=>c.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");
-  sola=b.dataset.bot==="2";conBot=b.dataset.bot==="1";
+  modoEnLinea(b.dataset.bot==="3");
+  if(modoOnline){sola=false;conBot=false;}
+  else{sola=b.dataset.bot==="2";conBot=b.dataset.bot==="1";}
   pintarTiempo();
   $("lab2").textContent=conBot?"Rival":"Jugador 2";
   $("n2").value=conBot?BOT.nombre:"";$("n2").disabled=conBot;
@@ -1079,7 +1206,8 @@ pintarAvs();
 
 $("chips-tiempo").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
   [...$("chips-tiempo").children].forEach(c=>c.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");
-  sinReloj=(+b.dataset.seg===0);seg=sinReloj?0:+b.dataset.seg;});
+  sinReloj=(+b.dataset.seg===0);seg=sinReloj?0:+b.dataset.seg;
+  if(red.lobby&&red.rol==="host"&&!red.rival&&red.lobby.meta)red.lobby.track(Object.assign({},red.lobby.meta,{sg:seg}));});
 $("chips-sonido").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
   [...$("chips-sonido").children].forEach(c=>c.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");
   sonido=b.dataset.son==="1";pintarSonido();});
@@ -1087,6 +1215,8 @@ $("chips-meta").addEventListener("click",e=>{const b=e.target.closest(".chip");i
   [...$("chips-meta").children].forEach(c=>c.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");});
 ["n1","n2"].forEach(id=>$(id).addEventListener("keydown",e=>{if(e.key==="Enter")$("btn-jugar").click();}));
 $("btn-jugar").addEventListener("click",()=>{
+  if(modoOnline){redEntrar();return;}
+  enLinea=false;solo=false;
   avatares[1]=AVATAR_BOTI;
   const a=$("n1").value.trim(),b=BOT.nombre;
   if(!a||!b){$("aviso").textContent="Escribí tu nombre para empezar.";return;}
@@ -1123,7 +1253,7 @@ function practicar(){
 function iniciarRonda(desde,segundos,empieza){
   limpiarTimers();
   estado=items.map(()=>"pendiente");respondio=items.map(()=>-1);idx=desde;turno=empieza;puntos=[0,0];rachaBot=0;rachas=[0,0];intentos=0;
-  sinReloj=(segundos===0);restante=segundos;jugando=false;bloqueado=false;arranque=true;
+  sinReloj=(segundos===0);restante=segundos;rel=[segundos,segundos];usado=[0,0];tIni=0;jugando=false;bloqueado=false;arranque=true;partidaViva=true;
   letraIni=items[desde]?items[desde].letra:"";
   $("f-tot").textContent=items.length;
   $("modo-tag").style.display=recuperacion?"":"none";
@@ -1157,7 +1287,7 @@ function pintar(){
   $("riel-ok").style.width=(100*ok/n)+"%";$("riel-er").style.width=(100*er/n)+"%";$("riel-ps").style.width=(100*ps/n)+"%";
   $("prog-txt").textContent=(ok+er)+" cerradas"+(ps?" · "+ps+" en ↻":"")+" · "+(n-ok-er-ps)+" por jugar";
   $("m-ok").textContent=ok;$("m-er").textContent=er;$("m-re").textContent=n-ok-er;
-  $("quien").innerHTML=ava(turno)+nombres[turno]+(rachas[turno]>=3?"<span class='fuego'>🔥 "+rachas[turno]+"</span>":"");
+  $("quien").innerHTML=ava(turno)+(enLinea?nombreBonito(nombres[turno]):nombres[turno])+(rachas[turno]>=3?"<span class='fuego'>🔥 "+rachas[turno]+"</span>":"");
 }
 
 /* ===== TURNO ===== */
@@ -1165,13 +1295,15 @@ function overlayTurno(resu){
   jugando=false;pararReloj();colorTurno();sTurno();
   $("definicion").innerHTML="";$("consigna").textContent="";
   $("ov-resu").innerHTML=resu;
-  $("ov-quien").innerHTML=avaO(turno)+nombres[turno];
-  $("ov-sub").textContent=esBot()?"Le toca a Boti":(arranque?"Preparate para empezar":"Te toca");
+  $("ov-quien").innerHTML=avaO(turno)+(enLinea?nombreBonito(nombres[turno]):nombres[turno]);
+  $("ov-sub").textContent=enLinea?(miTurno()?(arranque?"Preparate para empezar":"Te toca"):"Le toca a "+nombreBonito(nombres[turno])):esBot()?"Le toca a Boti":(arranque?"Preparate para empezar":"Te toca");
   $("btn-listo").className="btn"+(turno===1?" dos":"");
-  $("btn-listo").style.display=(esBot()&&!arranque)?"none":"";
+  const auto=autoTurno()||(esBot()&&!arranque);
+  $("btn-listo").style.display=auto?"none":"";
   $("tablero").classList.add("oculto");$("overlay").classList.add("activo");
   pintar();
-  if(esBot()&&!arranque) luego(()=>{$("overlay").classList.remove("activo");entrarAlJuego();},1300);
+  if(auto) luego(()=>{$("overlay").classList.remove("activo");
+    if(arranque){arranque=false;cuentaRegresiva();}else entrarAlJuego();},autoTurno()?1100:1300);
   else $("btn-listo").focus();
 }
 $("btn-listo").addEventListener("click",()=>{
@@ -1179,7 +1311,7 @@ $("btn-listo").addEventListener("click",()=>{
   if(arranque){arranque=false;cuentaRegresiva();}else entrarAlJuego();
 });
 function cuentaRegresiva(){
-  mostrar("p-cuenta");$("empieza-quien").textContent="Empieza "+nombres[turno];
+  mostrar("p-cuenta");$("empieza-quien").textContent="Empieza "+(enLinea?nombreBonito(nombres[turno]):nombres[turno]);
   const pasos=["3","2","1","¡YA!"];let i=0;
   const paso=()=>{const n=$("numero");n.textContent=pasos[i];n.className="numero pop"+(i===3?" ya":"");n.offsetWidth;sCuenta(3-i);
     i++;i<pasos.length?luego(paso,850):luego(()=>{mostrar("p-juego");entrarAlJuego();},800);};
@@ -1189,9 +1321,11 @@ function entrarAlJuego(){
   jugando=true;bloqueado=false;intentos=0;colorTurno();$("tablero").classList.remove("oculto");
   mostrarLetra();
   if(esBot()){habilitar(false);jugadaBot();}
+  else if(enLinea&&!miTurno()){habilitar(false);verRival();}   // espectador: mira y escucha al rival
   else{   // con lectura: la respuesta y el reloj arrancan recién cuando termina de leer
+    $("entrada").placeholder="Tu respuesta";
     if(lectura&&soportaVoz){habilitar(false);pararReloj();}
-    else{habilitar(true);arrancarReloj();}
+    else{habilitar(true);arrancarReloj();arrancarLetra();}
     luego(()=>$("entrada").focus(),120);}
 }
 function habilitar(v){
@@ -1262,20 +1396,21 @@ function resolverBot(res){
 
 /* ===== JUGADA HUMANA ===== */
 function cerrarJugada(resu){
-  bloqueado=true;habilitar(false);pararReloj();
+  bloqueado=true;habilitar(false);pararReloj();pararLetra();cortarTiempo();
   luego(()=>{
     bloqueado=false;
-    if(!quedan())return terminar(recuperacion?"Repaso terminado.":(sola?(estado.every(s=>s==="acierto")?"¡Cerraste el rosco entero!":"Cerraste todas las letras."):"Cerraron el rosco entero."));
+    if(!quedan())return terminar(recuperacion?"Repaso terminado.":(sola||solo?(estado.every(s=>s==="acierto")?"¡Cerraste el rosco entero!":"Cerraste todas las letras."):"Cerraron el rosco entero."));
+    if(enLinea&&!tieneTiempo(0)&&!tieneTiempo(1))return terminar("Se terminó el reloj de los dos.");
     siguienteLetra();
-    if(sola){   // contra vos misma: seguís vos, sin tarjeta de turno
+    if(sola||solo){   // contra vos misma o repaso: seguís vos, sin tarjeta de turno
       intentos=0;mostrarLetra();
       if(lectura&&soportaVoz){habilitar(false);pararReloj();}
-      else{habilitar(true);arrancarReloj();luego(()=>$("entrada").focus(),120);}
-    }else{turno=1-turno;overlayTurno(resu);}
-  },esBot()?1700:1300);
+      else{habilitar(true);arrancarReloj();arrancarLetra();luego(()=>$("entrada").focus(),120);}
+    }else{if(tieneTiempo(1-turno))turno=1-turno;overlayTurno(resu);}
+  },(esBot()||!miTurno())?1700:1300);
 }
 function responder(){
-  if(!jugando||bloqueado||esBot())return;
+  if(!jugando||bloqueado||esBot()||!miTurno())return;
   const txt=$("entrada").value.trim();
   if(!txt){$("feedback").className="feedback pas";$("feedback").innerHTML="<span class='tit'>Escribí una palabra</span>o tocá Pasapalabra para que vuelva más adelante.";return;}
   const it=items[idx],ok=acepta(it,txt);
@@ -1285,7 +1420,7 @@ function responder(){
     $("entrada").focus();$("entrada").select();return;}
   if(ok){estado[idx]="acierto";respondio[idx]=turno;puntos[turno]++;rachas[turno]++;sOk();carita("salta");burbuja("ok");
     $("feedback").className="feedback ok";$("feedback").innerHTML="<span class='tit'>✓ "+it.p+"</span>"+(rachas[turno]>=3?"<span class='racha'>¡Racha de "+rachas[turno]+"! 🔥</span>":"");
-    pintar();cerrarJugada("<span style='color:var(--lima)'>✓ "+it.p+"</span>");return;}
+    pintar();redJugada("ok",txt);cerrarJugada("<span style='color:var(--lima)'>✓ "+it.p+"</span>");return;}
   intentos++;
   if(modoPractica()&&intentos===1){   // segunda oportunidad con pista, solo en práctica
     sMal();$("feedback").className="feedback mal";carita("sacude");burbuja("mal");
@@ -1294,38 +1429,65 @@ function responder(){
   estado[idx]="error";respondio[idx]=turno;rachas[turno]=0;sMal();carita("sacude");burbuja("mal");
   $("feedback").className="feedback mal";
   $("feedback").innerHTML="<span class='tit'>✕ Era "+it.p+"</span><span class='clave'>Pista clave: "+it.k+"</span>";
-  pintar();cerrarJugada("<span style='color:var(--parina)'>✕ Era "+it.p+"</span>");
+  pintar();redJugada("mal",txt);cerrarJugada("<span style='color:var(--parina)'>✕ Era "+it.p+"</span>");
 }
 function pasar(){
-  if(!jugando||bloqueado||esBot())return;
+  if(!jugando||bloqueado||esBot()||!miTurno())return;
   if(estado.filter(s=>s!=="acierto"&&s!=="error").length<=1)return;   // última letra: hay que responderla
   if(estado[idx]==="pendiente"){estado[idx]="pasada";respondio[idx]=turno;}
   rachas[turno]=0;sPas();$("feedback").className="feedback pas";carita("inclina");burbuja("pas");
   $("feedback").innerHTML="<span class='tit'>↻ Pasapalabra</span>La "+items[idx].letra+" vuelve más adelante.";
-  pintar();cerrarJugada("<span style='color:var(--ambar)'>↻ Pasapalabra en la "+items[idx].letra+"</span>");
+  pintar();redJugada("pasa");cerrarJugada("<span style='color:var(--ambar)'>↻ Pasapalabra en la "+items[idx].letra+"</span>");
 }
 $("btn-responder").addEventListener("click",responder);
 $("btn-pasar").addEventListener("click",pasar);
 $("entrada").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();responder();}});
-document.addEventListener("keydown",e=>{if(jugando&&!bloqueado&&!esBot()&&e.key==="Escape"){e.preventDefault();pasar();}});
+document.addEventListener("keydown",e=>{if(jugando&&!bloqueado&&!esBot()&&miTurno()&&e.key==="Escape"){e.preventDefault();pasar();}});
 
 /* menú */
 $("btn-menu").addEventListener("click",e=>{e.stopPropagation();const v=$("menu-pop").classList.toggle("abierto");$("btn-menu").setAttribute("aria-expanded",v);});
 document.addEventListener("click",()=>$("menu-pop").classList.remove("abierto"));
 $("btn-cortar").addEventListener("click",()=>{
   $("menu-pop").classList.remove("abierto");
-  if(confirm("¿Seguro que querés terminar?\nEl rosco queda cerrado con lo que respondieron hasta ahora."))terminar("Cerraron la partida antes de completar el rosco.");
+  if(confirm("¿Seguro que querés terminar?\nEl rosco queda cerrado con lo que respondieron hasta ahora.")){
+    if(enLinea){const m=nombreBonito(nombres[yo])+" terminó la partida antes de completar el rosco.";cortarTiempo();redEnviar("fin",{m:m,rel:rel,us:usado});terminar(m);}
+    else terminar("Cerraron la partida antes de completar el rosco.");}
 });
 
-/* ===== RELOJ ===== */
+/* ===== RELOJ =====
+   Offline es un reloj compartido (restante); en línea cada uno gasta solo el suyo (rel[]). */
+const tieneTiempo=j=>sinReloj||recuperacion||(conBot&&j===1)||(enLinea?rel[j]>0:true);
+const cortarTiempo=()=>{if(tIni)usado[turno]+=Date.now()-tIni;tIni=0;};
 function relojUI(){
+  const duo=$("reloj-duo");
+  if(enLinea){
+    duo.style.display="";$("tiempo").style.display="none";
+    [0,1].forEach(j=>{const e=$("tiempo"+j);if(!e)return;
+      e.textContent=sinReloj?"∞":fmt(rel[j]);
+      e.classList.toggle("urgente",!sinReloj&&rel[j]<=30&&rel[j]>0);
+      e.classList.toggle("agotado",!sinReloj&&rel[j]<=0);
+      e.classList.toggle("activo",j===turno&&jugando);
+      $("tnom"+j).textContent=j===yo?"Vos":nombreBonito(nombres[j]||"").split(" ")[0];});
+    return;}
+  duo.style.display="none";$("tiempo").style.display="";
   if(sinReloj){$("tiempo").textContent="∞";$("tiempo").classList.remove("urgente");return;}
   $("tiempo").textContent=fmt(restante);
   $("tiempo").classList.toggle("urgente",restante<=30);
 }
 function arrancarReloj(){
+  if(enLinea){
+    if(sinReloj||recuperacion||!miTurno()){relojUI();return;}   // el espectador no gasta reloj
+    clearInterval(cron);const j=turno;tIni=Date.now();relojUI();
+    cron=setInterval(()=>{
+      if(!jugando||bloqueado)return;
+      rel[j]--;relojUI();redEnviar("reloj",{r:rel[j],j:j});
+      if(rel[j]===60||rel[j]===30)tono(880,.35,"sine",.14);
+      if(rel[j]<=30&&rel[j]>0)tic(rel[j]<=10);
+      if(rel[j]<=0){clearInterval(cron);sinReloj_(j);}
+    },1000);
+    return;}
   if(sinReloj||esBot()){relojUI();return;}   // el reloj no corre en el turno de la compu
-  clearInterval(cron);
+  clearInterval(cron);tIni=Date.now();
   cron=setInterval(()=>{
     if(!jugando){return;}
     restante--;relojUI();
@@ -1335,39 +1497,109 @@ function arrancarReloj(){
   },1000);
 }
 const pararReloj=()=>{clearInterval(cron);cron=null;};
+function sinReloj_(j){   // se le terminó su reloj a quien tiene el turno
+  if(!jugando||bloqueado||turno!==j)return;
+  rel[j]=0;rachas[j]=0;
+  if(estado[idx]==="pendiente"){estado[idx]="pasada";respondio[idx]=j;}
+  sMal();carita("sacude");burbuja("pas");
+  $("feedback").className="feedback mal";
+  $("feedback").innerHTML="<span class='tit'>⏱ Se terminó tu reloj</span>"+(tieneTiempo(1-j)&&quedan()?nombreBonito(nombres[1-j])+" sigue con las letras que quedan.":"");
+  redJugada("sin","",1);pintar();cerrarJugada("<span style='color:var(--parina)'>⏱ Sin reloj: "+nombreBonito(nombres[j])+"</span>");
+}
+/* ===== TIEMPO DE CADA LETRA (solo en línea) ===== */
+let letraT=null,letraInt=null,letraFin=0;
+function segundosLetra(it){
+  const pal=String(it.d||"").replace(/<[^>]+>/g," ").split(/\s+/).filter(Boolean).length;
+  let t=8+it.p.length/1.3+((lectura&&soportaVoz)?0:pal/2.5);
+  const mul=seg>0?(seg>=360?1.25:seg>120?1:.8):1, cap=seg>=360?55:seg>120?45:35;
+  return Math.max(15,Math.min(cap,Math.ceil(t*mul/5)*5));
+}
+function correrBarra(t){
+  const b=$("barra-turno"),i=$("barra-turno-i");clearInterval(letraInt);
+  if(!t){b.classList.remove("on","urgente");return;}
+  letraFin=Date.now()+t*1000;b.classList.remove("urgente");b.classList.add("on");
+  i.style.transition="none";i.style.width="100%";i.offsetWidth;
+  i.style.transition="width "+t+"s linear";i.style.width="0%";
+  const pinta=()=>{const q=Math.max(0,Math.ceil((letraFin-Date.now())/1000));$("barra-turno-s").textContent="Tiempo de la letra: "+q+" s";
+    b.classList.toggle("urgente",q<=5);if(q<=0)clearInterval(letraInt);};
+  pinta();letraInt=setInterval(pinta,250);
+}
+function pararLetra(){clearTimeout(letraT);clearInterval(letraInt);letraT=null;const b=$("barra-turno");if(b)b.classList.remove("on","urgente");}
+function arrancarLetra(){
+  if(!enLinea||!miTurno()||sinReloj||recuperacion||!jugando)return;
+  const t=segundosLetra(items[idx]);correrBarra(t);
+  redEnviar("tl",{s:t,i:idx});
+  clearTimeout(letraT);letraT=setTimeout(porTiempo,t*1000);
+}
+function porTiempo(){
+  if(!jugando||bloqueado||esBot()||!miTurno())return;
+  const it=items[idx],ultima=estado.filter(s=>s!=="acierto"&&s!=="error").length<=1;
+  rachas[turno]=0;
+  if(estado[idx]==="pasada"||ultima){
+    estado[idx]="error";respondio[idx]=turno;sMal();carita("sacude");burbuja("mal");
+    $("feedback").className="feedback mal";
+    $("feedback").innerHTML="<span class='tit'>⏱ Se terminó el tiempo</span>Era "+it.p+". <span class='clave'>Pista clave: "+it.k+"</span>";
+    redJugada("mal","",1);pintar();cerrarJugada("<span style='color:var(--parina)'>⏱ Era "+it.p+"</span>");
+  }else{
+    estado[idx]="pasada";respondio[idx]=turno;sPas();carita("inclina");burbuja("pas");
+    $("feedback").className="feedback pas";
+    $("feedback").innerHTML="<span class='tit'>⏱ Se terminó el tiempo</span>La "+it.letra+" vuelve más adelante.";
+    redJugada("pasa","",1);pintar();cerrarJugada("<span style='color:var(--ambar)'>⏱ Tiempo en la "+it.letra+"</span>");
+  }
+}
 
 /* ===== FINAL ===== */
 function terminar(motivo){
-  jugando=false;pararReloj();limpiarTimers();habilitar(false);sFin();
+  if(enLinea&&!partidaViva)return;   // una sola vez, aunque llegue "fin" del rival
+  partidaViva=false;pararLetra();banda("");
+  jugando=false;cortarTiempo();pararReloj();limpiarTimers();habilitar(false);sFin();
   const n=items.length,ok=estado.filter(s=>s==="acierto").length;
-  const usado=sinReloj?0:seg-Math.max(restante,0);
   $("f-ok").textContent=ok;$("f-tot").textContent=n;$("motivo").textContent=motivo;
-  $("f-rot").textContent=conBot?"Conceptos cerrados entre los dos":(sola?"Conceptos del rosco":"Conceptos recuperados");
+  $("f-rot").textContent=conBot||enLinea?"Conceptos cerrados entre los dos":(sola||solo?"Conceptos del rosco":"Conceptos recuperados");
   $("f-sec").textContent=seccion;
-  $("f-tiempo").textContent=sinReloj?"sin reloj":fmt(usado);
+  $("f-tiempo").textContent=sinReloj?"sin reloj":enLinea?fmt(Math.round(usado[yo]/1000)):fmt(seg-Math.max(restante,0));
 
+  const enOrd=enLinea?ordenFinal():null;
   $("duelo").style.display=conBot?"flex":"none";
   $("d1").innerHTML=ava(0)+nombres[0];$("dp1").textContent=puntos[0];
   $("d2").innerHTML=ava(1)+nombres[1];$("dp2").textContent=puntos[1];
-  $("aportes").innerHTML=conBot
+  const pd=$("podio");pd.style.display="none";pd.innerHTML="";
+  if(enLinea){
+    pd.style.display="flex";
+    pd.innerHTML=enOrd.map((j,i)=>{
+      const emp=puntaje(0)===puntaje(1),gano=i===0&&!emp;
+      return '<div class="col'+(gano?" gana":"")+'"><div class="med">'+ava(j)+'</div>'+medalla(i,emp)+
+        '<div class="nom">'+nombreBonito(nombres[j])+(j===yo?' <em>(vos)</em>':'')+'</div>'+
+        '<div class="pts">'+puntaje(j)+' pts</div><div class="sub">'+puntos[j]+' aciertos · '+(sinReloj?"sin reloj":"+"+bono(j)+" pts por el reloj")+'</div></div>';
+    }).join("");
+    lluviaLetras();
+  }
+  $("aportes").innerHTML=enLinea
+    ? nombreBonito(nombres[0])+" resolvió <b>"+puntos[0]+"</b> conceptos y "+nombreBonito(nombres[1])+" resolvió <b>"+puntos[1]+"</b>. Entre los dos cerraron <b>"+ok+"</b> de "+n+"."
+    : conBot
     ? "Resolviste <b>"+puntos[0]+"</b> conceptos y "+nombres[1]+" resolvió <b>"+puntos[1]+"</b>. Entre los dos cerraron <b>"+ok+"</b> de "+n+"."
     : sola
     ? "Resolviste <b>"+puntos[0]+"</b> de <b>"+n+"</b> conceptos vos sola."
     : nombres[0]+" aportó <b>"+puntos[0]+"</b> respuestas · "+nombres[1]+" aportó <b>"+puntos[1]+"</b> respuestas · juntos resolvieron <b>"+ok+"</b> conceptos.";
   $("aportes").classList.remove("visible");
-  $("btn-aportes").style.display=(conBot||sola)?"none":"";
+  $("btn-aportes").style.display=(conBot||sola||enLinea||solo)?"none":"";
   $("btn-aportes").textContent="Ver conceptos resueltos por cada integrante";
 
   const firmes=[],revisar=[],sin=[];
   items.forEach((it,i)=>{
     if(estado[i]==="acierto")firmes.push(it);
-    else if(estado[i]==="error"){if(!(conBot&&respondio[i]===1))revisar.push(it);}
+    else if(estado[i]==="error"){if(!(conBot&&respondio[i]===1)&&!(enLinea&&respondio[i]===1-yo))revisar.push(it);}
     else sin.push(it);
   });
   pendientesRepaso=revisar.concat(sin);
 
   let v;
-  if(conBot){
+  if(enLinea){
+    const mis=puntaje(yo),suyo=puntaje(1-yo);
+    if(mis===suyo)v="¡Empate de "+mis+" puntos! La revancha define al campeón.";
+    else if(enOrd[0]===yo)v="¡Ganaste vos! "+mis+" a "+suyo+" puntos. Las que quedaron en rojo vuelven en el repaso.";
+    else v="Ganó "+nombreBonito(nombres[enOrd[0]])+" por "+suyo+" a "+mis+". Pedile revancha y practicá las que quedaron en rojo.";
+  }else if(conBot){
     if(puntos[0]>puntos[1]){v="Le ganaste a "+nombres[1]+" por "+puntos[0]+" a "+puntos[1]+". Igual mirá abajo las que quedaron en rojo.";if(conBot)luego(confeti,650);}
     else if(puntos[0]===puntos[1])v="Empate en "+puntos[0]+". Las que quedaron en rojo son el desempate para la próxima.";
     else v=nombres[1]+" resolvió "+puntos[1]+" y vos "+puntos[0]+". Practicá las que costaron y volvé a desafiarlo.";
@@ -1382,7 +1614,7 @@ function terminar(motivo){
   else v="Quedaron varios conceptos para volver a pensar. Empiecen por el repaso de abajo.";
   $("veredicto").textContent=v;
 
-  $("meta-preg").textContent=recuperacion?"Después del repaso: ¿cambió algo?":(sola?"¿Qué te costó más?":"Antes de repasar: ¿qué les costó más?");
+  $("meta-preg").textContent=recuperacion?"Después del repaso: ¿cambió algo?":(sola||solo?"¿Qué te costó más?":"Antes de repasar: ¿qué les costó más?");
   [...$("chips-meta").children].forEach(c=>c.setAttribute("aria-pressed","false"));
   $("meta").style.display=pendientesRepaso.length?"":"none";
 
@@ -1401,6 +1633,7 @@ function terminar(motivo){
   $("btn-practicar").textContent="Practicar las "+pendientesRepaso.length+" que costaron";
   progresoGuardar();
   rankingEnviar().finally(rankingActualizar);   // anota la marca y refresca la tabla
+  redAlTerminar();
   mostrar("p-final");window.scrollTo({top:0,behavior:"smooth"});
 }
 $("btn-aportes").addEventListener("click",()=>{
@@ -1413,7 +1646,7 @@ $("btn-copiar").addEventListener("click",async()=>{
   const linea="Pasapalabra IA · "+new Date().toLocaleDateString("es-AR")+
     " · Sección "+seccion+" · "+nombres[0]+" y "+nombres[1]+
     " · "+(recuperacion?"repaso":"partida")+
-    " · "+ok+"/"+n+" conceptos · tiempo "+(sinReloj?"sin reloj":fmt(seg-Math.max(restante,0)))+
+    " · "+ok+"/"+n+" conceptos · tiempo "+(sinReloj?"sin reloj":enLinea?fmt(Math.round(usado[yo]/1000)):fmt(seg-Math.max(restante,0)))+
     " · para revisar: "+err;
   try{await navigator.clipboard.writeText(linea);$("btn-copiar").textContent="✓ Copiado";}
   catch(e){window.prompt("Copiá esta línea:",linea);}
@@ -1467,9 +1700,494 @@ $("btn-copiar").addEventListener("click",async()=>{
   cont.classList.add("disperso");setTimeout(()=>{juntar();setTimeout(()=>cont.classList.add("gira"),1500);},120); // se cierran y quedan girando
   setInterval(()=>{dispersar();setTimeout(juntar,1800);},14000); // y cada tanto vuelven a cerrarse
 })();
-$("btn-practicar").addEventListener("click",()=>{audio();practicar();});
-$("btn-otra").addEventListener("click",()=>{audio();nuevaPartida();});
-$("btn-inicio").addEventListener("click",()=>{pararReloj();limpiarTimers();progresoPintar();mostrar("p-inicio");});
+$("btn-practicar").addEventListener("click",()=>{audio();
+  if(red.sala){redASolo();}
+  practicar();});
+$("btn-otra").addEventListener("click",()=>{audio();
+  if(red.sala){redRevancha();return;}
+  enLinea=false;solo=false;nuevaPartida();});
+$("btn-inicio").addEventListener("click",()=>{pararReloj();pararLetra();limpiarTimers();
+  if(red.sala){redSalir();return;}
+  progresoPintar();mostrar("p-inicio");});
+
+/* ============================================================
+   MODO EN LÍNEA — dos celulares, mismo rosco (Supabase Realtime)
+   Dos estudiantes comparten el rosco por un canal en tiempo real
+   (broadcast + presence; gratis, sin tablas ni datos guardados).
+   Quien tiene el turno decide su jugada y la anuncia; los dos
+   aplican la misma regla. Los relojes son uno por jugador.
+   ============================================================ */
+const RT_URL="wss://apehzspwbyqwsrdeezrn.supabase.co/realtime/v1/websocket?apikey=sb_publishable_GX9QGXoB3IuHbuLMKsgwgw_IVhGy0KL&vsn=1.0.0";
+const ID=(function(){try{let v=sessionStorage.getItem("ppia-id");if(!v){v=Math.random().toString(36).slice(2,10);sessionStorage.setItem("ppia-id",v);}return v;}catch(e){return Math.random().toString(36).slice(2,10);}})();
+const limpiaNom=s=>String(s||"").replace(/[<>&"'`]/g,"").replace(/\s+/g," ").trim().slice(0,28);
+const limpiaSec=s=>String(s||"").replace(/[<>&"'`]/g,"").slice(0,12);
+const avOk=a=>{a=+a;return a>=0&&a<AVATARES.length-1?Math.floor(a):0;};
+const escH=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nombreBonito=s=>String(s||"").replace(/\s+/g," ").trim().toLowerCase().replace(/(^|\s)(\S)/g,(m,a,l)=>a+l.toUpperCase());
+
+/* --- cliente mínimo del protocolo Phoenix (websocket de Supabase Realtime) --- */
+const RT={ws:null,ref:0,abierto:false,canales:{},hb:null,espera:1000,onEstado:null};
+function rtEnviar(o){if(RT.ws&&RT.abierto){try{RT.ws.send(JSON.stringify(o));return true;}catch(e){}}return false;}
+function rtConectar(){
+  if(RT.ws&&(RT.ws.readyState===0||RT.ws.readyState===1))return;
+  let ws;try{ws=new WebSocket(RT_URL);}catch(e){return rtReintentar();}
+  RT.ws=ws;
+  ws.onopen=()=>{RT.abierto=true;RT.espera=1000;
+    clearInterval(RT.hb);RT.hb=setInterval(()=>rtEnviar({topic:"phoenix",event:"heartbeat",payload:{},ref:String(++RT.ref)}),25000);
+    Object.keys(RT.canales).forEach(k=>RT.canales[k].unir());
+    if(RT.onEstado)RT.onEstado(true);};
+  ws.onmessage=ev=>{let m;try{m=JSON.parse(ev.data);}catch(e){return;}
+    const c=RT.canales[m.topic];if(c)c.recibir(m);};
+  ws.onclose=()=>{const era=RT.abierto;RT.abierto=false;clearInterval(RT.hb);
+    Object.keys(RT.canales).forEach(k=>RT.canales[k].unido=false);
+    if(era&&RT.onEstado)RT.onEstado(false);rtReintentar();};
+  ws.onerror=()=>{};
+}
+function rtReintentar(){if(!Object.keys(RT.canales).length)return;
+  setTimeout(rtConectar,RT.espera);RT.espera=Math.min(RT.espera*2,8000);}
+function rtCanal(nombre,h){
+  const topic="realtime:"+nombre;
+  const c={topic:topic,unido:false,joinRef:null,meta:null,pres:{},
+    unir(){c.joinRef=String(++RT.ref);
+      rtEnviar({topic:topic,event:"phx_join",ref:c.joinRef,join_ref:c.joinRef,
+        payload:{config:{broadcast:{self:false,ack:false},presence:{key:ID},private:false}}});},
+    recibir(m){
+      if(m.event==="phx_reply"&&m.ref===c.joinRef){
+        if(m.payload&&m.payload.status==="ok"){c.unido=true;if(c.meta)c.mandarMeta();if(h.unido)h.unido();}
+        else setTimeout(()=>{if(RT.canales[topic])c.unir();},1500);return;}
+      if(m.event==="phx_close"||m.event==="phx_error"){c.unido=false;setTimeout(()=>{if(RT.canales[topic]&&RT.abierto)c.unir();},1500);return;}
+      if(m.event==="presence_state"){c.pres={};Object.keys(m.payload||{}).forEach(k=>{const x=m.payload[k].metas;if(x&&x.length)c.pres[k]=x[x.length-1];});if(h.pres)h.pres(c.pres);return;}
+      if(m.event==="presence_diff"){const d=m.payload||{};
+        Object.keys(d.leaves||{}).forEach(k=>{delete c.pres[k];});
+        Object.keys(d.joins||{}).forEach(k=>{const x=d.joins[k].metas;if(x&&x.length)c.pres[k]=x[x.length-1];});
+        if(h.pres)h.pres(c.pres);return;}
+      if(m.event==="broadcast"&&m.payload){const p=m.payload.payload||{};
+        if(p.para&&p.para!==ID)return;if(h.msg)h.msg(m.payload.event,p);}
+    },
+    enviar(ev,p){p=Object.assign({de:ID},p||{});
+      return rtEnviar({topic:topic,event:"broadcast",ref:String(++RT.ref),join_ref:c.joinRef,payload:{type:"broadcast",event:ev,payload:p}});},
+    mandarMeta(){rtEnviar({topic:topic,event:"presence",ref:String(++RT.ref),join_ref:c.joinRef,
+      payload:c.meta?{type:"presence",event:"track",payload:c.meta}:{type:"presence",event:"untrack"}});},
+    track(meta){c.meta=meta;if(c.unido)c.mandarMeta();},
+    untrack(){if(!c.meta)return;c.meta=null;if(c.unido)c.mandarMeta();},
+    salir(){if(c.unido)rtEnviar({topic:topic,event:"phx_leave",payload:{},ref:String(++RT.ref),join_ref:c.joinRef});
+      delete RT.canales[topic];c.unido=false;}
+  };
+  RT.canales[topic]=c;
+  if(RT.abierto)c.unir();else rtConectar();
+  return c;
+}
+
+/* --- estado de la sala --- */
+const red={sala:"",rol:"",canal:null,rival:null,rivalAqui:false,ronda:0,rondaT:0,seq:0,pend:null,
+  quiero:false,rivalQuiere:false,lobby:null,salas:{},buscarT:null,ausenteT:null,jug:null,secRival:"",reanudar:false};
+let modoOnline=false,enLinea=false,yo=0,solo=false,partidaViva=false,rel=[0,0],usado=[0,0],tIni=0;
+const miTurno=()=>!enLinea||turno===yo;
+const autoTurno=()=>enLinea||solo;
+const nombreModo=s=>+s===0?"Sin reloj · práctica":+s<=240?"4 min cada uno":+s<=360?"6 min cada uno":"8 min cada uno";
+
+function redEnviar(ev,p){if(red.canal)red.canal.enviar(ev,Object.assign({ronda:red.ronda},p||{}));}
+function guardarSesion(){try{sessionStorage.setItem("ppia-sala",JSON.stringify({sala:red.sala,rol:red.rol,rival:red.rival,nombre:nombres[yo],t:Date.now()}));}catch(e){}}
+function borrarSesion(){try{sessionStorage.removeItem("ppia-sala");}catch(e){}}
+function banda(txt,boton){const b=$("banda-red");if(!b)return;if(!txt){b.classList.remove("on");return;}
+  $("banda-txt").textContent=txt;$("banda-btn").style.display=boton?"":"none";b.classList.add("on");}
+RT.onEstado=ok=>{if(!red.sala)return;
+  if(!ok)banda("Se cortó tu conexión. Reconectando…",false);
+  else if(red.rivalAqui||!red.rival)banda("");};
+
+/* --- inicio: modo en línea y lista de salas abiertas --- */
+function modoEnLinea(on){
+  modoOnline=on;document.body.classList.toggle("online",on);
+  $("btn-jugar").textContent=on?textoEntrar():"Sortear rosco y empezar";
+  if(on)lobbyAbrir();else lobbyCerrar();
+}
+function textoEntrar(){const c=$("cod-sala").value.toUpperCase().replace(/[^A-Z0-9]/g,"");
+  return c.length===4?"Entrar a la sala "+c:"Crear sala y esperar al rival";}
+$("cod-sala").addEventListener("input",()=>{const i=$("cod-sala");i.value=i.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,4);$("btn-jugar").textContent=textoEntrar();});
+$("cod-sala").addEventListener("keydown",e=>{if(e.key==="Enter")$("btn-jugar").click();});
+function lobbyAbrir(){if(red.lobby)return;
+  red.lobby=rtCanal("ppia-lobby",{pres:m=>{red.salas=m;pintarSalas();}});}
+function lobbyCerrar(){if(red.lobby&&!red.sala){red.lobby.salir();red.lobby=null;}}
+function pintarSalas(){
+  const cont=$("salas-abiertas");if(!cont)return;
+  const lista=Object.keys(red.salas).map(k=>red.salas[k]).filter(x=>x&&x.c&&x.id!==ID).sort((a,b)=>(b.t||0)-(a.t||0)).slice(0,12);
+  cont.innerHTML=lista.length?'<small class="salas-tit">Salas esperando rival</small>'+lista.map(x=>
+    '<button class="sala-item" type="button" data-c="'+escH(x.c)+'"><img src="'+AVATARES[avOk(x.a)].img+'" alt=""><span>'+escH(nombreBonito(limpiaNom(x.n)))+
+    '<small>'+escH(limpiaSec(x.s))+' · '+nombreModo(x.sg)+'</small></span><b>'+escH(x.c)+'</b></button>').join("")
+    :'<small class="salas-tit">Todavía no hay salas abiertas. Creá una y pasale el código a tu rival.</small>';
+}
+$("salas-abiertas").addEventListener("click",e=>{const b=e.target.closest(".sala-item");if(!b)return;
+  $("cod-sala").value=b.dataset.c;$("btn-jugar").textContent=textoEntrar();
+  if($("n1").value.trim())$("btn-jugar").click();else{$("aviso").textContent="Escribí tu nombre y tocá «Entrar a la sala».";$("n1").focus();}});
+
+function redEntrar(){
+  const a=limpiaNom($("n1").value);
+  if(!a){$("aviso").textContent="Escribí tu nombre para entrar a una sala.";$("n1").focus();return;}
+  const cod=$("cod-sala").value.toUpperCase().replace(/[^A-Z0-9]/g,"");
+  if(cod&&cod.length!==4){$("aviso").textContent="El código de la sala tiene 4 caracteres.";return;}
+  $("aviso").textContent="";audio();
+  try{localStorage.setItem("ppia-jugador",JSON.stringify({nombre:a,avatar:avatares[0],seccion:seccion}))}catch(e){}
+  if(cod)redUnirse(cod,a,avatares[0]);else redCrear(a,avatares[0]);
+}
+function codigoNuevo(){const L="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let c;
+  const usados=Object.keys(red.salas).map(k=>red.salas[k].c);
+  do{c="";for(let i=0;i<4;i++)c+=L[Math.floor(Math.random()*L.length)];}while(usados.indexOf(c)>=0);return c;}
+function redAbrirCanal(code){
+  red.sala=code;red.canal=rtCanal("ppia-sala-"+code,{pres:redPres,msg:redMsg});
+}
+function redCrear(nom,av){
+  redReset();red.rol="host";yo=0;enLinea=false;
+  nombres=[nom,""];avatares=[av,(av+1)%AVATAR_BOTI];
+  const code=codigoNuevo();redAbrirCanal(code);
+  red.canal.track({id:ID,rol:"host",n:nom,a:av,s:seccion});
+  lobbyAbrir();red.lobby.track({id:ID,c:code,n:nom,a:av,s:seccion,sg:seg,t:Date.now()});
+  guardarSesion();pintarSala();mostrar("p-sala");
+}
+function redUnirse(code,nom,av){
+  redReset();red.rol="guest";yo=1;enLinea=false;
+  nombres=["",nom];avatares=[0,av];
+  redAbrirCanal(code);
+  red.canal.track({id:ID,rol:"guest",n:nom,a:av,s:seccion});
+  pintarSala("Buscando la sala "+code+"…");mostrar("p-sala");
+  clearTimeout(red.buscarT);
+  red.buscarT=setTimeout(()=>{if(!red.rival&&red.rol==="guest"){
+    pintarSala("No encontramos la sala "+code+". Revisá el código con tu rival: puede que todavía no la haya creado o que ya se haya cerrado.");}},7000);
+}
+function redReset(){
+  if(red.canal){red.canal.salir();}
+  if(red.lobby)red.lobby.untrack();
+  clearTimeout(red.buscarT);clearTimeout(red.ausenteT);
+  chat.lista=[];
+  Object.assign(red,{sala:"",rol:"",canal:null,rival:null,rivalAqui:false,ronda:0,rondaT:0,seq:0,pend:null,quiero:false,rivalQuiere:false,jug:null,secRival:"",reanudar:false});
+  banda("");
+}
+function redSalir(){
+  if(red.canal)redEnviar("chau",{});
+  const c=red.canal;redReset();
+  enLinea=false;solo=false;partidaViva=false;borrarSesion();
+  pararReloj();pararLetra();limpiarTimers();
+  if(!modoOnline)lobbyCerrar();
+  progresoPintar();mostrar("p-inicio");rankingActualizar();
+}
+
+/* --- presencia: quién está en la sala --- */
+function redPres(m){
+  const otros=Object.keys(m).filter(k=>k!==ID).map(k=>m[k]).filter(x=>x&&x.id);
+  if(red.rol==="host"){
+    if(!red.rival){
+      const g=otros.filter(x=>x.rol==="guest")[0];
+      if(g)redAceptar(g);
+    }
+    otros.forEach(x=>{if(x.rol==="guest"&&x.id!==red.rival)red.canal.enviar("llena",{para:x.id});});
+    const aqui=!!(red.rival&&m[red.rival]);
+    redRivalPresente(aqui);
+  }else if(red.rol==="guest"){
+    const h=otros.filter(x=>x.rol==="host")[0];
+    if(h&&!red.rival){clearTimeout(red.buscarT);pintarSala("Entrando a la sala…");}
+    redRivalPresente(!!(h&&(!red.rival||h.id===red.rival)));
+  }
+}
+function redAceptar(g){
+  red.rival=g.id;red.secRival=limpiaSec(g.s);
+  nombres[1]=limpiaNom(g.n)||"Rival";avatares[1]=avOk(g.a);
+  if(avatares[1]===avatares[0])avatares[1]=(avatares[0]+1)%AVATAR_BOTI;
+  if(red.lobby)red.lobby.untrack();
+  red.canal.enviar("bien",{para:g.id,hn:nombres[0],ha:avatares[0],hs:seccion,ga:avatares[1],gn:nombres[1],sg:seg});
+  guardarSesion();pintarSala();
+}
+function redRivalPresente(aqui){
+  const antes=red.rivalAqui;red.rivalAqui=aqui;
+  if(aqui&&red.reanudar){red.reanudar=false;redEnviar("pide",{});}
+  if(aqui){clearTimeout(red.ausenteT);banda(RT.abierto?"":"Se cortó tu conexión. Reconectando…",false);
+    if(!antes&&enLinea)redMandarEstado();
+    if($("p-sala").classList.contains("activa"))pintarSala();
+    redBotonFinal();return;}
+  if(!antes||!red.rival)return;
+  const nom=nombres[1-yo]||"tu rival";
+  if($("p-sala").classList.contains("activa")){
+    if(red.rol==="host"){clearTimeout(red.ausenteT);red.ausenteT=setTimeout(()=>{if(!red.rivalAqui){redLiberar();}},6000);}
+    else pintarSala(nom+" se desconectó. Esperando que vuelva…");
+    return;}
+  if(enLinea&&partidaViva)banda("Se cortó la conexión de "+nom+". Esperando que vuelva…",true);
+  redBotonFinal();
+}
+function redLiberar(){   // el host vuelve a esperar rival
+  red.rival=null;red.rivalAqui=false;nombres[1]="";
+  if(red.lobby)red.lobby.track({id:ID,c:red.sala,n:nombres[0],a:avatares[0],s:seccion,sg:seg,t:Date.now()});
+  guardarSesion();pintarSala();
+}
+$("banda-btn").addEventListener("click",()=>{banda("");
+  if(enLinea&&partidaViva)terminar("Se cortó la conexión de "+(nombres[1-yo]||"tu rival")+".");});
+
+/* --- mensajes --- */
+function redMsg(ev,p){
+  if(ev==="bien"&&red.rol==="guest"){
+    clearTimeout(red.buscarT);red.rival=p.de;red.rivalAqui=true;
+    if(enLinea&&partidaViva){guardarSesion();return;}
+    nombres=[limpiaNom(p.hn)||"Rival",limpiaNom(p.gn)||nombres[1]];avatares=[avOk(p.ha),avOk(p.ga)];
+    red.secRival=limpiaSec(p.hs);seg=+p.sg||0;sinReloj=seg===0;
+    guardarSesion();pintarSala();return;}
+  if(ev==="llena"&&red.rol==="guest"&&!red.rival){
+    const c=red.sala;redReset();borrarSesion();mostrar("p-sala");
+    pintarSala("La sala "+c+" ya tiene dos jugadores. Creá otra o probá con otro código.",true);return;}
+  if(p.de!==red.rival)return;
+  if(ev==="chat"){chatRecibir(p);return;}
+  if(ev==="chau"){
+    const nom=nombres[1-yo]||"Tu rival";
+    if(red.rol==="guest"){
+      if(enLinea&&partidaViva){banda(nom+" salió de la sala.",true);red.rivalAqui=false;red.rival=null;redBotonFinal();return;}
+      const c=red.sala;redReset();borrarSesion();enLinea=false;mostrar("p-sala");
+      pintarSala(nom+" cerró la sala "+c+".",true);return;}
+    red.rivalAqui=false;
+    if($("p-sala").classList.contains("activa")){redLiberar();return;}
+    if(enLinea&&partidaViva)banda(nom+" salió de la sala.",true);
+    red.rival=null;redBotonFinal();return;}
+  if(ev==="inicio"){redAplicarInicio(p);return;}
+  if(ev==="estado"){redAplicarEstado(p);return;}
+  if(ev==="pide"){redMandarEstado();return;}
+  if(ev==="rev"){red.rivalQuiere=true;
+    if(red.rol==="host"&&red.quiero)return redIniciar();
+    redBotonFinal();return;}
+  if(p.ronda!==red.ronda||!enLinea)return;
+  if(ev==="jug"){red.pend=p;redPendiente();return;}
+  if(ev==="tl"){if(!miTurno()&&p.i===idx)correrBarra(+p.s||0);return;}
+  if(ev==="reloj"){if(!miTurno()&&typeof p.r==="number"){const j=p.j===1?1:0;rel[j]=p.r;relojUI();
+    if(p.r<=10&&p.r>0)tic(true);}return;}
+  if(ev==="tec"){if(!miTurno()&&jugando&&!bloqueado){$("entrada").value=String(p.v||"").replace(/[<>]/g,"").slice(0,40);rivalEscribe();}return;}
+  if(ev==="fin"){if(Array.isArray(p.rel))rel=[+p.rel[0]||0,+p.rel[1]||0];if(Array.isArray(p.us))usado=[+p.us[0]||0,+p.us[1]||0];if(partidaViva)terminar(String(p.m||"Partida terminada.").slice(0,120));return;}
+}
+
+/* --- sala de espera --- */
+function pintarSala(msg,cerrada){
+  $("sala-cod").textContent=red.sala||"····";
+  const slot=(j)=>{
+    const lleno=j===0?!!nombres[0]&&(red.rol==="host"||!!red.rival):!!nombres[1]&&(red.rol==="guest"||!!red.rival);
+    if(!lleno)return '<div class="sala-vacio"><span class="pensando"><i></i><i></i><i></i></span></div><b>Esperando rival</b><small>'+(red.rol==="host"?"Pasale el código":"…")+'</small>';
+    const sec=j===yo?seccion:red.secRival;
+    return '<img src="'+AVATARES[avatares[j]].img+'" alt=""><b>'+escH(nombreBonito(nombres[j]))+(j===yo?" <em>(vos)</em>":"")+'</b><small>'+escH(sec||"")+'</small>';};
+  $("sala-j0").innerHTML=slot(0);$("sala-j1").innerHTML=slot(1);
+  $("sala-modo").textContent=red.sala?"Modo de la sala: "+nombreModo(seg):"";
+  const listos=!!red.rival&&red.rivalAqui;
+  let t;
+  if(msg)t=msg;
+  else if(red.rol==="host")t=listos?"¡Ya llegó "+nombreBonito(nombres[1])+"! Cuando estén listos, sorteá el rosco.":"Pasale este código a tu rival para que entre desde su celular. También aparece en la lista de salas abiertas.";
+  else t=listos?"Estás en la sala. Esperá a que "+nombreBonito(nombres[0])+" sortee el rosco.":"Entrando a la sala…";
+  $("sala-txt").textContent=t;
+  $("btn-sala-empezar").style.display=red.rol==="host"?"":"none";
+  $("btn-sala-empezar").disabled=!listos;
+  $("btn-sala-salir").textContent=cerrada?"Volver al inicio":"Salir de la sala";
+  chatUbicar();
+}
+$("btn-sala-empezar").addEventListener("click",()=>{audio();if(red.rol==="host"&&red.rival&&red.rivalAqui)redIniciar();});
+$("btn-sala-salir").addEventListener("click",()=>{audio();redSalir();});
+
+/* --- arranque de cada rosco (lo sortea quien creó la sala) --- */
+const IX_P={};PALABRAS.forEach((w,i)=>{if(!(w.p in IX_P))IX_P[w.p]=i;});
+function redIniciar(){
+  red.quiero=false;red.rivalQuiere=false;
+  nRosco=sortearRosco();
+  const codes=ROSCOS[nRosco].map(it=>[it.letra,it.m===E?0:1,IX_P[it.p]===undefined?0:IX_P[it.p]]);
+  if(solo&&red.jug){nombres=red.jug.nombres;avatares=red.jug.avatares;}
+  const p={ronda:red.ronda+1,rondaT:Date.now(),it:codes,desde:ARRANQUES[Math.floor(Math.random()*ARRANQUES.length)],sg:seg,emp:Math.floor(Math.random()*2),
+    nombres:nombres.slice(),avatares:avatares.slice(),secs:[seccion,red.secRival]};
+  red.canal.enviar("inicio",p);redAplicarInicio(p);
+}
+const decodificar=codes=>codes.map(c=>{const w=PALABRAS[+c[2]]||PALABRAS[0];
+  return Object.assign({},w,{letra:String(c[0]),m:c[1]?C:E,ix:+c[2]});});
+function redAplicarInicio(p){
+  banda("");clearTimeout(red.buscarT);
+  enLinea=true;solo=false;conBot=false;sola=false;recuperacion=false;red.jug=null;
+  red.ronda=+p.ronda||1;red.rondaT=+p.rondaT||0;red.seq=0;red.pend=null;red.quiero=false;red.rivalQuiere=false;
+  nombres=[limpiaNom(p.nombres[0]),limpiaNom(p.nombres[1])];avatares=[avOk(p.avatares[0]),avOk(p.avatares[1])];
+  if(red.rol==="guest"&&p.secs)red.secRival=limpiaSec(p.secs[0]);
+  seg=+p.sg||0;items=decodificar(p.it);
+  iniciarRonda(+p.desde||0,seg,p.emp?1:0);guardarSesion();
+}
+
+/* --- jugadas --- */
+function redJugada(res,txt,porTiempo){
+  cortarTiempo();
+  if(!enLinea)return;red.seq++;
+  redEnviar("jug",{seq:red.seq,i:idx,res:res,tx:String(txt||"").slice(0,40),tiempo:porTiempo?1:0,rel:rel,us:usado});
+}
+function redPendiente(){
+  const p=red.pend;if(!p||!enLinea)return;
+  if(p.seq<=red.seq){red.pend=null;return;}
+  if(p.seq>red.seq+1){red.pend=null;redEnviar("pide",{});return;}
+  if(!jugando||bloqueado||miTurno())return;   // se aplica apenas el tablero esté listo
+  red.pend=null;
+  if(p.i!==idx){redEnviar("pide",{});return;}
+  red.seq=p.seq;if(Array.isArray(p.rel)){rel=[+p.rel[0]||0,+p.rel[1]||0];relojUI();}
+  if(Array.isArray(p.us))usado=[+p.us[0]||0,+p.us[1]||0];
+  resolverRival(p);
+}
+function resolverRival(p){
+  const it=items[idx],nom=escH(nombreBonito(nombres[turno]));pararLetra();
+  if(p.res==="ok"){estado[idx]="acierto";respondio[idx]=turno;puntos[turno]++;rachas[turno]++;sOk();carita("salta");burbuja("ok");
+    $("feedback").className="feedback ok";$("feedback").innerHTML="<span class='tit'>✓ "+it.p+"</span>"+nom+" acertó esta."+(rachas[turno]>=3?"<span class='racha'>Racha de "+rachas[turno]+" 🔥</span>":"");
+    pintar();cerrarJugada("<span style='color:var(--lima)'>✓ "+it.p+"</span>");}
+  else if(p.res==="mal"){estado[idx]="error";respondio[idx]=turno;rachas[turno]=0;sMal();carita("sacude");burbuja("mal");
+    $("feedback").className="feedback mal";
+    $("feedback").innerHTML="<span class='tit'>✕ Era "+it.p+"</span>"+(p.tiempo?nom+" se quedó sin tiempo.":p.tx?nom+" escribió «"+escH(p.tx)+"».":"");
+    pintar();cerrarJugada("<span style='color:var(--parina)'>✕ Era "+it.p+"</span>");}
+  else if(p.res==="sin"){rel[turno]=0;rachas[turno]=0;if(estado[idx]==="pendiente"){estado[idx]="pasada";respondio[idx]=turno;}sPas();carita("inclina");burbuja("pas");
+    $("feedback").className="feedback pas";
+    $("feedback").innerHTML="<span class='tit'>⏱ Se terminó el reloj de "+nom+"</span>"+(tieneTiempo(yo)&&quedan()?"Seguís vos con las letras que quedan.":"");
+    pintar();cerrarJugada("<span style='color:var(--parina)'>⏱ Sin reloj: "+nom+"</span>");}
+  else{if(estado[idx]==="pendiente"){estado[idx]="pasada";respondio[idx]=turno;}rachas[turno]=0;sPas();carita("inclina");burbuja("pas");
+    $("feedback").className="feedback pas";
+    $("feedback").innerHTML="<span class='tit'>↻ Pasapalabra</span>"+nom+(p.tiempo?" se quedó sin tiempo":" pasó")+". La "+it.letra+" vuelve más adelante.";
+    pintar();cerrarJugada("<span style='color:var(--ambar)'>↻ Pasapalabra en la "+it.letra+"</span>");}
+}
+function verRival(){
+  $("feedback").className="feedback";
+  $("feedback").innerHTML='<span class="pensando">'+escH(nombreBonito(nombres[turno]))+' está pensando <i></i><i></i><i></i></span>';
+  $("entrada").value="";$("entrada").placeholder="Responde "+nombreBonito(nombres[turno]);
+  setTimeout(redPendiente,0);
+}
+let escribeT=null;
+function rivalEscribe(){
+  $("feedback").innerHTML='<span class="pensando">'+escH(nombreBonito(nombres[turno]))+' está escribiendo <i></i><i></i><i></i></span>';
+  clearTimeout(escribeT);escribeT=setTimeout(()=>{if(jugando&&!miTurno()&&!bloqueado)
+    $("feedback").innerHTML='<span class="pensando">'+escH(nombreBonito(nombres[turno]))+' está pensando <i></i><i></i><i></i></span>';},2500);
+}
+let tecT=0,tecPend=null;
+function mandarTecleo(){tecPend=null;tecT=Date.now();if(enLinea&&miTurno()&&jugando&&!bloqueado)redEnviar("tec",{v:$("entrada").value.slice(0,40)});}
+$("entrada").addEventListener("input",()=>{if(!enLinea||!miTurno()||!jugando)return;
+  if(tecPend)return;const falta=300-(Date.now()-tecT);
+  if(falta<=0)mandarTecleo();else tecPend=setTimeout(mandarTecleo,falta);});
+
+/* --- estado completo: para quien se reconecta o recarga la página --- */
+function redMandarEstado(){
+  if(!enLinea||!red.canal||!items.length||!red.rondaT)return;
+  if(items.some(it=>typeof it.ix!=="number"))return;
+  red.canal.enviar("estado",{ronda:red.ronda,rondaT:red.rondaT,seq:red.seq,it:items.map(it=>[it.letra,it.m===E?0:1,it.ix]),
+    es:estado,rp:respondio,pu:puntos,ra:rachas,idx:idx,tu:turno,rel:rel,us:usado,sg:seg,li:letraIni,
+    fin:partidaViva?0:1,nombres:nombres,avatares:avatares,secs:yo===0?[seccion,red.secRival]:[red.secRival,seccion]});
+}
+function redAplicarEstado(p){
+  if(solo)return;
+  const nuevo=(+p.rondaT>red.rondaT)||(+p.rondaT===red.rondaT&&+p.seq>red.seq);
+  if(!nuevo)return;
+  if(+p.rondaT===red.rondaT&&!partidaViva)return;
+  enLinea=true;solo=false;conBot=false;sola=false;recuperacion=false;
+  red.ronda=+p.ronda;red.rondaT=+p.rondaT;red.seq=+p.seq;red.pend=null;
+  nombres=[limpiaNom(p.nombres[0]),limpiaNom(p.nombres[1])];avatares=[avOk(p.avatares[0]),avOk(p.avatares[1])];
+  if(p.secs)red.secRival=limpiaSec(p.secs[1-yo]);
+  seg=+p.sg||0;items=decodificar(p.it);
+  iniciarRonda(+p.idx||0,seg,p.tu?1:0);
+  const ok=a=>Array.isArray(a)&&a.length===items.length;
+  if(ok(p.es))estado=p.es.map(s=>["acierto","error","pasada","pendiente"].indexOf(s)>=0?s:"pendiente");
+  if(ok(p.rp))respondio=p.rp.map(x=>+x);
+  puntos=[+p.pu[0]||0,+p.pu[1]||0];rachas=[+p.ra[0]||0,+p.ra[1]||0];
+  usado=Array.isArray(p.us)?[+p.us[0]||0,+p.us[1]||0]:[0,0];
+  rel=Array.isArray(p.rel)?[+p.rel[0]||0,+p.rel[1]||0]:[seg,seg];letraIni=String(p.li||"");arranque=false;relojUI();pintar();
+  banda("");guardarSesion();
+  if(p.fin){limpiarTimers();terminar("Partida terminada.");}
+}
+
+/* --- puntaje del podio: aciertos + bonus por el reloj que sobró --- */
+const bono=j=>sinReloj?0:Math.round(rel[j]*2);
+const puntaje=j=>puntos[j]*100+bono(j);
+const ordenFinal=()=>[0,1].sort((a,b)=>puntaje(b)-puntaje(a)||usado[a]-usado[b]);
+const medalla=(i,emp)=>i===0&&!emp
+  ?'<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#FFD23F" stroke="#B8860B" stroke-width="1.5"/><text x="12" y="16.5" text-anchor="middle" font-size="12" font-weight="800" fill="#7A5800">1</text></svg>'
+  :'<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#D7DEE9" stroke="#96A3B8" stroke-width="1.5"/><text x="12" y="16.5" text-anchor="middle" font-size="12" font-weight="800" fill="#4C5A70">2</text></svg>';
+function lluviaLetras(){   // letras del rosco que caen como papelitos cuando se arma el podio
+  const cols=["#22E3D6","#FF4FA3","#4D9BFF","#0A9E96","#E01480","#2446C8"],capa=document.createElement("div");
+  for(let i=0;i<70;i++){const s=document.createElement("b");s.className="confeti letra-cae";
+    s.textContent=LETRAS[Math.floor(Math.random()*LETRAS.length)];
+    s.style.left=(Math.random()*100)+"vw";s.style.color=cols[i%cols.length];
+    s.style.fontSize=(22+Math.random()*34)+"px";
+    s.style.setProperty("--rot",(Math.random()*540-270)+"deg");
+    s.style.setProperty("--t",(3+Math.random()*2.6)+"s");
+    s.style.animationDelay=(Math.random()*1.4)+"s";
+    capa.appendChild(s);}
+  document.body.appendChild(capa);setTimeout(()=>capa.remove(),7600);
+}
+
+/* --- final: revancha, repaso a solas --- */
+function redBotonFinal(){
+  chatUbicar();
+  const b=$("btn-otra");if(!red.sala){b.textContent="Otro rosco";b.disabled=false;return;}
+  const nom=nombreBonito((red.jug?red.jug.nombres:nombres)[1-yo]||"tu rival");
+  if(!red.rival||!red.rivalAqui){b.textContent=red.rival?"Esperando que vuelva "+nom:"Tu rival salió de la sala";b.disabled=true;return;}
+  b.disabled=red.quiero&&!red.rivalQuiere;
+  b.textContent=red.quiero?"Esperando a "+nom+"…":red.rivalQuiere?nom+" quiere la revancha: ¡dale!":"Pedir revancha";
+}
+function redRevancha(){
+  red.quiero=true;redEnviar("rev",{});
+  if(red.rol==="host"&&red.rivalQuiere)return redIniciar();
+  redBotonFinal();
+}
+function redASolo(){   // el repaso de las que costaron se juega a solas
+  red.jug={nombres:nombres.slice(),avatares:avatares.slice()};
+  const n=nombres[yo],a=avatares[yo];
+  enLinea=false;solo=true;red.quiero=false;nombres=[n,n];avatares=[a,a];
+}
+function redAlTerminar(){
+  if(red.sala)redBotonFinal();else $("btn-otra").textContent="Otro rosco";
+}
+
+/* --- chat entre los dos (en la sala de espera y al terminar; nunca durante el rosco) --- */
+const chat={lista:[],ultimo:0};
+const MALAS=/^(bolud|pelotud|forr[oa]s?$|put[oa]s?$|putit|pute[ao]|mierd|conch|culo|orto$|idiot|estupid|tarad|mogol|imbecil|pendej|cagon|chot[oa]|pija|verga|garca|trolo|tont[oa]s?$|inutil|bob[oa]s?$|gord[oa]s?$|fe[oa]s?$|sorete|chupa|coger|cogid|manc[oa]s?$|burr[oa]s?$|matate|muerete|odio|lpm|ctm|hdp|tarupi|zarpad)/;
+function filtrar(t){return t.split(/(\s+)/).map(w=>{
+    const n=w.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z\u00f1]/g,"");
+  return n&&MALAS.test(n)?"•••":w;}).join("");}
+const nomRival=()=>nombreBonito((red.jug?red.jug.nombres:nombres)[1-yo]||"tu rival");
+function chatUbicar(id){
+  const c=$("chat");if(!c)return;
+  if(!id){const a=document.querySelector(".pantalla.activa");id=a?a.id:"";}
+  const slot=id==="p-sala"?$("slot-sala"):id==="p-final"?$("slot-final"):null;
+  const ver=!!(slot&&red.sala&&(red.rival||chat.lista.length));
+  c.classList.toggle("on",ver);if(!ver)return;
+  if(c.parentNode!==slot)slot.appendChild(c);
+  const activo=!!(red.rival&&red.rivalAqui);
+  [...$("chat-rapidas").children].forEach(b=>b.disabled=!activo);
+  chatPintar();
+}
+function chatPintar(){
+  $("chat-tit").textContent="Chat con "+nomRival();
+  const l=$("chat-lista");
+  l.innerHTML=chat.lista.length?chat.lista.map(m=>m.aviso?'<p class="chat-aviso">'+escH(m.tx)+'</p>':
+    '<div class="msg'+(m.mio?" mio":"")+'"><b>'+escH(m.mio?"Vos":nombreBonito(m.n))+'</b>'+escH(m.tx)+'</div>').join("")
+    :'<p class="chat-vacio">Mandale una frase a '+escH(nomRival())+'. Por ejemplo, para ponerse de acuerdo y jugar otra.</p>';
+  if(red.rival&&!red.rivalAqui&&chat.lista.length)l.innerHTML+='<p class="chat-aviso">'+escH(nomRival())+' no está conectado.</p>';
+  l.scrollTop=l.scrollHeight;
+}
+function chatEnviar(tx){
+  tx=filtrar(String(tx||"").replace(/\s+/g," ").trim().slice(0,80));
+  if(!tx||!red.rival||!red.rivalAqui)return;
+  const t=Date.now();if(t-chat.ultimo<700)return;chat.ultimo=t;
+  redEnviar("chat",{tx:tx});
+  chat.lista.push({mio:1,j:yo,n:nombres[yo]||(red.jug?red.jug.nombres[yo]:""),tx:tx});
+  if(chat.lista.length>60)chat.lista.shift();
+  chatPintar();
+}
+function chatRecibir(p){
+  const tx=filtrar(String(p.tx||"").replace(/\s+/g," ").trim().slice(0,80));if(!tx)return;
+  chat.lista.push({mio:0,j:1-yo,n:(red.jug?red.jug.nombres:nombres)[1-yo],tx:tx});
+  if(chat.lista.length>60)chat.lista.shift();
+  tono(1046,.09,"sine",.1);tono(1318,.12,"sine",.09,.08);
+  chatUbicar();
+}
+$("chat-rapidas").addEventListener("click",e=>{const b=e.target.closest(".chip-chat");if(b)chatEnviar(b.textContent);});
+$("chat-enviar").addEventListener("click",()=>{const i=$("chat-in");chatEnviar(i.value);i.value="";});
+$("chat-in").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("chat-enviar").click();}});
+
+/* --- recargar la página no saca de la sala --- */
+(function(){let g=null;try{g=JSON.parse(sessionStorage.getItem("ppia-sala")||"null");}catch(e){}
+  if(!g||!g.sala||Date.now()-g.t>2*3600*1000)return;
+  const nom=limpiaNom(g.nombre)||limpiaNom($("n1").value);if(!nom)return;
+  if(g.rol==="host"){redReset();red.rol="host";yo=0;nombres=[nom,""];redAbrirCanal(g.sala);red.rival=g.rival||null;
+    red.canal.track({id:ID,rol:"host",n:nom,a:avatares[0],s:seccion});
+    if(!red.rival){lobbyAbrir();red.lobby.track({id:ID,c:g.sala,n:nom,a:avatares[0],s:seccion,sg:seg,t:Date.now()});}}
+  else{redReset();red.rol="guest";yo=1;nombres=["",nom];redAbrirCanal(g.sala);red.rival=g.rival||null;
+    red.canal.track({id:ID,rol:"guest",n:nom,a:avatares[0],s:seccion});avatares=[0,avatares[0]];}
+  red.reanudar=true;pintarSala("Volviendo a la sala "+g.sala+"…");mostrar("p-sala");
+  red.buscarT=setTimeout(()=>{if(!red.rivalAqui)pintarSala("Tu rival ya no está en la sala "+g.sala+".",true);},9000);
+})();
 </script>
 </body>
 </html>
