@@ -670,19 +670,20 @@ body.online #tiempo{display:none}
 .ini-bg{position:absolute;inset:0;background:url("img/inicio.webp") center 22%/cover no-repeat}
 .ini-topfade{position:absolute;inset:auto 0 0 0;height:52%;
   background:linear-gradient(180deg,transparent,rgba(3,8,26,.82) 62%,#03081A)}
-.btn-jugar-hero{position:absolute;left:50%;bottom:24%;transform:translateX(-50%);z-index:3}
-.nav-app{position:absolute;left:12px;right:12px;bottom:12px;z-index:3;display:flex;gap:8px;
-  background:rgba(5,11,32,.78);border:1px solid rgba(120,160,255,.22);border-radius:18px;
-  padding:8px;backdrop-filter:blur(8px)}
-.nav-app button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:0;
-  background:transparent;color:#8FA4D6;font:600 12px/1.1 var(--body);padding:8px 4px;
-  border-radius:12px;cursor:pointer}
+.btn-jugar-hero{position:absolute;left:50%;bottom:23%;transform:translateX(-50%);z-index:3;
+  min-height:66px;padding:10px 46px;font-size:clamp(22px,6vw,28px);gap:12px;text-transform:uppercase}
+.btn-jugar-hero svg{width:26px;height:26px}
+.nav-app{position:absolute;left:12px;right:12px;bottom:30px;z-index:3;display:flex;gap:8px;
+  background:none;border:0;padding:0;backdrop-filter:none}
+.nav-app button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  background:rgba(5,11,32,.72);border:1px solid rgba(120,160,255,.3);color:#C7D4F6;font:700 12.5px/1.1 var(--body);
+  padding:10px 4px;min-height:68px;border-radius:16px;cursor:pointer;backdrop-filter:blur(6px)}
 .nav-app button svg{width:22px;height:22px;fill:var(--turquesa)}
 .nav-app button:nth-child(2) svg{fill:var(--amarillo)}
 .nav-app button:hover{background:rgba(140,120,255,.14);color:#EAF0FF}
-.ini-cred{position:absolute;bottom:88px;left:0;right:0;z-index:2;text-align:center;
-  font-size:9.5px;line-height:1.4;color:rgba(200,214,244,.75);margin:0;padding:0 24px;
-  border-top:0!important;text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.ini-cred{position:absolute;bottom:7px;left:0;right:0;z-index:3;text-align:center;
+  font-size:9.5px;line-height:1.3;color:rgba(200,214,244,.8);margin:0;padding:0 16px;
+  border-top:0!important;text-shadow:0 1px 6px rgba(0,0,0,.8)}
 [data-tema="aula"] #p-inicio .tarjeta.ini-full{box-shadow:0 24px 60px rgba(43,73,140,.3)}
 
 /* ===== Registro / pantallas internas ===== */
@@ -945,6 +946,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
       <button type="button" id="nav-rank"><svg viewBox="0 0 24 24"><path d="M5 20v-8h4v8H5zm5.5 0V4h4v16h-4zM16 20v-5h4v5h-4z"/></svg>Clasificación</button>
       <button type="button" id="nav-info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 10.5V17" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/><circle cx="12" cy="7.4" r="1.5"/></svg>Acerca de</button>
     </nav>
+    <p class="ini-cred">Creado por <strong>Patricia Inés Castro</strong> en colaboración con Devin (Cognition) y Claude (Anthropic).</p>
   </div>
 </section>
 
