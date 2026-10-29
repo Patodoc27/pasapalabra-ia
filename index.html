@@ -777,7 +777,7 @@ body{padding:0;overflow:hidden}
   display:flex;flex-direction:column;background:none;border:0;box-shadow:none;border-radius:0;
   padding:14px 18px 18px;backdrop-filter:none;min-height:0}
 #p-inicio{--fondop:url("img/inicio.webp")}
-#p-registro,#p-sala,#p-juego,#p-cuenta,#p-final,#p-ranking,#p-repaso{--fondop:url("img/fondo-hero.webp")}
+#p-registro,#p-sala,#p-juego,#p-cuenta,#p-final,#p-ranking,#p-repaso,#p-info{--fondop:url("img/fondo-hero.webp")}
 #p-inicio>.tarjeta.ini-full{padding:0;min-height:0}
 .top{display:flex;align-items:center;gap:10px;min-height:44px;border:0;padding-bottom:8px;justify-content:flex-start;flex-wrap:wrap}
 .top h2,.reg-tit{flex:1;text-align:center;font-family:var(--display);font-weight:400;font-size:22px;letter-spacing:.02em;margin:0}
@@ -926,28 +926,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
       </div>
     </div>
     <div class="inicio-grid">
-<div class="como">
-      <div class="paso" style="--c:var(--turquesa);--f:rgba(15,181,174,.09)"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4.6 4.6 0 1 0 0-9.2 4.6 4.6 0 0 0 0 9.2zm0 1.8c-4.6 0-8.2 2.5-8.2 5.7V21h16.4v-1.5c0-3.2-3.6-5.7-8.2-5.7z"/></svg></span><div><h3>A tu ritmo</h3><p>Sola respondés todo el rosco; contra Boti los turnos alternan.</p></div></div>
-      <div class="paso" style="--c:var(--ambar);--f:rgba(255,201,60,.18)"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 0 8 8h-2.2A5.8 5.8 0 1 1 12 6.2c1.7 0 3.2.7 4.3 1.9L13 11.4h8V3.4l-3.2 3.2A8 8 0 0 0 12 4z"/></svg></span><div><h3>¿No la saben?</h3><p>Pasapalabra: esa letra vuelve más adelante.</p></div></div>
-      <div class="paso" style="--c:var(--parina);--f:rgba(255,92,147,.09)"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm1.2-10.2V6h-2.4v7l5 4.4 1.5-1.8-4.1-3.8z"/></svg></span><div><h3>Cierren el rosco</h3><p>Antes de que se termine el tiempo.</p></div></div>
-    </div>
 
-    <div class="col-a">
-    <details>
-      <summary>Reglas del juego</summary>
-      <ul>
-        <li>Sola: respondés las 19 letras vos. Contra Boti y En línea: por turnos, incluso al decir pasapalabra.</li>
-        <li>Acierto ✓ en tu color · error ✕ en rosa · pasapalabra ↻ en celeste (la letra vuelve).</li>
-        <li>La consigna se lee en voz alta y recién después se habilita la respuesta.</li>
-        <li>Cada uno tiene su reloj según el modo elegido y corre solo en su turno.</li>
-        <li>Cada letra tiene un tiempo límite (la barra): si se acaba, vuelve como pasapalabra; si ya había vuelto, es error.</li>
-        <li>En línea ves y escuchás la consigna del rival y lo que escribe.</li>
-        <li>Gana quien acierta más; si empatan, el desempate es la revancha.</li>
-        <li>Tilde y ñ cuentan. Si errás solo la acentuación, avisa y corregís sin perder la letra.</li>
-        <li>Cada partida sortea palabras y letra de arranque: nunca se repite el rosco.</li>
-        <li>En práctica sin reloj, el primer error da una pista y otra oportunidad.</li>
-      </ul>
-    </details>
     <div class="rosco-preview"><div id="rosco-mini"></div></div>
     </div><!-- /col-a -->
     <div class="col-b">
@@ -1091,6 +1070,35 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
 </section>
 
 <!-- ===== FINAL ===== -->
+<section class="pantalla" id="p-info">
+  <div class="tarjeta">
+    <div class="top"><button class="icobtn volver" id="btn-info-atras" title="Volver" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>Acerca de</h2><span style="width:42px"></span></div>
+<div class="como">
+      <div class="paso" style="--c:var(--turquesa);--f:rgba(15,181,174,.09)"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4.6 4.6 0 1 0 0-9.2 4.6 4.6 0 0 0 0 9.2zm0 1.8c-4.6 0-8.2 2.5-8.2 5.7V21h16.4v-1.5c0-3.2-3.6-5.7-8.2-5.7z"/></svg></span><div><h3>A tu ritmo</h3><p>Sola respondés todo el rosco; contra Boti los turnos alternan.</p></div></div>
+      <div class="paso" style="--c:var(--ambar);--f:rgba(255,201,60,.18)"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 0 8 8h-2.2A5.8 5.8 0 1 1 12 6.2c1.7 0 3.2.7 4.3 1.9L13 11.4h8V3.4l-3.2 3.2A8 8 0 0 0 12 4z"/></svg></span><div><h3>¿No la saben?</h3><p>Pasapalabra: esa letra vuelve más adelante.</p></div></div>
+      <div class="paso" style="--c:var(--parina);--f:rgba(255,92,147,.09)"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm1.2-10.2V6h-2.4v7l5 4.4 1.5-1.8-4.1-3.8z"/></svg></span><div><h3>Cierren el rosco</h3><p>Antes de que se termine el tiempo.</p></div></div>
+    </div>
+
+    <div class="col-a">
+    <details>
+      <summary>Reglas del juego</summary>
+      <ul>
+        <li>Sola: respondés las 19 letras vos. Contra Boti y En línea: por turnos, incluso al decir pasapalabra.</li>
+        <li>Acierto ✓ en tu color · error ✕ en rosa · pasapalabra ↻ en celeste (la letra vuelve).</li>
+        <li>La consigna se lee en voz alta y recién después se habilita la respuesta.</li>
+        <li>Cada uno tiene su reloj según el modo elegido y corre solo en su turno.</li>
+        <li>Cada letra tiene un tiempo límite (la barra): si se acaba, vuelve como pasapalabra; si ya había vuelto, es error.</li>
+        <li>En línea ves y escuchás la consigna del rival y lo que escribe.</li>
+        <li>Gana quien acierta más; si empatan, el desempate es la revancha.</li>
+        <li>Tilde y ñ cuentan. Si errás solo la acentuación, avisa y corregís sin perder la letra.</li>
+        <li>Cada partida sortea palabras y letra de arranque: nunca se repite el rosco.</li>
+        <li>En práctica sin reloj, el primer error da una pista y otra oportunidad.</li>
+      </ul>
+    </details>
+    <p class="ini-cred" style="text-align:center;margin-top:18px">IA ROSCO · Pasapalabra de inteligencia artificial · Profe Patricia</p>
+  </div>
+</section>
+
 <section class="pantalla" id="p-final">
   <div class="tarjeta">
     <div class="top"><button class="icobtn volver" id="btn-res-inicio" title="Volver al inicio" aria-label="Volver al inicio"><svg viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>Tu resultado</h2><span style="width:42px"></span></div>
@@ -1678,10 +1686,11 @@ $("btn-jugar-hero").addEventListener("click",()=>{audio();mostrar("p-registro");
 $("btn-volver-reg").addEventListener("click",()=>{audio();mostrar("p-inicio");});
 $("nav-perfil").addEventListener("click",()=>{audio();mostrar("p-registro");luego(()=>$("n1").focus(),450);});
 $("nav-rank").addEventListener("click",()=>{audio();rankOrigen="p-inicio";mostrarRankingSecs();});
-$("nav-info").addEventListener("click",()=>{audio();mostrar("p-registro");const d=document.querySelector("#p-registro details");if(d)d.open=true;luego(()=>d&&d.scrollIntoView({behavior:"smooth"}),300);});
+$("nav-info").addEventListener("click",()=>{audio();mostrar("p-info");});
 $("btn-volver-juego").addEventListener("click",()=>{$("btn-cortar").click();});
 $("btn-res-inicio").addEventListener("click",()=>{audio();mostrar("p-inicio");});
 $("btn-rank-atras").addEventListener("click",()=>{audio();mostrar(rankOrigen);});
+$("btn-info-atras").addEventListener("click",()=>{audio();mostrar("p-inicio");});
 $("btn-jugar").addEventListener("click",()=>{
   if(modoOnline){redEntrar();return;}
   enLinea=false;solo=false;
