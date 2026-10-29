@@ -321,7 +321,7 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
   #rosco::after{content:"";position:absolute;inset:8%;border-radius:50%;pointer-events:none;
     background:radial-gradient(circle,color-mix(in srgb,var(--jug) 12%,transparent),transparent 72%)}
   #rosco .letra{width:10.6%;font-size:calc(var(--rw,343px)*.052)}
-  .centro-juego{inset:auto;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  .centro-juego{inset:auto;position:absolute;top:50%;left:50%;transform:translate(-50%,calc(-50% + 18px));
     width:calc(var(--rw,343px)*.50);height:calc(var(--rw,343px)*.46);padding:0;gap:5px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
   #p-juego .consigna{font-size:11.5px;padding:4px 10px;letter-spacing:.06em}
@@ -1785,10 +1785,12 @@ function progresoGuardar(){
   try{
     const g=progresoLeer();
     g.partidas=(g.partidas||0)+1;
+    if(quedan()){localStorage.setItem("ppia-progreso",JSON.stringify(g));progresoPintar();return;}
+    // rosco incompleto: solo cuenta la partida, no suma aciertos ni estadísticas
     const mj=solo?0:(enLinea?yo:0);   // en línea o repaso: el progreso es del que juega acá
     g.aciertos=(g.aciertos||0)+puntos[mj];
     g.mejor=Math.max(g.mejor||0,puntos[mj]);
-    if(!quedan())g.completos=(g.completos||0)+1;   // rosco cerrado: no quedó letra pendiente
+    g.completos=(g.completos||0)+1;   // rosco cerrado: no quedó letra pendiente
     const mio=enLinea?yo:0;   // índice del jugador de este dispositivo
     let misErr=0;const f=g.fallos||{};
     const map={};(g.repasar||[]).forEach(it=>map[it.p]=it);
