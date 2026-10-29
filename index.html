@@ -639,8 +639,9 @@ body.online #tiempo{display:none}
 .fstats small{font-size:12.5px;color:var(--gris);letter-spacing:.04em}
 .fstats .fs-ok b{color:var(--turquesa)}.fstats .fs-er b{color:var(--parina)}.fstats .fs-ps b{color:var(--sol)}
 [data-tema="show"] .ranking{background:var(--panel);border:1px solid var(--panel-borde);border-radius:18px}
-[data-tema="show"] .f-rank{background:rgba(18,30,66,.65);border:1px solid rgba(120,170,255,.14);border-radius:14px;
-  grid-template-columns:34px 40px 1fr;margin-bottom:6px}
+[data-tema="show"] .f-rank{background:rgba(18,30,66,.85);border:1.5px solid rgba(235,245,255,.75);border-radius:14px;
+  grid-template-columns:34px 40px 1fr;margin-bottom:8px;box-shadow:0 3px 14px -4px rgba(0,0,0,.65)}
+[data-tema="show"] .f-rank .pos{color:#fff;font-weight:900;font-size:19px;text-shadow:0 0 10px rgba(46,232,216,.6),0 1px 3px rgba(0,0,0,.8)}
 [data-tema="show"] .f-rank:nth-child(odd){background:rgba(18,30,66,.65)}
 [data-tema="show"] .f-rank.mio{background:color-mix(in srgb,var(--violeta) 30%,transparent)!important;
   outline:1.5px solid color-mix(in srgb,var(--violeta) 70%,transparent)}
@@ -892,7 +893,10 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
 .menu-pop{top:48px}
 #overlay{position:absolute}
 /* --- resultado --- */
-#p-final .top h2,#p-ranking .top h2{flex:1;text-align:center}
+#p-final .top h2{flex:1;text-align:center}
+#p-ranking .top h2{flex:1;text-align:center;font-family:var(--display);font-weight:900;
+  font-size:clamp(28px,8vw,38px);letter-spacing:.03em;color:#fff;
+  -webkit-text-stroke:1.2px #04182A;text-shadow:0 3px 0 #04182A,0 0 22px rgba(46,232,216,.4)}
 .fstats>div,.fpunts>div{background:var(--vidrio);border:1px solid var(--vidrio-b);backdrop-filter:blur(12px)}
 .duelo>div,.podio,.grupo,.jug,.chat .c-carta,.menu-pop{background:var(--vidrio);border:1px solid var(--vidrio-b)}
 /* --- aula claro: igual que antes, vidrio blanco --- */
