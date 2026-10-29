@@ -316,12 +316,13 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
   #rosco::after{content:"";position:absolute;inset:8%;border-radius:50%;pointer-events:none;
     background:radial-gradient(circle,color-mix(in srgb,var(--jug) 12%,transparent),transparent 72%)}
   #rosco .letra{width:10.6%;font-size:calc(var(--rw,343px)*.052)}
-  .centro-juego{inset:auto;top:50%;left:50%;transform:translate(-50%,-50%);
-    width:calc(var(--rw,343px)*.56);height:calc(var(--rw,343px)*.52);padding:0;gap:5px}
+  .centro-juego{inset:auto;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:calc(var(--rw,343px)*.54);height:calc(var(--rw,343px)*.50);padding:0;gap:5px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
   .consigna{font-size:12px;padding:6px 15px}
-  .definicion{line-height:1.32;min-height:0;width:100%;overflow:hidden}
+  .definicion{line-height:1.32;min-height:0;width:100%;padding:0 13px;overflow:hidden}
   .respuesta{width:100%;margin-bottom:14px}
-  .barra-turno{margin-top:16px}
+  .barra-turno{margin-top:24px}
   #entrada{max-width:none;padding:13px 14px;font-size:16px}
   .respuesta .btn{padding:13px 20px;font-size:15px}
   .lateral .acciones{order:-1;width:100%}
@@ -632,8 +633,8 @@ body.online #tiempo{display:none}
 
 /* ---- final / podio / ranking ---- */
 [data-tema="show"] .puntaje .total{color:var(--turquesa);text-shadow:0 0 40px color-mix(in srgb,var(--turquesa) 50%,transparent)}
-.fstats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0 4px}
-.fstats>div{flex:1;min-width:110px;max-width:200px;background:var(--panel);border:1px solid var(--panel-borde);
+.fstats{display:flex;gap:12px;justify-content:center;margin:14px 0 4px}
+.fstats>div{flex:1;min-width:0;max-width:200px;background:var(--panel);border:1px solid var(--panel-borde);
   border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;align-items:center;gap:2px}
 .fstats b{font-family:var(--display);font-size:clamp(24px,5vw,34px);line-height:1}
 .fstats small{font-size:12.5px;color:var(--gris);letter-spacing:.04em}
@@ -799,11 +800,17 @@ body{padding:0;overflow:hidden}
 #p-registro .bajada{color:#BFD0F2;text-shadow:0 1px 8px rgba(0,0,0,.6)}
 #p-registro .icobtn.volver{color:#D7E4FF}
 #p-final{--fondop:url("img/resultado.webp");background-position:center top}
-#p-final .puntaje{position:static;height:auto;min-height:0;flex:none;gap:0;padding-top:44vh}
-#p-final .anillo{position:absolute;left:0;top:9vh;width:min(57vw,235px);aspect-ratio:1;background:none!important;border:0!important;box-shadow:none!important;mask-image:none!important;-webkit-mask-image:none!important}
-#p-final .anillo::before{display:none!important}
-#p-final .anillo-in{background:none;border:0;box-shadow:none;backdrop-filter:none}
-#p-final .anillo-in b{text-shadow:0 0 22px rgba(34,227,214,.75),0 2px 10px rgba(0,0,0,.6)}
+#p-final .puntaje{position:static;height:auto;min-height:0;flex:none;gap:0;padding-top:40vh}
+#p-final .pie{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+#p-final .pie .btn{width:100%;justify-content:center}
+#p-final #btn-practicar{grid-column:1/-1;font-size:17px;font-weight:800}
+#p-final .anillo{position:absolute;left:4vw;top:8vh;width:min(62vw,250px);aspect-ratio:1;background:none!important;border:0!important;box-shadow:none!important;mask-image:none!important;-webkit-mask-image:none!important}
+#p-final .anillo::before{display:block!important;
+  background:conic-gradient(var(--turquesa) 0 var(--a1,0%),var(--parina) var(--a1,0%) var(--a2,0%),rgba(140,170,230,.14) var(--a2,0%) 100%);
+  -webkit-mask:radial-gradient(farthest-side,transparent 78%,#000 79%);mask:radial-gradient(farthest-side,transparent 78%,#000 79%);
+  filter:drop-shadow(0 0 14px rgba(34,227,214,.5))}
+#p-final .anillo-in{background:rgba(5,12,32,.8);border:0;box-shadow:0 0 0 1px rgba(140,190,255,.3);backdrop-filter:blur(8px)}
+#p-final .anillo-in b{font-size:clamp(46px,13vw,64px);text-shadow:0 0 22px rgba(34,227,214,.75),0 2px 10px rgba(0,0,0,.6)}
 #p-final .anillo-in small{color:#BFE9F5;text-shadow:0 1px 8px rgba(0,0,0,.7)}
 #p-final .robot-final{display:none}
 #p-final .veredicto{position:static!important;max-width:100%;text-align:center}
@@ -878,8 +885,8 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
 .rosco-col{flex:1;display:flex;flex-direction:column;min-height:0}
 @media(min-width:761px){.rosco-caja{flex:1;min-height:0;position:relative}}
 #rosco{position:absolute;inset:0}
-.centro-juego{position:absolute;left:50%;top:50%;width:66%;height:62%;transform:translate(-50%,-50%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;overflow:hidden}
+@media(min-width:761px){.centro-juego{position:absolute;left:50%;top:50%;width:66%;height:62%;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;overflow:hidden}}
 .consigna{font-weight:900;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--turquesa);
   background:none;padding:0;box-shadow:none}
 .definicion{font-weight:800;line-height:1.28;color:var(--texto)}
@@ -1148,11 +1155,11 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
 <section class="pantalla" id="p-final">
   <div class="tarjeta">
     <div class="top"><button class="icobtn volver" id="btn-res-inicio" title="Volver al inicio" aria-label="Volver al inicio"><svg viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>Tu resultado</h2><span style="width:42px"></span></div>
-    <p class="eyebrow" id="motivo">Rosco cerrado</p>
     <div class="puntaje">
       <div class="anillo" id="anillo"><div class="anillo-in"><b><span id="f-ok">0</span></b><small>respuestas<br>correctas<br><span style="opacity:.65">de <span id="f-tot">19</span></span></small><span id="f-rot" style="display:none"></span></div>
       <img class="robot-final" src="img/robot.webp" alt="">
     </div>
+      <p class="eyebrow" id="motivo">Rosco cerrado</p>
       <p class="veredicto" id="veredicto"></p>
     <div class="fstats">
       <div class="fs-ok"><b id="fs-ok">0</b><small>Correctas</small></div>
@@ -1168,11 +1175,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
       <div style="--c:var(--j2)"><b id="d2">—</b><span id="dp2">0</span> aciertos</div>
     </div>
     <div class="podio" id="podio" style="display:none"></div>
-    <div class="ranking" id="ranking-final" style="display:none">
-      <h3><svg class="tit-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 4h3a1 1 0 0 1 1 1c0 3.5-2 6-4.6 6.7A6 6 0 0 1 13 15.9V18h3v2H8v-2h3v-2.1a6 6 0 0 1-3.4-4.2C5 11 3 8.5 3 5a1 1 0 0 1 1-1h3V3h10v1zm-10 2H5.4c.3 1.7 1.2 3 2.4 3.7A10 10 0 0 1 7 6zm10 0a10 10 0 0 1-.8 3.7c1.2-.7 2.1-2 2.4-3.7H17z"/></svg>Mejores jugadores</h3>
-      <small>Tu marca ya quedó anotada en la planilla de la profe.</small>
-      <div id="ranking-final-lista"></div>
-    </div>
+
     <div id="aportes"></div>
     <p style="margin-top:14px"><button class="btn hueca chica" id="btn-aportes">Ver conceptos resueltos por cada integrante</button></p>
     <div class="meta" id="meta">
@@ -1187,10 +1190,10 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
     <div id="grupos"></div>
     <span id="slot-final"></span>
     <div class="pie">
-      <button class="btn uva grande" id="btn-resultados"><svg class="tit-ico" viewBox="0 0 24 24" aria-hidden="true" style="fill:#fff"><path d="M17 4h3a1 1 0 0 1 1 1c0 3.5-2 6-4.6 6.7A6 6 0 0 1 13 15.9V18h3v2H8v-2h3v-2.1a6 6 0 0 1-3.4-4.2C5 11 3 8.5 3 5a1 1 0 0 1 1-1h3V3h10v1zm-10 2H5.4c.3 1.7 1.2 3 2.4 3.7A10 10 0 0 1 7 6zm10 0a10 10 0 0 1-.8 3.7c1.2-.7 2.1-2 2.4-3.7H17z"/></svg>Resultados y ranking</button>
+      <button class="btn hueca" id="btn-resultados"><svg class="tit-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 20V10h4v10H4zm6 0V4h4v16h-4zm6 0v-7h4v7h-4z"/></svg>Ver clasificación</button>
+      <button class="btn hueca" id="btn-otra"><svg class="tit-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4a8 8 0 1 0 8 8h-2.2A5.8 5.8 0 1 1 12 6.2c1.7 0 3.2.7 4.3 1.9L13 11.4h8V3.4l-3.2 3.2A8 8 0 0 0 12 4z"/></svg><span id="btn-otra-txt">Jugar de nuevo</span></button>
       <button class="btn uva" id="btn-practicar">Practicar las que costaron</button>
-      <button class="btn" id="btn-otra">Otro rosco</button>
-      <button class="btn hueca" id="btn-inicio">Volver al inicio</button>
+      <button class="btn hueca chica" id="btn-inicio">Volver al inicio</button>
       <button class="btn hueca chica" id="btn-copiar">Copiar resultado</button>
     </div>
     <p style="color:var(--gris);font-size:13.5px;margin-top:14px">Tiempo usado <b id="f-tiempo">—</b><span style="display:none">Sección <b id="f-sec">—</b></span></p>
@@ -1529,14 +1532,14 @@ function leerConsigna(){
     $("feedback").className="feedback";
     $("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 3a8 8 0 0 0-8 8v6a2 2 0 0 0 2 2h2a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H6v-1a6 6 0 0 1 12 0v1h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2a2 2 0 0 0 2-2v-6a8 8 0 0 0-8-8z'/></svg> Sin voz</span>No se escuchó la consigna, pero está escrita arriba: podés responder igual.";
     luego(()=>$("entrada").focus(),60);
-  },7000+(cons.length+txt.length)*80);
+  },10000+(cons.length+txt.length)*130);
   setTimeout(()=>decir(cons,()=>{
     setTimeout(()=>{
       if(!lectura||!soportaVoz||!jugando||items[idx]!==it)return;
       decir(txt,()=>{
         if(jugando&&items[idx]===it&&!esBot()){
           if(enLinea&&!miTurno()){verRival();return;}
-          habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();
+          if($("entrada").disabled){habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();}
           $("feedback").className="feedback";$("feedback").textContent="";
           luego(()=>$("entrada").focus(),60);
         }});
@@ -1904,7 +1907,7 @@ function mostrarLetra(){
   const it=items[idx];
   $("consigna").textContent=(it.m===E?"Empieza por ":"Contiene la ")+it.letra+(estado[idx]==="pasada"?" ↻":"");
   const rw=$("rosco").offsetWidth||343;
-  $("definicion").style.fontSize=Math.max(12,Math.min(rw*.042,rw/it.d.length*18))+"px";
+  $("definicion").style.fontSize=Math.max(12,Math.min(rw*.04,rw/it.d.length*16))+"px";
   $("definicion").innerHTML=it.d;
   $("entrada").value="";actBtnResp();$("feedback").textContent="";$("feedback").className="feedback";
   pintar();leerConsigna();
@@ -2125,7 +2128,8 @@ function terminar(motivo){
   $("f-ok").textContent=ok;$("f-tot").textContent=n;$("motivo").textContent=motivo;
   const er_=estado.filter(s=>s==="error").length;
   $("fs-ok").textContent=ok;$("fs-er").textContent=er_;$("fs-ps").textContent=n-ok-er_;
-  $("anillo").style.setProperty("--pct",(100*ok/n)+"%");
+  $("anillo").style.setProperty("--a1",(100*ok/n)+"%");
+  $("anillo").style.setProperty("--a2",(100*(ok+er_)/n)+"%");
   const pts=ok*100+(sinReloj?0:Math.round(99*Math.max(0,Math.min(1,(seg-(enLinea?rel[yo]:Math.max(restante,0)))/seg))));
   $("fp-val").textContent=pts.toLocaleString("es-AR");
   let mejor=0;try{mejor=+localStorage.getItem("ppia-mejor-pts")||0}catch(e){}
@@ -2693,11 +2697,11 @@ function lluviaLetras(){   // letras del rosco que caen como papelitos cuando se
 /* --- final: revancha, repaso a solas --- */
 function redBotonFinal(){
   chatUbicar();
-  const b=$("btn-otra");if(!red.sala){b.textContent="Otro rosco";b.disabled=false;return;}
+  const b=$("btn-otra"),bt=$("btn-otra-txt");if(!red.sala){bt.textContent="Jugar de nuevo";b.disabled=false;return;}
   const nom=nombreBonito((red.jug?red.jug.nombres:nombres)[1-yo]||"tu rival");
-  if(!red.rival||!red.rivalAqui){b.textContent=red.rival?"Esperando que vuelva "+nom:"Tu rival salió de la sala";b.disabled=true;return;}
+  if(!red.rival||!red.rivalAqui){bt.textContent=red.rival?"Esperando que vuelva "+nom:"Tu rival salió de la sala";b.disabled=true;return;}
   b.disabled=red.quiero&&!red.rivalQuiere;
-  b.textContent=red.quiero?"Esperando a "+nom+"…":red.rivalQuiere?nom+" quiere la revancha: ¡dale!":"Pedir revancha";
+  bt.textContent=red.quiero?"Esperando a "+nom+"…":red.rivalQuiere?nom+" quiere la revancha: ¡dale!":"Pedir revancha";
 }
 function redRevancha(){
   red.quiero=true;redEnviar("rev",{});
