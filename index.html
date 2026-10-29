@@ -327,6 +327,7 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
   #p-juego .consigna{font-size:11.5px;padding:4px 10px;letter-spacing:.06em}
   .definicion{line-height:1.32;min-height:0;width:100%;padding:0 10px;overflow:hidden}
   .respuesta{width:100%;margin-bottom:14px}
+  #p-juego .feedback{margin-top:26px;max-height:none}
   .barra-turno{margin-top:43px}
   #entrada{max-width:none;padding:13px 14px;font-size:16px}
   .respuesta .btn{padding:13px 20px;font-size:15px}
@@ -506,7 +507,7 @@ body.online #salas-abiertas{display:flex!important}
 .sala-item span small{display:block;color:var(--gris);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sala-item b{font-family:var(--display);font-weight:800;color:var(--uva);letter-spacing:.12em}
 #p-sala .tarjeta{display:flex;flex-direction:column;gap:14px;text-align:center}
-#p-sala .cod-sala{display:inline-block;font-family:var(--display);font-size:38px;font-weight:800;color:var(--uva);letter-spacing:.22em;background:var(--superficie2);border:2px dashed var(--uva);border-radius:14px;padding:4px 18px}
+#p-sala .cod-sala{display:block;width:max-content;max-width:100%;margin:10px auto 2px;font-family:var(--display);font-size:38px;font-weight:800;color:var(--uva);letter-spacing:.22em;background:var(--superficie2);border:2px dashed var(--uva);border-radius:14px;padding:4px 18px}
 #p-sala .jug{display:flex;align-items:center;gap:12px;padding:10px 16px;border-radius:16px;background:var(--superficie2);border:2px solid var(--borde);text-align:left;min-height:66px}
 #p-sala .jug[style*="j1"]{border-color:var(--j1)}
 #p-sala .jug[style*="j2"]{border-color:var(--j2)}
@@ -1558,7 +1559,7 @@ const callar=()=>{if(soportaVoz)speechSynthesis.cancel();};
 function toastVoz(msg){  // aviso breve abajo de la pantalla
   let t=$("toast-voz");
   if(!t){t=document.createElement("p");t.id="toast-voz";
-    t.style.cssText="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1E2A66;color:#fff;padding:10px 18px;border-radius:999px;font-family:'Roboto',sans-serif;font-weight:700;font-size:14px;z-index:80;box-shadow:0 8px 22px -8px rgba(0,0,0,.4);transition:opacity .25s;max-width:88vw;text-align:center;pointer-events:none";
+    t.style.cssText="position:fixed;left:50%;top:110px;transform:translateX(-50%);background:#1E2A66;color:#fff;padding:10px 18px;border-radius:999px;font-family:'Roboto',sans-serif;font-weight:700;font-size:14px;z-index:80;box-shadow:0 8px 22px -8px rgba(0,0,0,.4);transition:opacity .25s;max-width:88vw;text-align:center;pointer-events:none";
     document.body.appendChild(t);}
   t.textContent=msg;t.style.opacity="1";
   clearTimeout(t._h);t._h=setTimeout(()=>t.style.opacity="0",2400);
