@@ -578,7 +578,9 @@ body.online #tiempo{display:none}
   border:3px solid #1A1200;border-radius:999px;padding:14px 34px;cursor:pointer;
   box-shadow:0 10px 28px -8px color-mix(in srgb,var(--amarillo) 75%,transparent),inset 0 2px 0 rgba(255,255,255,.55)}
 .btn-jugar-hero svg{width:20px;height:20px;fill:#241A02}
-.btn-jugar-hero:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn-jugar-hero:hover{filter:brightness(1.06)}
+.btn-jugar-hero:active{transform:translateX(-50%) scale(.95)}
+.btn-jugar-hero:hover{transform:translateX(-50%)}
 [data-tema="aula"] .hero{border-color:color-mix(in srgb,var(--uva) 40%,transparent)}
 [data-tema="aula"] .hero::before{background:linear-gradient(100deg,rgba(10,20,52,.9) 30%,rgba(10,20,52,.6) 66%,rgba(10,20,52,.35))}
 
