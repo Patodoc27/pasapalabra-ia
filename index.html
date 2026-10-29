@@ -1374,7 +1374,7 @@ const limpiarTimers=()=>{timers.forEach(clearTimeout);timers=[];};
 
 /* ===== SONIDO ===== */
 let ctx=null;
-function audio(){if(!ctx){try{ctx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(ctx&&ctx.state==="suspended")ctx.resume();return ctx;}
+function audio(){if(!ctx){try{ctx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(ctx&&ctx.state==="suspended"){const p=ctx.resume();if(p&&p.then)p.then(()=>{if(musQuer)musica(true)});}return ctx;}
 function tono(f,dur,tipo="triangle",vol=.16,delay=0){
   if(!sonido)return;const c=audio();if(!c)return;
   const o=c.createOscillator(),g=c.createGain(),t=c.currentTime+delay;
@@ -1404,6 +1404,28 @@ function sAlarma(){  // timbre de desafío: suena siempre, y vibra en Android
   for(let r=0;r<2;r++){[988,1319,1568].forEach((f,i)=>tonoA(f,.16,"triangle",.22,r*.55+i*.13));}
   try{if(navigator.vibrate)navigator.vibrate([180,90,180]);}catch(e){}
 }
+/* ===== MUSIQUITA DE FONDO: inicio / registro / final (suena solo con sonido activo) ===== */
+let musTimer=null,musPaso=0,musQuer=false;
+const MUS_ACORDES=[[261.6,329.6,392],[293.7,370,440],[349.2,440,523.3],[392,493.9,587.3]];
+function musNota(f,t,dur,vol,tipo){
+  const c=ctx,o=c.createOscillator(),g=c.createGain();
+  o.type=tipo;o.frequency.value=f;
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.03);
+  g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+dur+.05);
+}
+function musica(q){
+  if(q&&sonido){
+    const c=audio();if(!c)return;
+    if(musTimer||c.state!=="running")return;   // arranca tras el primer toque (autoplay)
+    const paso=()=>{if(!ctx||ctx.state!=="running")return;
+      const t=ctx.currentTime+.05,ac=MUS_ACORDES[musPaso%4];musPaso++;
+      ac.forEach((f,i)=>musNota(f,t+i*.22,.55,.04,"triangle"));
+      musNota(ac[0]/2,t,1.05,.05,"sine");
+    };
+    paso();musTimer=setInterval(paso,950);
+  }else if(musTimer){clearInterval(musTimer);musTimer=null;}
+}
 const ICO={sol:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.4"/><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.9 1.9M17.1 17.1 19 19M5 19l1.9-1.9M17.1 6.9 19 5"/></g></svg>',
 luna:'<svg viewBox="0 0 24 24"><path d="M20.4 14.1A8.9 8.9 0 0 1 9.9 3.6a.7.7 0 0 0-.9-.9A10.4 10.4 0 1 0 21.3 15a.7.7 0 0 0-.9-.9z"/></svg>',
 son:'<svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/><path d="M16 9.2a4.6 4.6 0 0 1 0 5.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>',
@@ -1411,7 +1433,7 @@ sonOff:'<svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/><g f
 vozOn:'<svg viewBox="0 0 24 24"><path d="M4 4h13a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9.6l-3.9 3.3c-.5.4-1.2.1-1.2-.5V6a2 2 0 0 1 2-2z"/></svg>',
 vozOff:'<svg viewBox="0 0 24 24"><path d="M5 4a2 2 0 0 1 2-2h12v18l-6-3.5L7 20a2 2 0 0 1-2-2V4z"/></svg>'};
 function pintarSonido(){const b=$("btn-son");b.innerHTML=sonido?ICO.son:ICO.sonOff;b.title=sonido?"Silenciar":"Activar sonido";b.setAttribute("aria-label",b.title);}
-$("btn-son").addEventListener("click",()=>{sonido=!sonido;pintarSonido();if(sonido)sTurno();});
+$("btn-son").addEventListener("click",()=>{sonido=!sonido;pintarSonido();musica(sonido&&musQuer);if(sonido)sTurno();});
 
 /* ===== VOZ · lectura de consignas ===== */
 let lectura=true,vozElegida=null;   // en esta versión la lectura está siempre activada
@@ -1506,7 +1528,8 @@ function leerConsigna(){
 
 const mostrar=id=>{document.querySelectorAll(".pantalla").forEach(p=>p.classList.remove("activa"));$(id).classList.add("activa");
   if(id!=="p-juego"&&soportaVoz)callar();
-  document.body.classList.toggle("con-letras",id==="p-inicio");chatUbicar(id);};
+  document.body.classList.toggle("con-letras",id==="p-inicio");chatUbicar(id);
+  musQuer=(id==="p-inicio"||id==="p-registro"||id==="p-final");musica(musQuer);};
 const colorTurno=()=>document.documentElement.style.setProperty("--jug",turno===0?"var(--j1)":"var(--j2)");
 
 /* ===== AMBIENTE: aula (claro) / show (oscuro) ===== */
