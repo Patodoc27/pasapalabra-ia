@@ -408,6 +408,30 @@ details.grupo .grupo-in{padding:0 16px 14px}
 .fila.ok{border-left-color:var(--lima)}.fila.ok .l{color:var(--lima)}
 .fila.mal{border-left-color:var(--parina)}.fila.mal .l{color:var(--parina)}
 .fila.sin{border-left-color:var(--sol)}.fila.sin .l{color:var(--ambar)}
+/* ===== MI PERFIL ===== */
+.perf-cabe{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--vidrio);
+  border:1px solid var(--vidrio-b);border-radius:18px;padding:16px;backdrop-filter:blur(10px)}
+.perf-ava{width:66px;height:66px;border-radius:50%;object-fit:contain;flex:none;
+  background:var(--superficie2);border:2px solid var(--turquesa)}
+.perf-id{flex:1;min-width:130px}
+.perf-id h3{font-family:var(--display);font-weight:800;font-size:clamp(20px,4.5vw,26px);margin:0;line-height:1.1}
+.perf-id p{margin:3px 0 0;color:var(--gris);font-size:14px}
+.perf-fila{display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.perf-ring{width:min(180px,46vw)}
+.anillo.perf-ring::before{background:conic-gradient(var(--turquesa) 0 var(--a1,0%),var(--parina) var(--a1,0%) var(--a2,0%),rgba(140,170,230,.14) var(--a2,0%) 100%);
+  filter:drop-shadow(0 0 12px rgba(34,227,214,.45))}
+.perf-stats{flex:1;min-width:220px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.perf-stats>div{background:var(--superficie2);border:1px solid var(--borde);border-radius:14px;padding:12px 8px;text-align:center}
+.perf-stats b{font-family:var(--display);font-size:clamp(22px,5vw,30px);display:block;line-height:1.1}
+.perf-stats small{color:var(--gris);font-size:12px;letter-spacing:.03em}
+.perf-pie{text-align:center;color:var(--gris);font-size:14px;margin-top:16px;line-height:1.5}
+.perf-nota-letra{display:inline-block;margin-left:6px;padding:2px 12px;border-radius:10px;
+  background:linear-gradient(135deg,var(--fucsia),var(--violeta));color:#fff;
+  font-family:var(--display);font-weight:900;font-size:15px}
+.perf-acciones{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+.perf-acciones .btn{flex:1;justify-content:center;min-width:150px}
+#perf-vacio{text-align:center;color:var(--gris);font-size:15.5px;line-height:1.6;
+  background:var(--vidrio);border:1px dashed var(--vidrio-b);border-radius:16px;padding:26px 18px;margin-top:20px}
 #aportes{display:none;margin-top:16px;background:var(--superficie2);border:1px solid var(--borde);border-radius:16px;padding:16px 18px;font-size:16px;color:var(--suave);line-height:1.6}
 #aportes.visible{display:block}
 #aportes b{font-family:var(--display);font-size:18px;color:var(--tinta)}
@@ -805,7 +829,7 @@ body{padding:0;overflow:hidden}
 #p-juego>.tarjeta{height:100%;min-height:0}
 #p-inicio>.tarjeta.ini-full{min-height:100%}
 #p-inicio{--fondop:url("img/inicio.webp")}
-#p-sala,#p-cuenta,#p-ranking,#p-repaso,#p-info{--fondop:url("img/fondo-hero.webp")}
+#p-sala,#p-cuenta,#p-ranking,#p-repaso,#p-info,#p-perfil{--fondop:url("img/fondo-hero.webp")}
 #p-juego{--fondop:none;background:linear-gradient(180deg,#081233 0%,#040A1F 55%,#030816 100%)}
 #p-registro{--fondop:url("img/registro.webp")}
 #p-registro::before{background:linear-gradient(180deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,.16) 20%,rgba(8,14,38,.55) 45%,rgba(4,10,28,.8) 100%)}
@@ -1067,6 +1091,39 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
     <p style="margin-top:4px"><button class="btn grande comenzar" id="btn-jugar" style="width:100%">Comenzar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></p>
     </div><!-- /col-b -->
     </div><!-- /inicio-grid -->
+  </div>
+</section>
+
+<!-- ===== PERFIL ===== -->
+<section class="pantalla" id="p-perfil">
+  <div class="tarjeta">
+    <div class="top"><button class="icobtn volver" id="btn-perf-atras" title="Volver" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>Mi perfil</h2><span style="width:42px"></span></div>
+    <div class="perf-cabe">
+      <img class="perf-ava" id="perf-ava" alt="Tu avatar">
+      <div class="perf-id"><h3 id="perf-nombre">—</h3><p id="perf-sec">—</p></div>
+      <button class="btn" id="btn-perf-editar" type="button">Editar mis datos</button>
+    </div>
+    <div id="perf-con" style="display:none">
+      <div class="perf-fila">
+        <div class="anillo perf-ring" id="perf-ring"><div class="anillo-in"><b><span id="perf-nota">0</span></b><small>calificación<br>provisoria</small></div></div>
+        <div class="perf-stats">
+          <div><b id="perf-partidas">0</b><small>Partidas jugadas</small></div>
+          <div><b id="perf-aciertos">0</b><small>Aciertos</small></div>
+          <div><b id="perf-mejor">0</b><small>Mejor rosco</small></div>
+          <div><b id="perf-completos">0</b><small>Roscos completos</small></div>
+        </div>
+      </div>
+      <p class="perf-pie" id="perf-pie"></p>
+      <div class="grupo" id="perf-dif" style="display:none">
+        <h3><i style="background:var(--parina)">✕</i>Palabras que más te cuestan</h3>
+        <div id="perf-fallos"></div>
+      </div>
+    </div>
+    <p id="perf-vacio">Todavía no jugaste ningún rosco desde este dispositivo. Cuando termines tu primera partida, acá vas a ver tus aciertos, tu calificación provisoria y las palabras que más te cuestan.</p>
+    <div class="perf-acciones">
+      <button class="btn" id="btn-perf-jugar" type="button">Ir a jugar</button>
+      <button class="btn" id="btn-perf-inicio" type="button">Volver al inicio</button>
+    </div>
   </div>
 </section>
 
@@ -1728,11 +1785,17 @@ function progresoGuardar(){
     g.aciertos=(g.aciertos||0)+puntos[mj];
     g.mejor=Math.max(g.mejor||0,puntos[mj]);
     if(!quedan())g.completos=(g.completos||0)+1;   // rosco cerrado: no quedó letra pendiente
+    const mio=enLinea?yo:0;   // índice del jugador de este dispositivo
+    let misErr=0;const f=g.fallos||{};
     const map={};(g.repasar||[]).forEach(it=>map[it.p]=it);
     items.forEach((it,i)=>{
       if(estado[i]==="acierto")delete map[it.p];                       // ya la recuperó: sale del repaso
-      else if(!(estado[i]==="error"&&respondio[i]===(enLinea?1-yo:(solo||sola?1:1))))map[it.p]=it;   // error del otro no va a tu repaso
+      else{
+        if(estado[i]==="error"&&respondio[i]===mio){misErr++;f[it.p]=(f[it.p]||0)+1;}
+        if(!(estado[i]==="error"&&respondio[i]===(enLinea?1-yo:(solo||sola?1:1))))map[it.p]=it;   // error del otro no va a tu repaso
+      }
     });
+    g.fallos=f;g.errores=(g.errores||0)+misErr;g.jugadas=(g.jugadas||0)+items.length;
     g.repasar=Object.values(map).slice(-60);
     localStorage.setItem("ppia-progreso",JSON.stringify(g));
   }catch(e){}
@@ -1809,7 +1872,34 @@ $("chips-meta").addEventListener("click",e=>{const b=e.target.closest(".chip");i
 let rankOrigen="p-final";
 $("btn-jugar-hero").addEventListener("click",()=>{audio();mostrar("p-registro");luego(()=>$("n1").focus(),450);});
 $("btn-volver-reg").addEventListener("click",()=>{audio();mostrar("p-inicio");});
-$("nav-perfil").addEventListener("click",()=>{audio();mostrar("p-registro");luego(()=>$("n1").focus(),450);});
+function perfilPintar(){
+  let j=null;try{j=JSON.parse(localStorage.getItem("ppia-jugador")||"null")}catch(e){}
+  $("perf-nombre").textContent=j&&j.nombre?j.nombre:"Todavía sin nombre";
+  $("perf-sec").textContent=j&&j.seccion?("Curso "+j.seccion):"Curso sin elegir";
+  const av=j&&typeof j.avatar==="number"?Math.min(AVATAR_BOTI-1,Math.max(0,j.avatar)):0;
+  $("perf-ava").src=AVATARES[av].img;
+  const g=progresoLeer(),part=g.partidas||0,ok=g.aciertos||0,err=g.errores||0,jug=g.jugadas||0;
+  if(!part){$("perf-con").style.display="none";$("perf-vacio").style.display="";return;}
+  $("perf-con").style.display="";$("perf-vacio").style.display="none";
+  const nota=Math.min(10,Math.floor(ok/10));   // 0-9→0, 10-19→1, …, 100+→10
+  $("perf-nota").textContent=nota;
+  const p1=jug?Math.round(100*ok/jug):0,p2=jug?Math.round(100*(ok+err)/jug):0;
+  const ring=$("perf-ring");ring.style.setProperty("--a1",p1+"%");ring.style.setProperty("--a2",p2+"%");
+  $("perf-partidas").textContent=part;$("perf-aciertos").textContent=ok;
+  $("perf-mejor").textContent=g.mejor||0;$("perf-completos").textContent=g.completos||0;
+  const prox=nota>=10?"— ya llegaste al 10.":("; te faltan "+(Math.max(0,(nota+1)*10-ok))+" aciertos para el "+(nota+1)+".");
+  $("perf-pie").innerHTML="<b>"+ok+"</b> aciertos · <b>"+err+"</b> errores · <b>"+Math.max(0,jug-ok-err)+"</b> sin cerrar en "+part+(part>1?" partidas.":" partida.")+" La nota sube un punto cada 10 aciertos"+prox;
+  const f=g.fallos||{},lista=Object.keys(f).map(p=>({p:p,n:f[p]})).sort((a,b)=>b.n-a.n).slice(0,6);
+  if(lista.length){
+    $("perf-dif").style.display="";
+    $("perf-fallos").innerHTML=lista.map(x=>"<div class='fila mal'><div class='l'>✕</div><div><div class='p'>"+x.p+"</div><div class='d'>La erraste "+x.n+(x.n>1?" veces":" vez")+"</div></div></div>").join("");
+  }else $("perf-dif").style.display="none";
+}
+$("nav-perfil").addEventListener("click",()=>{audio();perfilPintar();mostrar("p-perfil");});
+$("btn-perf-atras").addEventListener("click",()=>{audio();mostrar("p-inicio");});
+$("btn-perf-inicio").addEventListener("click",()=>{audio();mostrar("p-inicio");});
+$("btn-perf-jugar").addEventListener("click",()=>{audio();mostrar("p-registro");luego(()=>$("n1").focus(),450);});
+$("btn-perf-editar").addEventListener("click",()=>{audio();mostrar("p-registro");luego(()=>$("n1").focus(),450);});
 $("nav-rank").addEventListener("click",()=>{audio();rankOrigen="p-inicio";mostrarRankingSecs();});
 $("nav-info").addEventListener("click",()=>{audio();mostrar("p-info");});
 /* Pantalla completa desde el inicio: entra y sale con el mismo botón */
