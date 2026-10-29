@@ -1625,7 +1625,7 @@ async function mostrarRankingSecs(){
     [...cont.children].forEach(c=>{c.style.display=(b.dataset.sec==="*"||c.dataset.sec===b.dataset.sec)?"":"none";});};
   cont.innerHTML=secs.map(s=>{
     return '<div class="sec-col" data-sec="'+s+'"><h3>'+s+'</h3><small>'+porSec[s].length+' estudiantes con marca registrada</small>'+
-      porSec[s].slice(0,5).map((r,i)=>rankingFila(r,i,true)).join("")+'</div>';}).join("");
+      porSec[s].map((r,i)=>rankingFila(r,i,true)).join("")+'</div>';}).join("");
 }
 $("btn-resultados").addEventListener("click",()=>{audio();rankOrigen="p-final";mostrarRankingSecs();});
 $("btn-volver-ranking").addEventListener("click",()=>{audio();mostrar(rankOrigen);});
