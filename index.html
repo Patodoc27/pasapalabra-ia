@@ -817,7 +817,8 @@ body{padding:0;overflow:hidden}
 #progreso-card,.jug .sj{background:var(--vidrio);border:1px solid var(--vidrio-b);border-radius:18px;
   backdrop-filter:blur(12px) saturate(1.2);box-shadow:var(--sombra2)}
 .reg-top{align-items:center}
-.reg-top .reg-tit{flex:1;text-align:left;font-size:clamp(30px,9vw,38px);line-height:1.05}
+.reg-top .reg-tit{flex:1;text-align:center;font-size:clamp(30px,9vw,38px);line-height:1.05}
+.reg-top .bajada{margin-top:10px;text-align:center}
 .reg-tit em,.bajada{font-weight:600}
 label{display:block;font-size:12.5px;font-weight:700;color:#9DB4DC;letter-spacing:.12em;margin-bottom:7px}
 .etq,label{font-family:var(--cuerpo);text-transform:uppercase}
@@ -1543,7 +1544,7 @@ function leerConsigna(){
 const mostrar=id=>{document.querySelectorAll(".pantalla").forEach(p=>p.classList.remove("activa"));$(id).classList.add("activa");
   if(id!=="p-juego"&&soportaVoz)callar();
   document.body.classList.toggle("con-letras",id==="p-inicio");chatUbicar(id);
-  musQuer=(id==="p-inicio"||id==="p-registro"||id==="p-final");musica(musQuer);};
+  musQuer=(id!=="p-juego");musica(musQuer);};
 const colorTurno=()=>document.documentElement.style.setProperty("--jug",turno===0?"var(--j1)":"var(--j2)");
 
 /* ===== AMBIENTE: aula (claro) / show (oscuro) ===== */
