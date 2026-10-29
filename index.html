@@ -1046,7 +1046,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
     <div>
       <label class="etq-mod">Modalidad</label>
       <div class="chips modos" id="chips-rival">
-        <button class="chip modo" type="button" data-bot="2" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></svg><b>Sola</b><small>contra el reloj</small></button>
+        <button class="chip modo" type="button" data-bot="2" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></svg><b>Solo/a</b><small>contra el reloj</small></button>
         <button class="chip modo" type="button" data-bot="1" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="4"/><path d="M12 8V4.5"/><circle cx="12" cy="3.5" r="1.2" fill="currentColor"/><circle cx="9" cy="14" r="1.5" fill="currentColor"/><circle cx="15" cy="14" r="1.5" fill="currentColor"/><path d="M2 13v3M22 13v3"/></svg><b>Contra Boti</b><small>el robot rival</small></button>
         <button class="chip modo" type="button" data-bot="3" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="5" width="7.5" height="13" rx="2"/><rect x="14" y="5" width="7.5" height="13" rx="2"/><path d="M10.5 9.5h3M10.5 13.5h3"/></svg><b>En línea</b><small>cada una en su celu</small></button>
       </div>
@@ -1828,8 +1828,8 @@ const fmt=s=>String(Math.floor(Math.max(s,0)/60)).padStart(2,"0")+":"+String(Mat
 /* tiempos según modalidad: sola necesita más porque cada consigna se lee en voz alta;
    en línea cada jugador tiene su propio reloj */
 function pintarTiempo(){
-  const ops=modoOnline?[[240,"Normal · 4 min cada uno"],[180,"Intermedio · 3 min cada uno"],[90,"Intenso · 90 s cada uno"],[0,"Sin reloj · práctica"]]
-    :sola?[[240,"4 min"],[360,"6 min"],[480,"8 min"]]:[[180,"3 min"],[300,"5 min"]];
+  /* mismas opciones de tiempo en todas las modalidades, idénticas */
+  const ops=[[240,"Normal · 4 min"],[180,"Intermedio · 3 min"],[90,"Intenso · 90 s"],[0,"Sin reloj · práctica"]];
   $("chips-tiempo").innerHTML=ops.map((o,i)=>'<button class="chip" type="button" data-seg="'+o[0]+'" aria-pressed="'+(i===0)+'">'+o[1]+'</button>').join("");
   sinReloj=false;seg=ops[0][0];
 }
