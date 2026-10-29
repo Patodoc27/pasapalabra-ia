@@ -315,8 +315,9 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
   #rosco{position:relative!important;width:var(--rw,343px);aspect-ratio:1;flex:none;margin:auto}
   #rosco::after{content:"";position:absolute;inset:8%;border-radius:50%;pointer-events:none;
     background:radial-gradient(circle,color-mix(in srgb,var(--jug) 12%,transparent),transparent 72%)}
+  #rosco .letra{width:10.6%;font-size:calc(var(--rw,343px)*.052)}
   .centro-juego{inset:auto;top:50%;left:50%;transform:translate(-50%,-50%);
-    width:calc(var(--rw,343px)*.68);height:calc(var(--rw,343px)*.62);padding:0;gap:6px}
+    width:calc(var(--rw,343px)*.60);height:calc(var(--rw,343px)*.58);padding:0;gap:5px}
   .consigna{font-size:12px;padding:6px 15px}
   .definicion{line-height:1.32;min-height:0;overflow:hidden}
   .respuesta{width:100%}
@@ -1546,7 +1547,7 @@ const mostrar=id=>{document.querySelectorAll(".pantalla").forEach(p=>p.classList
   if(id==="p-juego")requestAnimationFrame(medirRosco);};
 /* El aro ocupa todo el espacio libre entre el encabezado y la respuesta, como en BioRosco */
 function medirRosco(){const caja=$("rosco").parentElement;const r=caja.getBoundingClientRect();
-  const w=Math.min(r.width,r.height)-4;
+  const w=Math.min(r.width,r.height)-2;
   caja.style.setProperty("--rw",Math.max(240,w)+"px");}
 window.addEventListener("resize",()=>{if($("p-juego").classList.contains("activa"))medirRosco();});
 const colorTurno=()=>document.documentElement.style.setProperty("--jug",turno===0?"var(--j1)":"var(--j2)");
@@ -1820,7 +1821,7 @@ function iniciarRonda(desde,segundos,empieza){
   carita("salta");burbuja("va");
 }
 function armarRosco(){
-  const cont=$("rosco");cont.innerHTML="";const n=items.length,R=window.matchMedia("(max-width:760px)").matches?40:44;
+  const cont=$("rosco");cont.innerHTML="";const n=items.length,R=window.matchMedia("(max-width:760px)").matches?41:44;
   items.forEach((it,i)=>{
     const ang=(-90+i*360/n)*Math.PI/180;
     const d=document.createElement("div");
@@ -1898,7 +1899,7 @@ function mostrarLetra(){
   const it=items[idx];
   $("consigna").textContent=(it.m===E?"Empieza por ":"Contiene la ")+it.letra+(estado[idx]==="pasada"?" ↻":"");
   const rw=$("rosco").offsetWidth||343;
-  $("definicion").style.fontSize=Math.max(13,Math.min(rw*.05,rw/it.d.length*24))+"px";
+  $("definicion").style.fontSize=Math.max(12.5,Math.min(rw*.045,rw/it.d.length*20))+"px";
   $("definicion").innerHTML=it.d;
   $("entrada").value="";actBtnResp();$("feedback").textContent="";$("feedback").className="feedback";
   pintar();leerConsigna();
