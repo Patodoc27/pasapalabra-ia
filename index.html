@@ -779,7 +779,22 @@ body{padding:0;overflow:hidden}
 #p-juego>.tarjeta{height:100%;min-height:0}
 #p-inicio>.tarjeta.ini-full{min-height:100%}
 #p-inicio{--fondop:url("img/inicio.webp")}
-#p-registro,#p-sala,#p-juego,#p-cuenta,#p-final,#p-ranking,#p-repaso,#p-info{--fondop:url("img/fondo-hero.webp")}
+#p-sala,#p-juego,#p-cuenta,#p-ranking,#p-repaso,#p-info{--fondop:url("img/fondo-hero.webp")}
+#p-registro{--fondop:url("img/registro.webp")}
+#p-registro::before{background:linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.34) 34%,rgba(4,10,28,.9) 78%,rgba(4,10,28,.94) 100%)}
+#p-registro .reg-tit{color:#0B2A4F;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+#p-registro .reg-tit em{color:#0AA6B8}
+#p-registro .bajada{color:#27436B;text-shadow:0 1px 6px rgba(255,255,255,.7);font-weight:800}
+#p-registro .icobtn.volver{color:#0B2A4F}
+#p-final{--fondop:url("img/resultado.webp");background-position:center top}
+#p-final .puntaje{position:static;height:auto;min-height:0;flex:none;gap:0;padding-top:44vh}
+#p-final .anillo{position:absolute;left:0;top:9vh;width:min(57vw,235px);aspect-ratio:1;background:none!important;border:0!important;box-shadow:none!important;mask-image:none!important;-webkit-mask-image:none!important}
+#p-final .anillo::before{display:none!important}
+#p-final .anillo-in{background:none;border:0;box-shadow:none;backdrop-filter:none}
+#p-final .anillo-in b{text-shadow:0 0 22px rgba(34,227,214,.75),0 2px 10px rgba(0,0,0,.6)}
+#p-final .anillo-in small{color:#BFE9F5;text-shadow:0 1px 8px rgba(0,0,0,.7)}
+#p-final .robot-final{display:none}
+#p-final .veredicto{position:static!important;max-width:100%;text-align:center}
 #p-inicio>.tarjeta.ini-full{padding:0}
 .top{display:flex;align-items:center;gap:10px;min-height:44px;border:0;padding-bottom:8px;justify-content:flex-start;flex-wrap:wrap}
 .top h2,.reg-tit{flex:1;text-align:center;font-family:var(--display);font-weight:400;font-size:22px;letter-spacing:.02em;margin:0}
@@ -988,11 +1003,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
       </div>
       <p style="color:var(--gris);font-size:13.5px;margin-top:10px">Para proyectar en clase conviene el claro; el oscuro es el modo show, tipo tele.</p>
     </div>
-    <div class="ranking" id="ranking-inicio" style="display:none">
-      <h3><svg class="tit-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 4h3a1 1 0 0 1 1 1c0 3.5-2 6-4.6 6.7A6 6 0 0 1 13 15.9V18h3v2H8v-2h3v-2.1a6 6 0 0 1-3.4-4.2C5 11 3 8.5 3 5a1 1 0 0 1 1-1h3V3h10v1zm-10 2H5.4c.3 1.7 1.2 3 2.4 3.7A10 10 0 0 1 7 6zm10 0a10 10 0 0 1-.8 3.7c1.2-.7 2.1-2 2.4-3.7H17z"/></svg>Mejores jugadores</h3>
-      <p style="color:var(--gris);font-size:12.5px;margin:2px 0 8px">Suma los aciertos de todas las partidas jugadas.</p>
-      <div id="ranking-inicio-lista"></div>
-    </div>
+        </div>
     <p class="aviso" id="aviso" role="status"></p>
     <p style="margin-top:14px"><button class="btn grande comenzar" id="btn-jugar" style="width:100%">Comenzar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></p>
     </div><!-- /col-b -->
@@ -1108,8 +1119,8 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
     <div class="puntaje">
       <div class="anillo" id="anillo"><div class="anillo-in"><b><span id="f-ok">0</span></b><small>respuestas<br>correctas<br><span style="opacity:.65">de <span id="f-tot">19</span></span></small><span id="f-rot" style="display:none"></span></div>
       <img class="robot-final" src="img/robot.webp" alt="">
-      <p class="veredicto" id="veredicto"></p>
     </div>
+      <p class="veredicto" id="veredicto"></p>
     <div class="fstats">
       <div class="fs-ok"><b id="fs-ok">0</b><small>Correctas</small></div>
       <div class="fs-er"><b id="fs-er">0</b><small>Incorrectas</small></div>
@@ -1362,6 +1373,18 @@ const sTurno=()=>{tono(880,.1,"sine",.12);tono(1175,.14,"sine",.11,.09);};
 const sTecla=()=>tono(1400,.02,"square",.05);
 const sFin=()=>[523,659,784,1047].forEach((f,i)=>tono(f,.5,"triangle",.13,i*.13));
 const sCuenta=n=>n>0?tono(700,.18,"square",.14):[784,1047].forEach((f,i)=>tono(f,.35,"square",.16,i*.1));
+function tonoA(f,dur,tipo,vol,delay){
+  const c=audio();if(!c)return;
+  const o=c.createOscillator(),g=c.createGain(),t=c.currentTime+(delay||0);
+  o.type=tipo||"triangle";o.frequency.setValueAtTime(f,t);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol||.22,t+.015);
+  g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+dur+.05);
+}
+function sAlarma(){  // timbre de desafío: suena siempre, y vibra en Android
+  for(let r=0;r<2;r++){[988,1319,1568].forEach((f,i)=>tonoA(f,.16,"triangle",.22,r*.55+i*.13));}
+  try{if(navigator.vibrate)navigator.vibrate([180,90,180]);}catch(e){}
+}
 const ICO={sol:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.4"/><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.9 1.9M17.1 17.1 19 19M5 19l1.9-1.9M17.1 6.9 19 5"/></g></svg>',
 luna:'<svg viewBox="0 0 24 24"><path d="M20.4 14.1A8.9 8.9 0 0 1 9.9 3.6a.7.7 0 0 0-.9-.9A10.4 10.4 0 1 0 21.3 15a.7.7 0 0 0-.9-.9z"/></svg>',
 son:'<svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5H4z"/><path d="M16 9.2a4.6 4.6 0 0 1 0 5.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>',
@@ -2360,6 +2383,7 @@ function redAceptar(g){
   red.rival=g.id;red.secRival=limpiaSec(g.s);
   nombres[1]=limpiaNom(g.n)||"Rival";avatares[1]=avOk(g.a);
   if(avatares[1]===avatares[0])avatares[1]=(avatares[0]+1)%AVATAR_BOTI;
+  sAlarma();
   if(red.lobby)red.lobby.untrack();
   red.canal.enviar("bien",{para:g.id,hn:nombres[0],ha:avatares[0],hs:seccion,ga:avatares[1],gn:nombres[1],sg:seg});
   guardarSesion();pintarSala();
@@ -2392,6 +2416,7 @@ $("banda-btn").addEventListener("click",()=>{banda("");
 function redMsg(ev,p){
   if(ev==="bien"&&red.rol==="guest"){
     clearTimeout(red.buscarT);red.rival=p.de;red.rivalAqui=true;
+    sAlarma();
     if(enLinea&&partidaViva){guardarSesion();return;}
     nombres=[limpiaNom(p.hn)||"Rival",limpiaNom(p.gn)||nombres[1]];avatares=[avOk(p.ha),avOk(p.ga)];
     red.secRival=limpiaSec(p.hs);seg=+p.sg||0;sinReloj=seg===0;
@@ -2465,6 +2490,7 @@ const decodificar=codes=>codes.map(c=>{const w=PALABRAS[+c[2]]||PALABRAS[0];
   return Object.assign({},w,{letra:String(c[0]),m:c[1]?C:E,ix:+c[2]});});
 function redAplicarInicio(p){
   banda("");clearTimeout(red.buscarT);
+  sAlarma();
   enLinea=true;solo=false;conBot=false;sola=false;recuperacion=false;red.jug=null;
   red.ronda=+p.ronda||1;red.rondaT=+p.rondaT||0;red.seq=0;red.pend=null;red.quiero=false;red.rivalQuiere=false;
   nombres=[limpiaNom(p.nombres[0]),limpiaNom(p.nombres[1])];avatares=[avOk(p.avatares[0]),avOk(p.avatares[1])];
