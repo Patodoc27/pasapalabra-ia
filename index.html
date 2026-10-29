@@ -1551,7 +1551,7 @@ const mostrar=id=>{document.querySelectorAll(".pantalla").forEach(p=>p.classList
 /* El aro ocupa todo el espacio libre entre el encabezado y la respuesta, como en BioRosco */
 function medirRosco(){const caja=$("rosco").parentElement;const r=caja.getBoundingClientRect();
   /* reserva fija para encabezado + barra + respuesta: el aro nunca cambia de tamaño */
-  const w=Math.min(r.width,Math.max(240,window.innerHeight-390));
+  const w=Math.min(r.width,Math.max(240,window.innerHeight-330));
   caja.style.setProperty("--rw",Math.max(240,w-2)+"px");}
 window.addEventListener("resize",()=>{if($("p-juego").classList.contains("activa"))medirRosco();});
 const colorTurno=()=>document.documentElement.style.setProperty("--jug",turno===0?"var(--j1)":"var(--j2)");
@@ -1825,7 +1825,7 @@ function iniciarRonda(desde,segundos,empieza){
   carita("salta");burbuja("va");
 }
 function armarRosco(){
-  const cont=$("rosco");cont.innerHTML="";const n=items.length,R=window.matchMedia("(max-width:760px)").matches?41:44;
+  const cont=$("rosco");cont.innerHTML="";const n=items.length,R=window.matchMedia("(max-width:760px)").matches?43:44;
   items.forEach((it,i)=>{
     const ang=(-90+i*360/n)*Math.PI/180;
     const d=document.createElement("div");
