@@ -322,10 +322,11 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
     background:radial-gradient(circle,color-mix(in srgb,var(--jug) 12%,transparent),transparent 72%)}
   #rosco .letra{width:10.6%;font-size:calc(var(--rw,343px)*.052)}
   .centro-juego{inset:auto;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-    width:calc(var(--rw,343px)*.66);height:calc(var(--rw,343px)*.62);padding:0;gap:6px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
-  #p-juego .consigna{font-size:11.5px;padding:4px 10px;letter-spacing:.06em}
-  .definicion{line-height:1.32;min-height:0;width:100%;padding:0 6px;overflow:hidden}
+    width:calc(var(--rw,343px)*.66);height:calc(var(--rw,343px)*.62);padding:26px 0 0;gap:6px;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;overflow:hidden}
+  .centro-juego::after{content:"";display:block;flex:none;height:40px}   /* espejo de la consigna: la definición queda centrada en el aro */
+  #p-juego .consigna{font-size:11.5px;padding:4px 10px;letter-spacing:.06em;flex:none}
+  .definicion{line-height:1.32;min-height:0;width:100%;padding:0 6px;overflow:hidden;margin:auto 0}
   .respuesta{width:100%;margin-bottom:14px}
   #p-juego .feedback{margin-top:26px;max-height:none}
   .barra-turno{margin-top:89px}
@@ -1169,11 +1170,12 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
     <div class="tablero" id="tablero">
       <div class="rosco-col">
         <div class="rosco-caja">
-          <div id="rosco" style="position:absolute;inset:0" role="list" aria-label="Rosco"></div>
-        <div class="centro-juego" id="centro-juego">
-          <p class="consigna" id="consigna">Empieza por A</p>
-          <p class="definicion" id="definicion">…</p>
-        </div>
+          <div id="rosco" style="position:absolute;inset:0" role="list" aria-label="Rosco">
+            <div class="centro-juego" id="centro-juego">
+              <p class="consigna" id="consigna">Empieza por A</p>
+              <p class="definicion" id="definicion">…</p>
+            </div>
+          </div>
         </div>
         <p class="feedback" id="feedback" role="status"></p>
         <div class="barra-turno" id="barra-turno"><i id="barra-turno-i"></i></div>
@@ -1968,7 +1970,9 @@ function iniciarRonda(desde,segundos,empieza){
   carita("salta");burbuja("va");
 }
 function armarRosco(){
-  const cont=$("rosco");cont.innerHTML="";const n=items.length,R=window.matchMedia("(max-width:760px)").matches?43:44;
+  const cont=$("rosco");const centro=$("centro-juego");cont.innerHTML="";
+  if(centro)cont.appendChild(centro);   // el bloque central vive dentro del rosco: se preserva y queda pintado encima
+  const n=items.length,R=window.matchMedia("(max-width:760px)").matches?43:44;
   items.forEach((it,i)=>{
     const ang=(-90+i*360/n)*Math.PI/180;
     const d=document.createElement("div");
