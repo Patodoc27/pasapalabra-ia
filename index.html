@@ -307,7 +307,7 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
 @media(max-width:760px){
   .tarjeta{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
   .tablero.oculto{filter:blur(4px) saturate(.7)}
-  #p-juego .tarjeta{padding:14px}
+  #p-juego .tarjeta{padding:12px 6px 8px}
   .rosco-caja{width:100%;height:auto;aspect-ratio:auto;display:flex;
     flex:1;min-height:0;margin:0 auto}
   .rosco-col{width:100%}
@@ -545,7 +545,7 @@ body.online #tiempo{display:none}
   --panel:#0D1738;--panel-borde:rgba(120,170,255,.24);
   --marca:#5B8CFF;--turquesa:#22E3D6;--parina:#FF4FA3;--sol:#8FA8F0;--ambar:#5F7BEA;--uva:#8B5CF6;
   --j1:#22E3D6;--j2:#8B5CF6;--jug:#22E3D6;
-  --letra-bg:#111E48;--letra-txt:#7E93C8;--letra-borde:rgba(120,160,235,.3);
+  --letra-bg:#17285E;--letra-txt:#D9E6FF;--letra-borde:rgba(140,180,255,.62);
   --anillo:rgba(34,227,214,.35);
 }
 
@@ -625,7 +625,7 @@ body.online #tiempo{display:none}
 [data-tema="show"] .respuesta input{border-radius:999px;background:var(--input-bg)}
 [data-tema="show"] .respuesta .btn{border-radius:999px}
 [data-tema="show"] .menu-pop{background:var(--menu-bg);border:1px solid var(--borde)}
-[data-tema="show"] .icobtn{background:var(--panel);border-color:var(--borde)}
+[data-tema="show"] .icobtn{background:var(--panel);border:1.5px solid rgba(150,180,255,.55);color:#D7E4FF;box-shadow:0 3px 12px -4px rgba(0,0,0,.6),inset 0 0 10px -6px rgba(120,170,255,.5)}
 [data-tema="show"] .overlay{background:var(--overlay-bg)}
 [data-tema="show"] .numero{color:var(--turquesa);text-shadow:0 0 60px color-mix(in srgb,var(--turquesa) 55%,transparent)}
 
@@ -1513,7 +1513,7 @@ function leerConsigna(){
   if(!lectura||!soportaVoz)return;
   if(!vozElegida)elegirVoz();
   callar();
-  if(!esBot()){$("feedback").className="feedback";$("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M4 9v6h4l6 5V4L8 9H4zm13.5 3a3.5 3.5 0 0 0-2-3.15v6.3a3.5 3.5 0 0 0 2-3.15zM15.5 4.6v2.1a5.5 5.5 0 0 1 0 10.6v2.1a7.5 7.5 0 0 0 0-14.8z'/></svg> Escuchá la consigna</span>Cuando termine de leer se habilita la respuesta.";}
+  if(!esBot()){$("feedback").className="feedback";$("feedback").innerHTML="";}
   /* primero la consigna; cuando termina, ~1.2 s de pausa y recién la definición;
      al terminar la definición se habilita el campo de respuesta */
   /* seguro anti-congelado: si el motor de voz queda mudo y no dispara
