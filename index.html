@@ -320,7 +320,8 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
     width:calc(var(--rw,343px)*.60);height:calc(var(--rw,343px)*.58);padding:0;gap:5px}
   .consigna{font-size:12px;padding:6px 15px}
   .definicion{line-height:1.32;min-height:0;overflow:hidden}
-  .respuesta{width:100%}
+  .respuesta{width:100%;margin-bottom:14px}
+  .barra-turno{margin-top:6px}
   #entrada{max-width:none;padding:13px 14px;font-size:16px}
   .respuesta .btn{padding:13px 20px;font-size:15px}
   .lateral .acciones{order:-1;width:100%}
@@ -785,7 +786,8 @@ body{padding:0;overflow:hidden}
 #p-juego>.tarjeta{height:100%;min-height:0}
 #p-inicio>.tarjeta.ini-full{min-height:100%}
 #p-inicio{--fondop:url("img/inicio.webp")}
-#p-sala,#p-juego,#p-cuenta,#p-ranking,#p-repaso,#p-info{--fondop:url("img/fondo-hero.webp")}
+#p-sala,#p-cuenta,#p-ranking,#p-repaso,#p-info{--fondop:url("img/fondo-hero.webp")}
+#p-juego{--fondop:none;background:linear-gradient(180deg,#081233 0%,#040A1F 55%,#030816 100%)}
 #p-registro{--fondop:url("img/registro.webp")}
 #p-registro::before{background:linear-gradient(180deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,.16) 20%,rgba(8,14,38,.55) 45%,rgba(4,10,28,.8) 100%)}
 #p-registro .tarjeta{background:rgba(6,12,34,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
