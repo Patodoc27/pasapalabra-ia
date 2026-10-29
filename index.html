@@ -1034,8 +1034,8 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
     <div class="reg-top">
       <button class="icobtn volver" id="btn-volver-reg" title="Volver al inicio" aria-label="Volver al inicio"><svg viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div>
-        <h2 class="reg-tit">Tu identidad <em>de juego</em></h2>
-        <p class="bajada">Completá tus datos para comenzar a desafiar tus conocimientos de inteligencia artificial.</p>
+        <h2 class="reg-tit">Configuración</h2>
+        <p class="bajada" style="font-size:13.5px">Completá tus datos para comenzar a desafiar tus conocimientos de inteligencia artificial.</p>
       </div>
     </div>
     <div class="inicio-grid">
@@ -1067,20 +1067,13 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
       </div>
     </div>
 
-    <div class="ranking" id="progreso-card" style="display:none;margin-top:20px">
-      <h3><svg class="tit-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10h4v10H4zm6 0V4h4v16h-4zm6 0v-7h4v7h-4z"/></svg>Tu progreso</h3>
-      <small>Se guarda en este teléfono, no se comparte.</small>
-      <span id="slot-inicio"></span>
-      <div id="progreso-detalle" style="font-size:15px;line-height:1.6"></div>
-      <p style="margin-top:10px;margin-bottom:0"><button class="btn pasar" id="btn-repaso" style="display:none;width:100%">↻ Repasar las que te costaron</button></p>
-    </div>
-
     <div style="margin-top:20px">
       <label>Tiempo de juego</label>
       <div class="chips" id="chips-tiempo">
-        <button class="chip" type="button" data-seg="240" aria-pressed="true">4 min</button>
-        <button class="chip" type="button" data-seg="360" aria-pressed="false">6 min</button>
-        <button class="chip" type="button" data-seg="480" aria-pressed="false">8 min</button>
+        <button class="chip" type="button" data-seg="240" aria-pressed="true">Normal · 4 min</button>
+        <button class="chip" type="button" data-seg="180" aria-pressed="false">Intermedio · 3 min</button>
+        <button class="chip" type="button" data-seg="90" aria-pressed="false">Intenso · 90 s</button>
+        <button class="chip" type="button" data-seg="0" aria-pressed="false">Sin reloj · práctica</button>
       </div>
     </div>
     <div style="margin-top:18px">
@@ -1101,7 +1094,8 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
     </div>
         </div>
     <p class="aviso" id="aviso" role="status"></p>
-    <p style="margin-top:4px"><button class="btn grande comenzar" id="btn-jugar" style="width:100%">Comenzar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></p>
+    <p style="margin-top:4px;margin-bottom:0"><button class="btn grande comenzar" id="btn-jugar" style="width:100%">Comenzar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></p>
+    <p style="margin-top:12px;margin-bottom:0"><button class="btn pasar" id="btn-repaso" style="display:none;width:100%">↻ Repasar las que te costaron</button></p>
     </div><!-- /col-b -->
     </div><!-- /inicio-grid -->
   </div>
@@ -1816,15 +1810,10 @@ function progresoGuardar(){
 }
 function progresoPintar(){
   const g=progresoLeer();
-  const card=$("progreso-card");
-  if(!g.partidas){card.style.display="none";return;}
-  card.style.display="";
   const rep=(g.repasar||[]).length;
-  $("progreso-detalle").innerHTML=
-    "Roscos completos: <b>"+(g.completos||0)+"</b><br>Conceptos acertados: <b>"+(g.aciertos||0)+"</b>";
   const b=$("btn-repaso");
+  if(!b)return;
   b.style.display=rep?"":"none";
-  if(rep)b.textContent="↻ Repasar las que te costaron";
 }
 $("btn-repaso").addEventListener("click",()=>{
   const g=progresoLeer();
