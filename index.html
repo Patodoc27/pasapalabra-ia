@@ -308,14 +308,15 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
   .tarjeta{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
   .tablero.oculto{filter:blur(4px) saturate(.7)}
   #p-juego .tarjeta{padding:14px}
-  .rosco-caja{width:min(100%,520px);aspect-ratio:auto;display:flex;flex-direction:column;
-    align-items:center;gap:10px}
+  .rosco-caja{width:min(88vw,44vh,360px);height:auto;aspect-ratio:auto;display:block;
+    flex:none;min-height:0;margin:0 auto}
+  .rosco-col{width:100%}
   .rosco-caja::after{display:none}
-  #rosco{position:relative!important;width:min(86vw,380px);aspect-ratio:1;flex:none}
-  #rosco::after{content:"";position:absolute;inset:15%;border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle,color-mix(in srgb,var(--jug) 12%,transparent),transparent 70%)}
-  .centro-juego{inset:auto;top:0;left:50%;transform:translateX(-50%);width:min(86vw,380px);aspect-ratio:1;
-    padding:17.5%;gap:8px}
+  #rosco{position:relative!important;width:min(88vw,44vh,360px);aspect-ratio:1;flex:none}
+  #rosco::after{content:"";position:absolute;inset:8%;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,color-mix(in srgb,var(--jug) 12%,transparent),transparent 72%)}
+  .centro-juego{inset:auto;top:0;left:50%;transform:translateX(-50%);width:min(88vw,44vh,360px);aspect-ratio:1;
+    padding:16.5%;gap:8px}
   .consigna{font-size:12px;padding:6px 15px}
   .definicion{font-size:13.5px;line-height:1.4;max-height:100%;overflow-y:auto}
   .respuesta{width:100%}
@@ -863,7 +864,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
 .progreso .txt{font-weight:900;font-size:14px}
 .tablero{display:flex;flex-direction:column;flex:1;min-height:0;gap:8px}
 .rosco-col{flex:1;display:flex;flex-direction:column;min-height:0}
-.rosco-caja{flex:1;min-height:0;position:relative}
+@media(min-width:761px){.rosco-caja{flex:1;min-height:0;position:relative}}
 #rosco{position:absolute;inset:0}
 .centro-juego{position:absolute;left:50%;top:50%;width:66%;height:62%;transform:translate(-50%,-50%);
   display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;overflow:hidden}
@@ -909,6 +910,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
 .respuesta #entrada{max-width:none;width:100%}
 .resp-btns .btn{min-height:54px;font-size:14px;letter-spacing:.04em;padding:10px 8px;text-transform:uppercase}
 .resp-btns .btn svg{width:22px;height:22px}
+.fico{width:15px;height:15px;vertical-align:-2.5px;display:inline-block}
 </style>
 <script>try{document.documentElement.dataset.tema=localStorage.getItem("ppia-tema")||"show"}catch(e){}</script>
 <script>
@@ -1465,7 +1467,7 @@ function leerConsigna(){
   if(!lectura||!soportaVoz)return;
   if(!vozElegida)elegirVoz();
   callar();
-  if(!esBot()){$("feedback").className="feedback";$("feedback").innerHTML="<span class='tit'>🗣️ Escuchá la consigna</span>Cuando termine de leer se habilita la respuesta.";}
+  if(!esBot()){$("feedback").className="feedback";$("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M4 9v6h4l6 5V4L8 9H4zm13.5 3a3.5 3.5 0 0 0-2-3.15v6.3a3.5 3.5 0 0 0 2-3.15zM15.5 4.6v2.1a5.5 5.5 0 0 1 0 10.6v2.1a7.5 7.5 0 0 0 0-14.8z'/></svg> Escuchá la consigna</span>Cuando termine de leer se habilita la respuesta.";}
   /* primero la consigna; cuando termina, ~1.2 s de pausa y recién la definición;
      al terminar la definición se habilita el campo de respuesta */
   /* seguro anti-congelado: si el motor de voz queda mudo y no dispara
@@ -1475,7 +1477,7 @@ function leerConsigna(){
     if(!jugando||esBot()||items[idx]!==it||!$("entrada").disabled)return;
     callar();habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();
     $("feedback").className="feedback";
-    $("feedback").innerHTML="<span class='tit'>🎧 Sin voz</span>No se escuchó la consigna, pero está escrita arriba: podés responder igual.";
+    $("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 3a8 8 0 0 0-8 8v6a2 2 0 0 0 2 2h2a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H6v-1a6 6 0 0 1 12 0v1h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2a2 2 0 0 0 2-2v-6a8 8 0 0 0-8-8z'/></svg> Sin voz</span>No se escuchó la consigna, pero está escrita arriba: podés responder igual.";
     luego(()=>$("entrada").focus(),60);
   },7000+(cons.length+txt.length)*80);
   setTimeout(()=>decir(cons,()=>{
@@ -1791,7 +1793,7 @@ function pintar(){
   $("riel-ok").style.width=(100*ok/n)+"%";$("riel-er").style.width=(100*er/n)+"%";$("riel-ps").style.width=(100*ps/n)+"%";
   $("prog-txt").textContent=(ok+er)+" cerradas"+(ps?" · "+ps+" en ↻":"")+" · "+(n-ok-er-ps)+" por jugar";
   $("m-ok").textContent=ok;$("m-er").textContent=er;$("m-re").textContent=n-ok-er;
-  $("quien").innerHTML=ava(turno)+(enLinea?nombreBonito(nombres[turno]):nombres[turno])+(rachas[turno]>=3?"<span class='fuego'>🔥 "+rachas[turno]+"</span>":"");
+  $("quien").innerHTML=ava(turno)+(enLinea?nombreBonito(nombres[turno]):nombres[turno])+(rachas[turno]>=3?"<span class='fuego'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 2c1.2 4.5-4.5 7-4.5 11a4.5 4.5 0 0 0 9 0c0-1.8-.8-2.8-1.4-3.8-.8 1-1.5 1.7-2.1 2.1.5-3.8-.3-7.4-1-9.3zm0 18.5a3.4 3.4 0 0 1-3.2-3.3c0-1.7 1.2-2.9 2.4-4 1.2 1 3.8 2.4 3.8 4.5a3.5 3.5 0 0 1-3 2.8z'/></svg> "+rachas[turno]+"</span>":"");
 }
 
 /* ===== TURNO ===== */
@@ -1923,7 +1925,7 @@ function responder(){
     $("feedback").innerHTML="<span class='tit'>Casi — le faltó la tilde</span>Esa es la palabra, pero se escribe con acento: <b>"+it.p+"</b>. Corregila y mandala de nuevo, no perdés la letra.";
     $("entrada").focus();$("entrada").select();return;}
   if(ok){estado[idx]="acierto";respondio[idx]=turno;puntos[turno]++;rachas[turno]++;sOk();carita("salta");burbuja("ok");
-    $("feedback").className="feedback ok";$("feedback").innerHTML="<span class='tit'>✓ "+it.p+"</span>"+(rachas[turno]>=3?"<span class='racha'>¡Racha de "+rachas[turno]+"! 🔥</span>":"");
+    $("feedback").className="feedback ok";$("feedback").innerHTML="<span class='tit'>✓ "+it.p+"</span>"+(rachas[turno]>=3?"<span class='racha'>¡Racha de "+rachas[turno]+"!<svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 2c1.2 4.5-4.5 7-4.5 11a4.5 4.5 0 0 0 9 0c0-1.8-.8-2.8-1.4-3.8-.8 1-1.5 1.7-2.1 2.1.5-3.8-.3-7.4-1-9.3zm0 18.5a3.4 3.4 0 0 1-3.2-3.3c0-1.7 1.2-2.9 2.4-4 1.2 1 3.8 2.4 3.8 4.5a3.5 3.5 0 0 1-3 2.8z'/></svg></span>":"");
     pintar();redJugada("ok",txt);cerrarJugada("<span style='color:var(--lima)'>✓ "+it.p+"</span>");return;}
   intentos++;
   if(modoPractica()&&intentos===1){   // segunda oportunidad con pista, solo en práctica
@@ -2007,8 +2009,8 @@ function sinReloj_(j){   // se le terminó su reloj a quien tiene el turno
   if(estado[idx]==="pendiente"){estado[idx]="pasada";respondio[idx]=j;}
   sMal();carita("sacude");burbuja("pas");
   $("feedback").className="feedback mal";
-  $("feedback").innerHTML="<span class='tit'>⏱ Se terminó tu reloj</span>"+(tieneTiempo(1-j)&&quedan()?nombreBonito(nombres[1-j])+" sigue con las letras que quedan.":"");
-  redJugada("sin","",1);pintar();cerrarJugada("<span style='color:var(--parina)'>⏱ Sin reloj: "+nombreBonito(nombres[j])+"</span>");
+  $("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Se terminó tu reloj</span>"+(tieneTiempo(1-j)&&quedan()?nombreBonito(nombres[1-j])+" sigue con las letras que quedan.":"");
+  redJugada("sin","",1);pintar();cerrarJugada("<span style='color:var(--parina)'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Sin reloj: "+nombreBonito(nombres[j])+"</span>");
 }
 /* ===== TIEMPO DE CADA LETRA (solo en línea) ===== */
 let letraT=null,letraInt=null,letraFin=0;
@@ -2044,13 +2046,13 @@ function porTiempo(){
   if(estado[idx]==="pasada"||ultima){
     estado[idx]="error";respondio[idx]=turno;sMal();carita("sacude");burbuja("mal");
     $("feedback").className="feedback mal";
-    $("feedback").innerHTML="<span class='tit'>⏱ Se terminó el tiempo</span>Era "+it.p+". <span class='clave'>Pista clave: "+it.k+"</span>";
-    redJugada("mal","",1);pintar();cerrarJugada("<span style='color:var(--parina)'>⏱ Era "+it.p+"</span>");
+    $("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Se terminó el tiempo</span>Era "+it.p+". <span class='clave'>Pista clave: "+it.k+"</span>";
+    redJugada("mal","",1);pintar();cerrarJugada("<span style='color:var(--parina)'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Era "+it.p+"</span>");
   }else{
     estado[idx]="pasada";respondio[idx]=turno;sPas();carita("inclina");burbuja("pas");
     $("feedback").className="feedback pas";
-    $("feedback").innerHTML="<span class='tit'>⏱ Se terminó el tiempo</span>La "+it.letra+" vuelve más adelante.";
-    redJugada("pasa","",1);pintar();cerrarJugada("<span style='color:var(--ambar)'>⏱ Tiempo en la "+it.letra+"</span>");
+    $("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Se terminó el tiempo</span>La "+it.letra+" vuelve más adelante.";
+    redJugada("pasa","",1);pintar();cerrarJugada("<span style='color:var(--ambar)'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Tiempo en la "+it.letra+"</span>");
   }
 }
 
@@ -2526,7 +2528,7 @@ function redPendiente(){
 function resolverRival(p){
   const it=items[idx],nom=escH(nombreBonito(nombres[turno]));pararLetra();
   if(p.res==="ok"){estado[idx]="acierto";respondio[idx]=turno;puntos[turno]++;rachas[turno]++;sOk();carita("salta");burbuja("ok");
-    $("feedback").className="feedback ok";$("feedback").innerHTML="<span class='tit'>✓ "+it.p+"</span>"+nom+" acertó esta."+(rachas[turno]>=3?"<span class='racha'>Racha de "+rachas[turno]+" 🔥</span>":"");
+    $("feedback").className="feedback ok";$("feedback").innerHTML="<span class='tit'>✓ "+it.p+"</span>"+nom+" acertó esta."+(rachas[turno]>=3?"<span class='racha'>Racha de "+rachas[turno]+"<svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 2c1.2 4.5-4.5 7-4.5 11a4.5 4.5 0 0 0 9 0c0-1.8-.8-2.8-1.4-3.8-.8 1-1.5 1.7-2.1 2.1.5-3.8-.3-7.4-1-9.3zm0 18.5a3.4 3.4 0 0 1-3.2-3.3c0-1.7 1.2-2.9 2.4-4 1.2 1 3.8 2.4 3.8 4.5a3.5 3.5 0 0 1-3 2.8z'/></svg></span>":"");
     pintar();cerrarJugada("<span style='color:var(--lima)'>✓ "+it.p+"</span>");}
   else if(p.res==="mal"){estado[idx]="error";respondio[idx]=turno;rachas[turno]=0;sMal();carita("sacude");burbuja("mal");
     $("feedback").className="feedback mal";
@@ -2534,8 +2536,8 @@ function resolverRival(p){
     pintar();cerrarJugada("<span style='color:var(--parina)'>✕ Era "+it.p+"</span>");}
   else if(p.res==="sin"){rel[turno]=0;rachas[turno]=0;if(estado[idx]==="pendiente"){estado[idx]="pasada";respondio[idx]=turno;}sPas();carita("inclina");burbuja("pas");
     $("feedback").className="feedback pas";
-    $("feedback").innerHTML="<span class='tit'>⏱ Se terminó el reloj de "+nom+"</span>"+(tieneTiempo(yo)&&quedan()?"Seguís vos con las letras que quedan.":"");
-    pintar();cerrarJugada("<span style='color:var(--parina)'>⏱ Sin reloj: "+nom+"</span>");}
+    $("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Se terminó el reloj de "+nom+"</span>"+(tieneTiempo(yo)&&quedan()?"Seguís vos con las letras que quedan.":"");
+    pintar();cerrarJugada("<span style='color:var(--parina)'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Sin reloj: "+nom+"</span>");}
   else{if(estado[idx]==="pendiente"){estado[idx]="pasada";respondio[idx]=turno;}rachas[turno]=0;sPas();carita("inclina");burbuja("pas");
     $("feedback").className="feedback pas";
     $("feedback").innerHTML="<span class='tit'>↻ Pasapalabra</span>"+nom+(p.tiempo?" se quedó sin tiempo":" pasó")+". La "+it.letra+" vuelve más adelante.";
