@@ -787,12 +787,14 @@ body{padding:0;overflow:hidden}
 #p-inicio{--fondop:url("img/inicio.webp")}
 #p-sala,#p-juego,#p-cuenta,#p-ranking,#p-repaso,#p-info{--fondop:url("img/fondo-hero.webp")}
 #p-registro{--fondop:url("img/registro.webp")}
-#p-registro::before{background:linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.34) 34%,rgba(4,10,28,.9) 78%,rgba(4,10,28,.94) 100%)}
-#p-registro .reg-tit{color:#0B2A4F;text-shadow:0 1px 0 rgba(255,255,255,.6)}
-#p-registro .etq-mod{color:#0B2A4F;text-shadow:0 1px 6px rgba(255,255,255,.85);font-weight:900}
-#p-registro .reg-tit em{color:#0AA6B8}
-#p-registro .bajada{color:#27436B;text-shadow:0 1px 6px rgba(255,255,255,.7);font-weight:800}
-#p-registro .icobtn.volver{color:#0B2A4F}
+#p-registro::before{background:linear-gradient(180deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,.16) 20%,rgba(8,14,38,.55) 45%,rgba(4,10,28,.8) 100%)}
+#p-registro .tarjeta{background:rgba(6,12,34,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(130,165,255,.28);border-radius:26px;box-shadow:0 24px 60px rgba(2,6,20,.55)}
+#p-registro .reg-tit{color:#EAF2FF;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+#p-registro .etq-mod{color:#8FE9FF;text-shadow:0 1px 8px rgba(0,0,0,.6);font-weight:900}
+#p-registro .reg-tit em{color:#2CE8D8}
+#p-registro .bajada{color:#BFD0F2;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+#p-registro .icobtn.volver{color:#D7E4FF}
 #p-final{--fondop:url("img/resultado.webp");background-position:center top}
 #p-final .puntaje{position:static;height:auto;min-height:0;flex:none;gap:0;padding-top:44vh}
 #p-final .anillo{position:absolute;left:0;top:9vh;width:min(57vw,235px);aspect-ratio:1;background:none!important;border:0!important;box-shadow:none!important;mask-image:none!important;-webkit-mask-image:none!important}
@@ -1409,11 +1411,11 @@ function sAlarma(){  // timbre de desafío: suena siempre, y vibra en Android
 }
 /* ===== MUSIQUITA DE FONDO: inicio / registro / final (suena solo con sonido activo) ===== */
 let musTimer=null,musPaso=0,musQuer=false;
-// melodía chiptune de 4 compases (32 pasos): lead square + bajo triangle, estilo videojuego
-const MUS_MEL=[523.25,0,659.25,0, 783.99,880,783.99,0, 659.25,0,587.33,0, 523.25,659.25,523.25,0,
-               587.33,0,659.25,0, 783.99,0,880,783.99, 659.25,587.33,659.25,0, 587.33,0,0,0];
-const MUS_BAJO=[130.8,0,0,0, 130.8,0,0,0, 174.6,0,0,0, 196,0,0,0,
-                130.8,0,0,0, 130.8,0,0,0, 220,0,0,0, 196,0,196,0];
+// melodía suave de lobby (32 pasos): lead sine + bajo triangle
+const MUS_MEL=[523.25,0,0,659.25,0,0,783.99,0, 880,0,0,783.99,0,659.25,0,0,
+               587.33,0,0,659.25,0,0,587.33,0, 523.25,0,0,0,0,0,0,0];
+const MUS_BAJO=[130.8,0,0,0,0,0,0,0, 174.6,0,0,0,0,0,0,0,
+                196,0,0,0,0,0,0,0, 130.8,0,0,0,0,0,0,0];
 function musNota(f,t,dur,vol,tipo){
   const c=ctx,o=c.createOscillator(),g=c.createGain();
   o.type=tipo;o.frequency.value=f;
@@ -1427,10 +1429,10 @@ function musica(q){
     if(musTimer||c.state!=="running")return;   // arranca tras el primer toque (autoplay)
     const paso=()=>{if(!ctx||ctx.state!=="running")return;
       const t=ctx.currentTime+.02,k=musPaso%32;musPaso++;
-      if(MUS_MEL[k])musNota(MUS_MEL[k],t,.14,.05,"square");
-      if(MUS_BAJO[k])musNota(MUS_BAJO[k],t,.24,.07,"triangle");
+      if(MUS_MEL[k])musNota(MUS_MEL[k],t,.34,.055,"sine");
+      if(MUS_BAJO[k])musNota(MUS_BAJO[k],t,.55,.075,"triangle");
     };
-    paso();musTimer=setInterval(paso,150);
+    paso();musTimer=setInterval(paso,220);
   }else if(musTimer){clearInterval(musTimer);musTimer=null;}
 }
 const ICO={sol:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.4"/><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.9 1.9M17.1 17.1 19 19M5 19l1.9-1.9M17.1 6.9 19 5"/></g></svg>',
