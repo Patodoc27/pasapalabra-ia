@@ -317,9 +317,9 @@ kbd{font-family:var(--cuerpo);font-weight:700;font-size:11px;color:var(--tinta);
     background:radial-gradient(circle,color-mix(in srgb,var(--jug) 12%,transparent),transparent 72%)}
   #rosco .letra{width:10.6%;font-size:calc(var(--rw,343px)*.052)}
   .centro-juego{inset:auto;top:50%;left:50%;transform:translate(-50%,-50%);
-    width:calc(var(--rw,343px)*.60);height:calc(var(--rw,343px)*.58);padding:0;gap:5px}
+    width:calc(var(--rw,343px)*.56);height:calc(var(--rw,343px)*.52);padding:0;gap:5px}
   .consigna{font-size:12px;padding:6px 15px}
-  .definicion{line-height:1.32;min-height:0;overflow:hidden}
+  .definicion{line-height:1.32;min-height:0;width:100%;overflow:hidden}
   .respuesta{width:100%;margin-bottom:14px}
   .barra-turno{margin-top:6px}
   #entrada{max-width:none;padding:13px 14px;font-size:16px}
@@ -477,8 +477,8 @@ body.online #salas-abiertas{display:flex!important}
 .bur-stat.rj.urgente{background:linear-gradient(145deg,#FF4FA3,#D61178)}
 .bur-stat.rj.urgente.activo{animation:late 1s steps(2,end) infinite}
 body.online #tiempo{display:none}
-.barra-turno{display:none;height:30px;padding:4px 10px;margin-bottom:8px;align-self:stretch;width:min(560px,100%);background:color-mix(in srgb,var(--superficie) 82%,transparent);border:1.5px solid var(--borde);border-radius:12px}
-.barra-turno.on{display:flex;align-items:center;gap:8px}
+.barra-turno{display:flex;visibility:hidden;height:30px;padding:4px 10px;margin-bottom:8px;align-self:stretch;width:min(560px,100%);background:color-mix(in srgb,var(--superficie) 82%,transparent);border:1.5px solid var(--borde);border-radius:12px;align-items:center;gap:8px}
+.barra-turno.on{visibility:visible}
 .barra-turno i{display:block;height:10px;border-radius:99px;background:var(--turquesa);width:100%;flex:none}
 .podio{display:flex;justify-content:center;align-items:flex-end;gap:clamp(10px,4vw,48px);margin-top:20px;width:100%}
 .podio-col{flex:1;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
@@ -1550,8 +1550,9 @@ const mostrar=id=>{document.querySelectorAll(".pantalla").forEach(p=>p.classList
   if(id==="p-juego")requestAnimationFrame(medirRosco);};
 /* El aro ocupa todo el espacio libre entre el encabezado y la respuesta, como en BioRosco */
 function medirRosco(){const caja=$("rosco").parentElement;const r=caja.getBoundingClientRect();
-  const w=Math.min(r.width,r.height)-2;
-  caja.style.setProperty("--rw",Math.max(240,w)+"px");}
+  /* reserva fija para encabezado + barra + respuesta: el aro nunca cambia de tamaño */
+  const w=Math.min(r.width,Math.max(240,window.innerHeight-390));
+  caja.style.setProperty("--rw",Math.max(240,w-2)+"px");}
 window.addEventListener("resize",()=>{if($("p-juego").classList.contains("activa"))medirRosco();});
 const colorTurno=()=>document.documentElement.style.setProperty("--jug",turno===0?"var(--j1)":"var(--j2)");
 
@@ -1902,7 +1903,7 @@ function mostrarLetra(){
   const it=items[idx];
   $("consigna").textContent=(it.m===E?"Empieza por ":"Contiene la ")+it.letra+(estado[idx]==="pasada"?" ↻":"");
   const rw=$("rosco").offsetWidth||343;
-  $("definicion").style.fontSize=Math.max(12.5,Math.min(rw*.045,rw/it.d.length*20))+"px";
+  $("definicion").style.fontSize=Math.max(12,Math.min(rw*.042,rw/it.d.length*18))+"px";
   $("definicion").innerHTML=it.d;
   $("entrada").value="";actBtnResp();$("feedback").textContent="";$("feedback").className="feedback";
   pintar();leerConsigna();
