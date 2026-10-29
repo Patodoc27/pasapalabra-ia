@@ -908,8 +908,15 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
 .respuesta{flex-direction:column;align-items:stretch;gap:10px}
 .respuesta .entrada{width:100%}
 .respuesta #entrada{max-width:none;width:100%}
-.resp-btns .btn{min-height:54px;font-size:14px;letter-spacing:.04em;padding:10px 8px;text-transform:uppercase}
+.resp-btns .btn{min-height:58px;font-size:15px;letter-spacing:.06em;padding:10px 8px;text-transform:uppercase;font-weight:900}
 .resp-btns .btn svg{width:22px;height:22px}
+.resp-btns .btn:active{transform:scale(.97)}
+[data-tema="show"] #btn-pasar{background:rgba(34,227,214,.12);border:2px solid #2CE8D8;color:#8FF7EE;
+  box-shadow:0 0 18px -4px rgba(34,227,214,.55),inset 0 0 16px -9px rgba(34,227,214,.7)}
+[data-tema="show"] #btn-responder{background:linear-gradient(135deg,#46F5DF,#0FA9E0);color:#032230;
+  box-shadow:0 6px 22px -4px rgba(34,227,214,.65),0 0 30px -4px rgba(34,183,240,.5)}
+.btn-jugar-hero{box-shadow:0 8px 30px -6px rgba(255,214,74,.6),0 0 34px -4px rgba(255,190,60,.45)}
+[data-tema="show"] .btn.comenzar{box-shadow:0 8px 30px -6px rgba(160,110,255,.6),0 0 34px -4px rgba(140,100,255,.45)}
 .fico{width:15px;height:15px;vertical-align:-2.5px;display:inline-block}
 </style>
 <script>try{document.documentElement.dataset.tema=localStorage.getItem("ppia-tema")||"show"}catch(e){}</script>
