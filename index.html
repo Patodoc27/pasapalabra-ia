@@ -789,6 +789,7 @@ body{padding:0;overflow:hidden}
 #p-registro{--fondop:url("img/registro.webp")}
 #p-registro::before{background:linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.34) 34%,rgba(4,10,28,.9) 78%,rgba(4,10,28,.94) 100%)}
 #p-registro .reg-tit{color:#0B2A4F;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+#p-registro .etq-mod{color:#0B2A4F;text-shadow:0 1px 6px rgba(255,255,255,.85);font-weight:900}
 #p-registro .reg-tit em{color:#0AA6B8}
 #p-registro .bajada{color:#27436B;text-shadow:0 1px 6px rgba(255,255,255,.7);font-weight:800}
 #p-registro .icobtn.volver{color:#0B2A4F}
@@ -969,7 +970,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
     </div><!-- /col-a -->
     <div class="col-b">
     <div>
-      <label>Modalidad</label>
+      <label class="etq-mod">Modalidad</label>
       <div class="chips modos" id="chips-rival">
         <button class="chip modo" type="button" data-bot="2" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></svg><b>Sola</b><small>contra el reloj</small></button>
         <button class="chip modo" type="button" data-bot="1" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="4"/><path d="M12 8V4.5"/><circle cx="12" cy="3.5" r="1.2" fill="currentColor"/><circle cx="9" cy="14" r="1.5" fill="currentColor"/><circle cx="15" cy="14" r="1.5" fill="currentColor"/><path d="M2 13v3M22 13v3"/></svg><b>Contra Boti</b><small>el robot rival</small></button>
@@ -1408,7 +1409,11 @@ function sAlarma(){  // timbre de desafío: suena siempre, y vibra en Android
 }
 /* ===== MUSIQUITA DE FONDO: inicio / registro / final (suena solo con sonido activo) ===== */
 let musTimer=null,musPaso=0,musQuer=false;
-const MUS_ACORDES=[[261.6,329.6,392],[293.7,370,440],[349.2,440,523.3],[392,493.9,587.3]];
+// melodía chiptune de 4 compases (32 pasos): lead square + bajo triangle, estilo videojuego
+const MUS_MEL=[523.25,0,659.25,0, 783.99,880,783.99,0, 659.25,0,587.33,0, 523.25,659.25,523.25,0,
+               587.33,0,659.25,0, 783.99,0,880,783.99, 659.25,587.33,659.25,0, 587.33,0,0,0];
+const MUS_BAJO=[130.8,0,0,0, 130.8,0,0,0, 174.6,0,0,0, 196,0,0,0,
+                130.8,0,0,0, 130.8,0,0,0, 220,0,0,0, 196,0,196,0];
 function musNota(f,t,dur,vol,tipo){
   const c=ctx,o=c.createOscillator(),g=c.createGain();
   o.type=tipo;o.frequency.value=f;
@@ -1421,11 +1426,11 @@ function musica(q){
     const c=audio();if(!c)return;
     if(musTimer||c.state!=="running")return;   // arranca tras el primer toque (autoplay)
     const paso=()=>{if(!ctx||ctx.state!=="running")return;
-      const t=ctx.currentTime+.05,ac=MUS_ACORDES[musPaso%4];musPaso++;
-      ac.forEach((f,i)=>musNota(f,t+i*.22,.55,.04,"triangle"));
-      musNota(ac[0]/2,t,1.05,.05,"sine");
+      const t=ctx.currentTime+.02,k=musPaso%32;musPaso++;
+      if(MUS_MEL[k])musNota(MUS_MEL[k],t,.14,.05,"square");
+      if(MUS_BAJO[k])musNota(MUS_BAJO[k],t,.24,.07,"triangle");
     };
-    paso();musTimer=setInterval(paso,950);
+    paso();musTimer=setInterval(paso,150);
   }else if(musTimer){clearInterval(musTimer);musTimer=null;}
 }
 const ICO={sol:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.4"/><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.9 1.9M17.1 17.1 19 19M5 19l1.9-1.9M17.1 6.9 19 5"/></g></svg>',
