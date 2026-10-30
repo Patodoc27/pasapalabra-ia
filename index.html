@@ -1504,31 +1504,14 @@ function sAlarma(){  // timbre de desafío: suena siempre, y vibra en Android
   for(let r=0;r<2;r++){[988,1319,1568].forEach((f,i)=>tonoA(f,.16,"triangle",.22,r*.55+i*.13));}
   try{if(navigator.vibrate)navigator.vibrate([180,90,180]);}catch(e){}
 }
-/* ===== MUSIQUITA DE FONDO: inicio / registro / final (suena solo con sonido activo) ===== */
-let musTimer=null,musPaso=0,musQuer=false;
-// melodía suave de lobby (32 pasos): lead sine + bajo triangle
-const MUS_MEL=[523.25,0,0,659.25,0,0,783.99,0, 880,0,0,783.99,0,659.25,0,0,
-               587.33,0,0,659.25,0,0,587.33,0, 523.25,0,0,0,0,0,0,0];
-const MUS_BAJO=[130.8,0,0,0,0,0,0,0, 174.6,0,0,0,0,0,0,0,
-                196,0,0,0,0,0,0,0, 130.8,0,0,0,0,0,0,0];
-function musNota(f,t,dur,vol,tipo){
-  const c=ctx,o=c.createOscillator(),g=c.createGain();
-  o.type=tipo;o.frequency.value=f;
-  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.03);
-  g.gain.exponentialRampToValueAtTime(.0001,t+dur);
-  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+dur+.05);
-}
+/* ===== MUSIQUITA DE FONDO: cumbia en inicio / registro / final (suena solo con sonido activo) ===== */
+let musAudio=null,musQuer=false;
 function musica(q){
+  if(!musAudio){try{musAudio=new Audio("cumbia.mp3");musAudio.loop=true;musAudio.volume=.45;musAudio.preload="auto";}catch(e){}}
+  if(!musAudio)return;
   if(q&&sonido){
-    const c=audio();if(!c)return;
-    if(musTimer||c.state!=="running")return;   // arranca tras el primer toque (autoplay)
-    const paso=()=>{if(!ctx||ctx.state!=="running")return;
-      const t=ctx.currentTime+.02,k=musPaso%32;musPaso++;
-      if(MUS_MEL[k])musNota(MUS_MEL[k],t,.34,.055,"sine");
-      if(MUS_BAJO[k])musNota(MUS_BAJO[k],t,.55,.075,"triangle");
-    };
-    paso();musTimer=setInterval(paso,220);
-  }else if(musTimer){clearInterval(musTimer);musTimer=null;}
+    const p=musAudio.play();if(p&&p.catch)p.catch(()=>{});   // arranca tras el primer toque (autoplay)
+  }else{musAudio.pause();}
 }
 const ICO={sol:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.4"/><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.9 1.9M17.1 17.1 19 19M5 19l1.9-1.9M17.1 6.9 19 5"/></g></svg>',
 luna:'<svg viewBox="0 0 24 24"><path d="M20.4 14.1A8.9 8.9 0 0 1 9.9 3.6a.7.7 0 0 0-.9-.9A10.4 10.4 0 1 0 21.3 15a.7.7 0 0 0-.9-.9z"/></svg>',
