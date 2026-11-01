@@ -178,13 +178,104 @@ function filaDeEstudiante_(reg, nombreCompleto) {
 function escribirPasapalabra_(nombre, aciertosAcum) {
   try {
     if (!REGISTRO_ID || REGISTRO_ID.indexOf("PEGAR") === 0) return;
+    // 1) mantener el resumen en la planilla de registro (lo lee también el quiz)
+    const ss = SpreadsheetApp.openById(REGISTRO_ID);
+    let hp = ss.getSheetByName("PasapalabraResumen");
+    if (!hp) { hp = ss.insertSheet("PasapalabraResumen"); hp.appendRow(["nombre","aciertos"]); }
+    const prev = hp.getDataRange().getValues();
+    let escrito = false;
+    for (let i = 1; i < prev.length; i++) {
+      if (norm_(prev[i][0]) === norm_(nombre)) {
+        hp.getRange(i + 1, 2).setValue(+aciertosAcum || 0);
+        escrito = true; break;
+      }
+    }
+    if (!escrito) hp.appendRow([nombre, +aciertosAcum || 0]);
+    // 2) nota por tramos en la columna PASAPALABRA
     const reg = encontrarRegistro_();
-    if (!reg) return;
-    const f = filaDeEstudiante_(reg, nombre);
-    if (f < 0) return;
-    const nota = Math.min(10, Math.floor((+aciertosAcum || 0) / 10));
-    reg.h.getRange(f + 1, reg.colPasap + 1).setValue(nota);
+    if (reg) {
+      const f = filaDeEstudiante_(reg, nombre);
+      if (f >= 0) {
+        const nota = Math.min(10, Math.floor((+aciertosAcum || 0) / 10));
+        reg.h.getRange(f + 1, reg.colPasap + 1).setValue(nota);
+      }
+    }
+    // 3) top 5 → 10 en MEJOR DESEMPEÑO (unión con el quiz)
+    actualizarMejorDesempeno_(ss);
   } catch (e) { /* no cortar el registro de la partida si falla la planilla */ }
+}
+
+// MEJOR DESEMPEÑO DE ACTIVIDADES VIRTUALES: un 10 para quien esté en el
+// top 5 de cualquiera de las dos apps (pasapalabra: aciertos acumulados;
+// quiz: mejor intento por aciertos y tiempo). Si está en ambas, un solo 10;
+// si sale del top 5, se borra.
+function quizTop5_(ss) {
+  const h = ss.getSheetByName("Intentos");
+  if (!h) return [];
+  const datos = h.getDataRange().getValues();
+  const mejores = {};
+  for (let i = 1; i < datos.length; i++) {
+    const v = datos[i];
+    if (v[7] !== "entregado") continue;
+    const clave = (String(v[3]) + "|" + String(v[4])).toLowerCase();
+    const corr = Number(v[11] || 0), seg = v[10] === "" ? 999999 : v[10];
+    if (!mejores[clave] || corr > mejores[clave].correctas ||
+        (corr === mejores[clave].correctas && seg < mejores[clave].segundos))
+      mejores[clave] = { nombre: (String(v[3]) + " " + String(v[4])).trim(), correctas: corr, segundos: seg };
+  }
+  const lista = Object.values(mejores);
+  lista.sort((x, y) => y.correctas - x.correctas || x.segundos - y.segundos);
+  return lista;
+}
+function pasapResumen_(ss) {
+  const h = ss.getSheetByName("PasapalabraResumen");
+  if (!h) return [];
+  const datos = h.getDataRange().getValues();
+  const lista = [];
+  for (let i = 1; i < datos.length; i++)
+    lista.push({ nombre: String(datos[i][0] || ""), aciertos: Number(datos[i][1] || 0) });
+  lista.sort((a, b) => b.aciertos - a.aciertos || (a.nombre < b.nombre ? -1 : a.nombre > b.nombre ? 1 : 0));
+  return lista;
+}
+function encontrarDesemp_(reg) {
+  let col = -1;
+  for (let j = 0; j < reg.datos[reg.filaEnc].length; j++) {
+    const t = norm_(reg.datos[reg.filaEnc][j]);
+    if (t.indexOf("mejor") === 0 && t.indexOf("desempen") >= 0) { col = j; break; }
+  }
+  return col;
+}
+function actualizarMejorDesempeno_(ss) {
+  const reg = encontrarRegistro_();
+  if (!reg) return;
+  const colDesemp = encontrarDesemp_(reg);
+  if (colDesemp < 0) return;
+  const merecen = {};
+  quizTop5_(ss).slice(0, 5).forEach(e => {
+    const f = filaDeEstudiante_(reg, e.nombre);
+    if (f >= 0) merecen[f] = 1;
+  });
+  pasapResumen_(ss).slice(0, 5).forEach(e => {
+    const f = filaDeEstudiante_(reg, e.nombre);
+    if (f >= 0) merecen[f] = 1;
+  });
+  const activas = {};
+  quizTop5_(ss).forEach(e => {
+    const f = filaDeEstudiante_(reg, e.nombre);
+    if (f >= 0) activas[f] = 1;
+  });
+  pasapResumen_(ss).forEach(e => {
+    const f = filaDeEstudiante_(reg, e.nombre);
+    if (f >= 0) activas[f] = 1;
+  });
+  for (const fr in activas) {
+    const fila = Number(fr);
+    const celda = reg.h.getRange(fila + 1, colDesemp + 1);
+    const actual = reg.datos[fila][colDesemp];
+    const actN = actual === "" || actual === null ? -1 : Number(String(actual).replace(",", "."));
+    if (merecen[fila]) { if (actN !== 10) celda.setValue(10); }
+    else if (actN === 10) celda.setValue("");
+  }
 }
 
 // ---- lectura: ranking para el juego, ya acumulado por estudiante ----------
