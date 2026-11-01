@@ -278,6 +278,21 @@ function actualizarMejorDesempeno_(ss) {
   }
 }
 
+// Sincroniza de una vez a la planilla de notas TODOS los aciertos ya
+// acumulados en "resumen" (para los que jugaron antes de pegar este código).
+// Ejecutarla UNA vez desde el editor (▶ Ejecutar) y listo.
+function sincronizar() {
+  const filas = resumen_().getDataRange().getValues().slice(1);
+  let n = 0;
+  for (const r of filas) {
+    const nombre = String(r[0] || "");
+    if (!nombre) continue;
+    escribirPasapalabra_(nombre, +r[5] || 0);
+    n++;
+  }
+  return "Sincronizados " + n + " estudiantes.";
+}
+
 // ---- lectura: ranking para el juego, ya acumulado por estudiante ----------
 // GET ?top=N → [{nombre, seccion, aciertos, partidas, avatar, total}]
 
