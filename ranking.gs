@@ -1,9 +1,16 @@
 // Pasapalabra IA — registro de partidas, resumen por estudiante y ranking
 // Pegar COMPLETO en Extensiones → Apps Script de la planilla, guardar y
 // publicar como aplicación web (ver instrucciones).
+//
+// Además escribe la nota por tramos (10-19 aciertos = 1, 20-29 = 2, ...,
+// 100+ = 10) en la columna "JUEGO EDUCATIVO: PASAPALABRA" de la planilla
+// de registro del curso (REGISTRO_ID). Reconoce al estudiante aunque
+// escriba un solo nombre/apellido, sin acentos o con letra de más/menos.
 
 const SHEET = "partidas";
 const RESUMEN = "resumen";
+const REGISTRO_ID = "PEGAR_ID_DE_LA_PLANILLA_DE_NOTAS";
+const HOJA_REGISTRO = ""; // opcional: nombre de la pestaña de la lista (ej. "5° 1°")
 
 // ---- hojas ---------------------------------------------------------------
 
@@ -80,18 +87,104 @@ function doPost(e) {
         ac, er, pa, mj, lj,
         lj ? Math.round(ac/lj*100) : 0, ts
       ]]);
+      escribirPasapalabra_(nombre, ac);
       return ok_();
     }
   }
   s.appendRow([nombre, seccion, avatar, 1, ahora,
                aciertos, errores, pasadas, aciertos, total,
                total ? Math.round(aciertos/total*100) : 0, +tiempo||0]);
+  escribirPasapalabra_(nombre, aciertos);
   return ok_();
 }
 
 function ok_() {
   return ContentService.createTextOutput(JSON.stringify({ok:true}))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ---- escritura en la planilla de registro del curso -----------------------
+// Columna "JUEGO EDUCATIVO: PASAPALABRA": nota por tramos de aciertos
+// acumulados: 10-19 → 1, 20-29 → 2, ..., 100+ → 10.
+
+function tokensReg_(t) {
+  const n = norm_(t);
+  return n ? n.split(" ") : [];
+}
+function distReg_(a, b) { // Levenshtein acotado
+  if (Math.abs(a.length - b.length) > 2) return 99;
+  let prev = [], cur = [];
+  for (let j = 0; j <= b.length; j++) prev[j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    cur[0] = i;
+    for (let j = 1; j <= b.length; j++)
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1,
+        prev[j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1));
+    const tmp = prev; prev = cur; cur = tmp;
+  }
+  return prev[b.length];
+}
+function nivelReg_(filaTok, t) {
+  if (filaTok === t || filaTok.indexOf(t) === 0 || t.indexOf(filaTok) === 0 ||
+      filaTok.indexOf(t) >= 0) return 2;
+  const d = distReg_(filaTok, t);
+  const tol = Math.max(filaTok.length, t.length) >= 7 ? 2 : 1;
+  return d <= tol ? 1 : 0;
+}
+function encontrarRegistro_() {
+  const ss = SpreadsheetApp.openById(REGISTRO_ID);
+  const hojas = HOJA_REGISTRO ? [ss.getSheetByName(HOJA_REGISTRO)] : ss.getSheets();
+  for (const h of hojas) {
+    if (!h) continue;
+    const datos = h.getDataRange().getValues();
+    for (let i = 0; i < Math.min(datos.length, 15); i++) {
+      let colPasap = -1, colApe = -1, colNom = -1;
+      for (let j = 0; j < datos[i].length; j++) {
+        const t = norm_(datos[i][j]);
+        if (t.indexOf("pasapalabra") >= 0) colPasap = j;
+        else if (t.indexOf("apellido") >= 0) colApe = j;
+        else if (t.indexOf("nombre") >= 0) colNom = j;
+      }
+      if (colPasap >= 0)
+        return { h, filaEnc: i, datos, colPasap, colApe, colNom };
+    }
+  }
+  return null;
+}
+function filaDeEstudiante_(reg, nombreCompleto) {
+  const buscado = tokensReg_(nombreCompleto);
+  if (!buscado.length) return -1;
+  let mejor = -1, mejorScore = 0, empate = false;
+  for (let r = reg.filaEnc + 1; r < reg.datos.length; r++) {
+    let filaTxt = "";
+    if (reg.colApe >= 0) filaTxt += " " + reg.datos[r][reg.colApe];
+    if (reg.colNom >= 0) filaTxt += " " + reg.datos[r][reg.colNom];
+    if (reg.colApe < 0 && reg.colNom < 0) return -1;
+    const filaTokens = tokensReg_(filaTxt);
+    if (!filaTokens.length) continue;
+    let score = 0, ok = true;
+    for (const tk of buscado) {
+      let n = 0;
+      for (const ft of filaTokens) n = Math.max(n, nivelReg_(ft, tk));
+      if (n === 0) { ok = false; break; }
+      score += n;
+    }
+    if (!ok) continue;
+    if (score > mejorScore) { mejor = r; mejorScore = score; empate = false; }
+    else if (score === mejorScore) empate = true;
+  }
+  return (mejor < 0 || empate) ? -2 : mejor;
+}
+function escribirPasapalabra_(nombre, aciertosAcum) {
+  try {
+    if (!REGISTRO_ID || REGISTRO_ID.indexOf("PEGAR") === 0) return;
+    const reg = encontrarRegistro_();
+    if (!reg) return;
+    const f = filaDeEstudiante_(reg, nombre);
+    if (f < 0) return;
+    const nota = Math.min(10, Math.floor((+aciertosAcum || 0) / 10));
+    reg.h.getRange(f + 1, reg.colPasap + 1).setValue(nota);
+  } catch (e) { /* no cortar el registro de la partida si falla la planilla */ }
 }
 
 // ---- lectura: ranking para el juego, ya acumulado por estudiante ----------
