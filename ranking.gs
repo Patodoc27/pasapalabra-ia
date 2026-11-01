@@ -145,8 +145,20 @@ function encontrarRegistro_() {
         else if (t.indexOf("apellido") >= 0) colApe = j;
         else if (t.indexOf("nombre") >= 0) colNom = j;
       }
-      if (colPasap >= 0)
-        return { h, filaEnc: i, datos, colPasap, colApe, colNom };
+      if (colPasap >= 0) {
+        // Encabezado de dos filas: si la columna de estudiantes
+        // (apellido/nombre) está en la fila siguiente, mirarla.
+        let filaEnc = i;
+        if (colApe < 0 && colNom < 0 && i + 1 < datos.length) {
+          for (let j2 = 0; j2 < datos[i + 1].length; j2++) {
+            const t2 = norm_(datos[i + 1][j2]);
+            if (t2.indexOf("apellido") >= 0) colApe = j2;
+            else if (t2.indexOf("nombre") >= 0) colNom = j2;
+          }
+          if (colApe >= 0 || colNom >= 0) filaEnc = i + 1;
+        }
+        return { h, filaEnc, filaEncGrados: i, datos, colPasap, colApe, colNom };
+      }
     }
   }
   return null;
@@ -239,8 +251,9 @@ function pasapResumen_(ss) {
 }
 function encontrarDesemp_(reg) {
   let col = -1;
-  for (let j = 0; j < reg.datos[reg.filaEnc].length; j++) {
-    const t = norm_(reg.datos[reg.filaEnc][j]);
+  const filaH = reg.filaEncGrados !== undefined ? reg.filaEncGrados : reg.filaEnc;
+  for (let j = 0; j < reg.datos[filaH].length; j++) {
+    const t = norm_(reg.datos[filaH][j]);
     if (t.indexOf("mejor") === 0 && t.indexOf("desempen") >= 0) { col = j; break; }
   }
   return col;
@@ -283,14 +296,25 @@ function actualizarMejorDesempeno_(ss) {
 // Ejecutarla UNA vez desde el editor (▶ Ejecutar) y listo.
 function sincronizar() {
   const filas = resumen_().getDataRange().getValues().slice(1);
-  let n = 0;
+  let ok = 0;
+  const sinFila = [];
+  const reg = encontrarRegistro_();
   for (const r of filas) {
     const nombre = String(r[0] || "");
     if (!nombre) continue;
     escribirPasapalabra_(nombre, +r[5] || 0);
-    n++;
+    if (reg) {
+      const f = filaDeEstudiante_(reg, nombre);
+      if (f >= 0) ok++;
+      else sinFila.push(nombre);
+    } else {
+      ok++;
+    }
   }
-  return "Sincronizados " + n + " estudiantes.";
+  const msg = "Sincronizados " + ok + " de " + (ok + sinFila.length) +
+    (sinFila.length ? " | SIN FILA EN LA PLANILLA: " + sinFila.join(", ") : "");
+  Logger.log(msg);
+  return msg;
 }
 
 // ---- lectura: ranking para el juego, ya acumulado por estudiante ----------
