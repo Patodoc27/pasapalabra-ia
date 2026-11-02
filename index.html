@@ -1226,7 +1226,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
         <li>Acierto ✓ en tu color · error ✕ en rosa · pasapalabra ↻ en celeste (la letra vuelve).</li>
         <li>La consigna se lee en voz alta y recién después se habilita la respuesta.</li>
         <li>Cada uno tiene su reloj según el modo elegido y corre solo en su turno.</li>
-        <li>Cada letra tiene un tiempo límite (la barra): si se acaba, vuelve como pasapalabra; si ya había vuelto, es error.</li>
+        <li>Cada letra tiene 20 segundos para responder desde que termina de leerse la consigna (la barra): si se acaba el tiempo, es error.</li>
         <li>En línea ves y escuchás la consigna del rival y lo que escribe.</li>
         <li>Gana quien acierta más; si empatan, el desempate es la revancha.</li>
         <li>Tilde y ñ cuentan. Si errás solo la acentuación, avisa y corregís sin perder la letra.</li>
@@ -2018,7 +2018,7 @@ function entrarAlJuego(){
   else{   // con lectura: la respuesta y el reloj arrancan recién cuando termina de leer
     $("entrada").placeholder="Tu respuesta";
     if(lectura&&soportaVoz){habilitar(false);pararReloj();}
-    else{habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();}
+    else esperarLectura(items[idx]);
     luego(()=>$("entrada").focus(),120);}
 }
 function habilitar(v){
@@ -2104,7 +2104,7 @@ function cerrarJugada(resu){
     if(sola||solo){   // contra vos misma o repaso: seguís vos, sin tarjeta de turno
       intentos=0;mostrarLetra();
       if(lectura&&soportaVoz){habilitar(false);pararReloj();}
-      else{habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();luego(()=>$("entrada").focus(),120);}
+      else esperarLectura(items[idx]);
     }else{if(tieneTiempo(1-turno))turno=1-turno;overlayTurno(resu);}
   },(esBot()||!miTurno())?1700:1300);
 }
@@ -2210,13 +2210,18 @@ function sinReloj_(j){   // se le terminó su reloj a quien tiene el turno
   $("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Se terminó tu reloj</span>"+(tieneTiempo(1-j)&&quedan()?nombreBonito(nombres[1-j])+" sigue con las letras que quedan.":"");
   redJugada("sin","",1);pintar();cerrarJugada("<span style='color:var(--parina)'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Sin reloj: "+nombreBonito(nombres[j])+"</span>");
 }
-/* ===== TIEMPO DE CADA LETRA (solo en línea) ===== */
-let letraT=null,letraInt=null,letraFin=0;
-function segundosLetra(it){
-  const pal=String(it.d||"").replace(/<[^>]+>/g," ").split(/\s+/).filter(Boolean).length;
-  let t=8+it.p.length/1.3+((lectura&&soportaVoz)?0:pal/2.5);
-  const mul=seg>0?(seg>=360?1.25:seg>120?1:.8):1, cap=seg>=360?55:seg>120?45:35;
-  return Math.max(15,Math.min(cap,Math.ceil(t*mul/5)*5));
+/* ===== TIEMPO DE CADA LETRA: 20 s desde que se habilita el recuadro ===== */
+let letraT=null,letraInt=null,letraFin=0,espVozT=null;
+function segundosLetra(it){return 20;}
+function duracionLectura(it){   // lo que tardaría la voz en leer consigna+definición
+  const cons=(it.m===E?"Empieza por la letra ":"Contiene la letra ")+it.letra;
+  const txt=(it.d||"").replace(/<[^>]+>/g," ");
+  return Math.max(11000,(cons.length+txt.length)*85);
+}
+function activarRespuesta(){habilitar(true);tIni=Date.now();arrancarReloj();arrancarLetra();luego(()=>$("entrada").focus(),60);}
+function esperarLectura(it){   // sin voz: espera el tiempo equivalente a la lectura y recién habilita
+  clearTimeout(espVozT);habilitar(false);pararReloj();
+  espVozT=setTimeout(()=>{if(jugando&&items[idx]===it&&!esBot()&&$("entrada").disabled)activarRespuesta();},duracionLectura(it));
 }
 function correrBarra(t){
   const b=$("barra-turno"),i=$("barra-turno-i");clearInterval(letraInt);
@@ -2229,7 +2234,7 @@ function correrBarra(t){
     if(f<=0)clearInterval(letraInt);};
   pinta();letraInt=setInterval(pinta,250);
 }
-function pararLetra(){clearTimeout(letraT);clearInterval(letraInt);letraT=null;const b=$("barra-turno");if(b)b.classList.remove("on","urgente");}
+function pararLetra(){clearTimeout(letraT);clearTimeout(espVozT);clearInterval(letraInt);letraT=null;const b=$("barra-turno");if(b)b.classList.remove("on","urgente");}
 function arrancarLetra(){
   if((enLinea&&!miTurno())||sinReloj||recuperacion||!jugando)return;
   const rem=enLinea?rel[turno]:restante;
