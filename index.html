@@ -1226,7 +1226,7 @@ input[type=text]::placeholder{color:#5F7B9E;font-weight:600}
         <li>Acierto ✓ en tu color · error ✕ en rosa · pasapalabra ↻ en celeste (la letra vuelve).</li>
         <li>La consigna se lee en voz alta y recién después se habilita la respuesta.</li>
         <li>Cada uno tiene su reloj según el modo elegido y corre solo en su turno.</li>
-        <li>Cada letra tiene 20 segundos para responder desde que termina de leerse la consigna (la barra): si se acaba el tiempo, es error.</li>
+        <li>Cada letra tiene 25 segundos para responder desde que termina de leerse la consigna (15 en Intenso); si se acaba el tiempo, es error.</li>
         <li>En línea ves y escuchás la consigna del rival y lo que escribe.</li>
         <li>Gana quien acierta más; si empatan, el desempate es la revancha.</li>
         <li>Tilde y ñ cuentan. Si errás solo la acentuación, avisa y corregís sin perder la letra.</li>
@@ -2210,9 +2210,9 @@ function sinReloj_(j){   // se le terminó su reloj a quien tiene el turno
   $("feedback").innerHTML="<span class='tit'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Se terminó tu reloj</span>"+(tieneTiempo(1-j)&&quedan()?nombreBonito(nombres[1-j])+" sigue con las letras que quedan.":"");
   redJugada("sin","",1);pintar();cerrarJugada("<span style='color:var(--parina)'><svg class='fico' viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm0 14.5A6.5 6.5 0 1 1 18.5 12 6.5 6.5 0 0 1 12 18.5zm.75-10.5h-1.5v5l4 2.4.75-1.2-3.25-1.95z'/></svg> Sin reloj: "+nombreBonito(nombres[j])+"</span>");
 }
-/* ===== TIEMPO DE CADA LETRA: 20 s desde que se habilita el recuadro ===== */
+/* ===== TIEMPO DE CADA LETRA: corre desde que se habilita el recuadro ===== */
 let letraT=null,letraInt=null,letraFin=0,espVozT=null;
-function segundosLetra(it){return 20;}
+function segundosLetra(it){return seg>0&&seg<=90?15:25;}   // Intenso 15 s · Normal/Intermedio 25 s (sin reloj no corre la barra)
 function duracionLectura(it){   // lo que tardaría la voz en leer consigna+definición
   const cons=(it.m===E?"Empieza por la letra ":"Contiene la letra ")+it.letra;
   const txt=(it.d||"").replace(/<[^>]+>/g," ");
